@@ -116,6 +116,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String get calculationSectionSubtitle => 'طريقة الحساب والفقه';
 
   @override
+  String get calculationMethodTitle => 'طريقة الحساب';
+
+  @override
+  String get calculationMethodSubtitle =>
+      'اختر الطريقة المعتمدة في منطقتك أو مسجدك';
+
+  @override
+  String get madhabSubtitle => 'يؤثر على وقت العصر فقط';
+
+  @override
+  String get highLatitudeSubtitle => 'للمواقع فوق 48° خط العرض';
+
+  @override
+  String get locationSubtitle => 'GPS أو بحث المدينة لمواقيت الصلاة';
+
+  @override
+  String get languageSubtitle => 'لغة التطبيق واتجاه الواجهة';
+
+  @override
+  String get themeSubtitle => 'فاتح، داكن، أو حسب النظام';
+
+  @override
+  String get resetSectionTitle => 'إعادة ضبط الإعدادات';
+
+  @override
+  String get resetSectionSubtitle =>
+      'استعادة الافتراضي مع الإبقاء على الأساسيات';
+
+  @override
+  String get resetSectionSummary => 'افتراضيات الحساب أو العرض';
+
+  @override
+  String get settingsGroupCalculation => 'الحساب';
+
+  @override
+  String get settingsGroupLocation => 'الموقع';
+
+  @override
+  String get settingsGroupNotifications => 'الإشعارات';
+
+  @override
+  String get settingsGroupDisplay => 'العرض';
+
+  @override
+  String get settingsGroupAppearance => 'المظهر';
+
+  @override
+  String get settingsGroupReset => 'إعادة الضبط';
+
+  @override
+  String get notificationsOff => 'متوقف';
+
+  @override
+  String notificationsOnCount(int count) {
+    return 'مفعّل · $count صلوات';
+  }
+
+  @override
+  String get hijriAdjustmentNeutral => 'هجري ±0';
+
+  @override
+  String hijriAdjustmentDaysShort(String signedDays) {
+    return 'هجري $signedDays';
+  }
+
+  @override
+  String get advancedSummaryDefault => 'إزاحات افتراضية';
+
+  @override
+  String advancedSummaryWithOffset(int minutes) {
+    return 'إزاحة عامة $minutes د';
+  }
+
+  @override
   String get madhabTitle => 'المذهب (العصر)';
 
   @override

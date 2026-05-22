@@ -310,6 +310,138 @@ abstract class AppLocalizations {
   /// **'Method and jurisprudence for prayer times'**
   String get calculationSectionSubtitle;
 
+  /// No description provided for @calculationMethodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation method'**
+  String get calculationMethodTitle;
+
+  /// No description provided for @calculationMethodSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the method used by your mosque or region'**
+  String get calculationMethodSubtitle;
+
+  /// No description provided for @madhabSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Affects Asr time only'**
+  String get madhabSubtitle;
+
+  /// No description provided for @highLatitudeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'For locations above 48° latitude'**
+  String get highLatitudeSubtitle;
+
+  /// No description provided for @locationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS or city search for prayer times'**
+  String get locationSubtitle;
+
+  /// No description provided for @languageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App language and layout direction'**
+  String get languageSubtitle;
+
+  /// No description provided for @themeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Light, dark, or follow system'**
+  String get themeSubtitle;
+
+  /// No description provided for @resetSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset settings'**
+  String get resetSectionTitle;
+
+  /// No description provided for @resetSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore defaults while keeping essentials'**
+  String get resetSectionSubtitle;
+
+  /// No description provided for @resetSectionSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation or display defaults'**
+  String get resetSectionSummary;
+
+  /// No description provided for @settingsGroupCalculation.
+  ///
+  /// In en, this message translates to:
+  /// **'CALCULATION'**
+  String get settingsGroupCalculation;
+
+  /// No description provided for @settingsGroupLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'LOCATION'**
+  String get settingsGroupLocation;
+
+  /// No description provided for @settingsGroupNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTIFICATIONS'**
+  String get settingsGroupNotifications;
+
+  /// No description provided for @settingsGroupDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'DISPLAY'**
+  String get settingsGroupDisplay;
+
+  /// No description provided for @settingsGroupAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'APPEARANCE'**
+  String get settingsGroupAppearance;
+
+  /// No description provided for @settingsGroupReset.
+  ///
+  /// In en, this message translates to:
+  /// **'RESET'**
+  String get settingsGroupReset;
+
+  /// No description provided for @notificationsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get notificationsOff;
+
+  /// No description provided for @notificationsOnCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1 {On · 1 prayer} other {On · {count} prayers}}'**
+  String notificationsOnCount(int count);
+
+  /// No description provided for @hijriAdjustmentNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri ±0'**
+  String get hijriAdjustmentNeutral;
+
+  /// No description provided for @hijriAdjustmentDaysShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri {signedDays}'**
+  String hijriAdjustmentDaysShort(String signedDays);
+
+  /// No description provided for @advancedSummaryDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default offsets'**
+  String get advancedSummaryDefault;
+
+  /// No description provided for @advancedSummaryWithOffset.
+  ///
+  /// In en, this message translates to:
+  /// **'Global offset {minutes} min'**
+  String advancedSummaryWithOffset(int minutes);
+
   /// No description provided for @madhabTitle.
   ///
   /// In en, this message translates to:

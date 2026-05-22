@@ -35,6 +35,43 @@
   "highLatitudeHint": "High latitude detected — consider a high-latitude rule under calculation settings.",
   "calculationSectionTitle": "Calculation",
   "calculationSectionSubtitle": "Method and jurisprudence for prayer times",
+  "calculationMethodTitle": "Calculation method",
+  "calculationMethodSubtitle": "Choose the method used by your mosque or region",
+  "madhabSubtitle": "Affects Asr time only",
+  "highLatitudeSubtitle": "For locations above 48° latitude",
+  "locationSubtitle": "GPS or city search for prayer times",
+  "languageSubtitle": "App language and layout direction",
+  "themeSubtitle": "Light, dark, or follow system",
+  "resetSectionTitle": "Reset settings",
+  "resetSectionSubtitle": "Restore defaults while keeping essentials",
+  "resetSectionSummary": "Calculation or display defaults",
+  "settingsGroupCalculation": "CALCULATION",
+  "settingsGroupLocation": "LOCATION",
+  "settingsGroupNotifications": "NOTIFICATIONS",
+  "settingsGroupDisplay": "DISPLAY",
+  "settingsGroupAppearance": "APPEARANCE",
+  "settingsGroupReset": "RESET",
+  "notificationsOff": "Off",
+  "notificationsOnCount": "{count, plural, =1 {On · 1 prayer} other {On · {count} prayers}}",
+  "@notificationsOnCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "hijriAdjustmentNeutral": "Hijri ±0",
+  "hijriAdjustmentDaysShort": "Hijri {signedDays}",
+  "@hijriAdjustmentDaysShort": {
+    "placeholders": {
+      "signedDays": { "type": "String" }
+    }
+  },
+  "advancedSummaryDefault": "Default offsets",
+  "advancedSummaryWithOffset": "Global offset {minutes} min",
+  "@advancedSummaryWithOffset": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
   "madhabTitle": "Madhab (Asr)",
   "madhabShafi": "Shafi",
   "madhabHanafi": "Hanafi",

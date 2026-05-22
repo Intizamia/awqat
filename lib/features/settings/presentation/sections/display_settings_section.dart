@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:times/core/widgets/schedule_groove_divider.dart';
 import 'package:times/features/settings/domain/app_settings.dart';
 import 'package:times/features/settings/domain/time_format_id.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/widgets/settings_section_header.dart';
+import 'package:times/features/settings/presentation/utils/settings_value_labels.dart';
+import 'package:times/features/settings/presentation/widgets/settings_check_row.dart';
 import 'package:times/l10n/app_localizations.dart';
 
-class DisplaySettingsSection extends StatelessWidget {
-  const DisplaySettingsSection({
+class DisplaySettingsBody extends StatelessWidget {
+  const DisplaySettingsBody({
     required this.settings,
     super.key,
   });
@@ -20,43 +22,48 @@ class DisplaySettingsSection extends StatelessWidget {
     final cubit = context.read<SettingsCubit>();
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SettingsSectionHeader(
-          title: l10n.displaySectionTitle,
-          subtitle: l10n.displaySectionSubtitle,
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-          child: Text(l10n.timeFormatTitle, style: Theme.of(context).textTheme.titleSmall),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SegmentedButton<TimeFormatId>(
-            segments: [
-              ButtonSegment(value: TimeFormatId.hour24, label: Text(l10n.timeFormat24)),
-              ButtonSegment(value: TimeFormatId.hour12, label: Text(l10n.timeFormat12)),
-            ],
-            selected: {settings.timeFormat},
-            onSelectionChanged: (selected) {
-              cubit.setTimeFormat(selected.first);
-            },
+        for (final format in TimeFormatId.values) ...[
+          if (format != TimeFormatId.values.first) const ScheduleGrooveDivider(),
+          SettingsCheckRow(
+            title: timeFormatLabel(l10n, format),
+            selected: settings.timeFormat == format,
+            onTap: () => cubit.setTimeFormat(format),
           ),
-        ),
+        ],
+        const ScheduleGrooveDivider(),
         SwitchListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           title: Text(l10n.showSunrise),
           value: settings.showSunrise,
           onChanged: cubit.setShowSunrise,
         ),
-        ListTile(
-          title: Text(l10n.hijriAdjustmentTitle),
-          subtitle: Text(l10n.hijriAdjustmentSubtitle),
+        const ScheduleGrooveDivider(),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+          child: Text(
+            l10n.hijriAdjustmentTitle,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: Text(
+            l10n.hijriAdjustmentSubtitle,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: Row(
             children: [
-              Text('${settings.hijriAdjustmentDays}'),
+              Text(
+                '${settings.hijriAdjustmentDays}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               Expanded(
                 child: Slider(
                   value: settings.hijriAdjustmentDays.toDouble(),
@@ -70,7 +77,6 @@ class DisplaySettingsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
       ],
     );
   }

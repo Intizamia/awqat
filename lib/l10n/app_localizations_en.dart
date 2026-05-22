@@ -118,6 +118,86 @@ class AppLocalizationsEn extends AppLocalizations {
       'Method and jurisprudence for prayer times';
 
   @override
+  String get calculationMethodTitle => 'Calculation method';
+
+  @override
+  String get calculationMethodSubtitle =>
+      'Choose the method used by your mosque or region';
+
+  @override
+  String get madhabSubtitle => 'Affects Asr time only';
+
+  @override
+  String get highLatitudeSubtitle => 'For locations above 48° latitude';
+
+  @override
+  String get locationSubtitle => 'GPS or city search for prayer times';
+
+  @override
+  String get languageSubtitle => 'App language and layout direction';
+
+  @override
+  String get themeSubtitle => 'Light, dark, or follow system';
+
+  @override
+  String get resetSectionTitle => 'Reset settings';
+
+  @override
+  String get resetSectionSubtitle =>
+      'Restore defaults while keeping essentials';
+
+  @override
+  String get resetSectionSummary => 'Calculation or display defaults';
+
+  @override
+  String get settingsGroupCalculation => 'CALCULATION';
+
+  @override
+  String get settingsGroupLocation => 'LOCATION';
+
+  @override
+  String get settingsGroupNotifications => 'NOTIFICATIONS';
+
+  @override
+  String get settingsGroupDisplay => 'DISPLAY';
+
+  @override
+  String get settingsGroupAppearance => 'APPEARANCE';
+
+  @override
+  String get settingsGroupReset => 'RESET';
+
+  @override
+  String get notificationsOff => 'Off';
+
+  @override
+  String notificationsOnCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'On · $count prayers',
+      one: 'On · 1 prayer',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get hijriAdjustmentNeutral => 'Hijri ±0';
+
+  @override
+  String hijriAdjustmentDaysShort(String signedDays) {
+    return 'Hijri $signedDays';
+  }
+
+  @override
+  String get advancedSummaryDefault => 'Default offsets';
+
+  @override
+  String advancedSummaryWithOffset(int minutes) {
+    return 'Global offset $minutes min';
+  }
+
+  @override
   String get madhabTitle => 'Madhab (Asr)';
 
   @override
