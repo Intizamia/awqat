@@ -69,10 +69,14 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                 if (!settingsState.settings.setup.isComplete) {
                   return const SizedBox.shrink();
                 }
-                return IconButton(
-                  icon: const Icon(Icons.explore_outlined),
-                  tooltip: l10n.qiblaTitle,
-                  onPressed: () => context.push('/qibla'),
+                return Semantics(
+                  button: true,
+                  label: l10n.qiblaTitle,
+                  child: IconButton(
+                    icon: const Icon(Icons.explore_outlined),
+                    tooltip: l10n.qiblaTitle,
+                    onPressed: () => context.push('/qibla'),
+                  ),
                 );
               },
             ),
@@ -136,7 +140,13 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                         hijriAdjustmentDays: appSettings.hijriAdjustmentDays,
                       ),
                       const SizedBox(height: 16),
-                      Card(
+                      Semantics(
+                        container: true,
+                        label: l10n.semanticsNextPrayer(
+                          next.name.label(l10n),
+                          formatPrayerTime(next.time, format: timeFormat),
+                        ),
+                        child: Card(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         child: Padding(
                           padding: const EdgeInsets.all(20),
@@ -182,10 +192,16 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                           ),
                         ),
                       ),
+                      ),
                       const SizedBox(height: 16),
                       ...visibleEntries.map((entry) {
                         final isNext = entry.name == next.name;
-                        return ListTile(
+                        return Semantics(
+                          label: l10n.semanticsPrayerTime(
+                            entry.name.label(l10n),
+                            formatPrayerTime(entry.time, format: timeFormat),
+                          ),
+                          child: ListTile(
                           leading: Icon(
                             isNext ? Icons.nightlight_round : Icons.schedule,
                             color: isNext
@@ -197,6 +213,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                             formatPrayerTime(entry.time, format: timeFormat),
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
+                        ),
                         );
                       }),
                     ],
@@ -245,10 +262,14 @@ class _SetupRequiredBody extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
-          FilledButton.icon(
-            onPressed: () => context.go('/settings'),
-            icon: const Icon(Icons.arrow_forward),
-            label: Text(l10n.setup),
+          Semantics(
+            button: true,
+            label: l10n.setup,
+            child: FilledButton.icon(
+              onPressed: () => context.go('/settings'),
+              icon: const Icon(Icons.navigate_next),
+              label: Text(l10n.setup),
+            ),
           ),
         ],
       ),

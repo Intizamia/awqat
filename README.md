@@ -7,16 +7,27 @@ Offline-first Islamic prayer times app for Android and iOS. Built with Flutter, 
 ```bash
 flutter pub get
 flutter gen-l10n   # after editing lib/l10n/*.arb
+dart run flutter_launcher_icons   # after changing assets/branding/icon.png
+dart run flutter_native_splash:create   # after splash config changes
 flutter run
 flutter analyze
 flutter test
 ```
 
-See [`AGENTS.md`](AGENTS.md) and [`docs/PROGRESS.md`](docs/PROGRESS.md) for roadmap and agent context.
+Device integration tests:
 
-## Features (in progress)
+```bash
+flutter test integration_test/app_flow_test.dart
+```
 
-- Local prayer calculation (`adhan_dart`)
-- English, Urdu, Arabic
-- First-run setup (method + location)
-- Qibla, notifications — planned
+See [`AGENTS.md`](AGENTS.md), [`docs/PROGRESS.md`](docs/PROGRESS.md), and [`docs/BACKLOG.md`](docs/BACKLOG.md).
+
+## MVP features
+
+- Local prayer calculation (`adhan_dart`) with configurable methods, madhab, offsets
+- English, Urdu, Arabic (RTL for ur/ar)
+- GPS + city search location, timezone-aware times
+- Hijri + Gregorian date header
+- Qibla compass from saved location
+- Prayer notifications (master + per-prayer toggles)
+- System / light / dark theme

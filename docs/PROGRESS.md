@@ -1,8 +1,8 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 8 complete → Phase 9 next  
-**Active branch:** `feature/phase-8-notifications`
+**Current phase:** MVP complete (Phase 9)  
+**Active branch:** `feature/phase-9-polish`
 
 ## Quick status
 
@@ -16,7 +16,7 @@
 - [x] Phase 6 Hijri display
 - [x] Phase 7 Qibla
 - [x] Phase 8 Notifications
-- [ ] Phase 9 Polish
+- [x] Phase 9 Polish
 
 ## Phase −1 — Agent docs
 
@@ -41,12 +41,7 @@
 
 ## Post-MVP backlog
 
-- Middle nav real feature
-- Aladhan / IslamicFinder API sources
-- Home screen widgets
-- Custom adhan sounds
-- M3 Expressive tokens
-- More languages
+See [`docs/BACKLOG.md`](BACKLOG.md).
 
 ## Phase 1 — Settings domain
 
@@ -112,6 +107,15 @@
 - [x] l10n (en, ur, ar); system default sound
 - [x] Unit tests (settings, planner)
 
+## Phase 9 — Polish
+
+- [x] Brand app icon + native splash (`#2E7D32`, `assets/branding/icon.png`)
+- [x] RTL locale config + explicit directionality for ar/ur
+- [x] Accessibility semantics (next prayer, prayer rows, setup, Qibla)
+- [x] Theme tap targets + page transitions
+- [x] Integration test (configured app shows timetable)
+- [x] `docs/BACKLOG.md`, README MVP feature list
+
 ## Session notes
 
-- **2026-05-22:** Phase 8 on `feature/phase-8-notifications`. Next: Phase 9 polish.
+- **2026-05-22:** Phase 9 on `feature/phase-9-polish`. **MVP roadmap complete.**

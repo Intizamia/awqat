@@ -276,4 +276,14 @@ class AppLocalizationsUr extends AppLocalizations {
   String notificationPrayerBody(String prayer) {
     return '$prayer کا وقت ہو گیا';
   }
+
+  @override
+  String semanticsNextPrayer(String prayer, String time) {
+    return 'اگلی نماز: $prayer، $time';
+  }
+
+  @override
+  String semanticsPrayerTime(String prayer, String time) {
+    return '$prayer، $time';
+  }
 }

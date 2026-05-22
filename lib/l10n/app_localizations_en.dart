@@ -286,4 +286,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String notificationPrayerBody(String prayer) {
     return 'Time for $prayer';
   }
+
+  @override
+  String semanticsNextPrayer(String prayer, String time) {
+    return 'Next prayer: $prayer at $time';
+  }
+
+  @override
+  String semanticsPrayerTime(String prayer, String time) {
+    return '$prayer at $time';
+  }
 }

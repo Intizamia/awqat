@@ -6,6 +6,7 @@ import 'package:times/app/router.dart';
 import 'package:times/features/notifications/data/prayer_notification_service.dart';
 import 'package:times/features/notifications/presentation/notification_reschedule_listener.dart';
 import 'package:times/app/theme.dart';
+import 'package:times/core/l10n/locale_config.dart';
 import 'package:times/features/location/data/geolocator_location_service.dart';
 import 'package:times/features/location/presentation/location_cubit.dart';
 import 'package:times/features/prayer/data/adhan_calculation_engine.dart';
@@ -79,13 +80,25 @@ class TimesApp extends StatelessWidget {
             );
           }
 
+          final locale = localeFromCode(state.settings.localeCode);
+
           return MaterialApp.router(
             title: 'Times',
             theme: buildLightTheme(),
             darkTheme: buildDarkTheme(),
             themeMode: themeModeFromId(state.settings.themeMode),
-            locale: localeFromCode(state.settings.localeCode),
+            locale: locale,
             supportedLocales: AppLocalizations.supportedLocales,
+            localeListResolutionCallback: (locales, supported) {
+              for (final preferred in locales ?? const <Locale>[]) {
+                for (final candidate in supported) {
+                  if (candidate.languageCode == preferred.languageCode) {
+                    return candidate;
+                  }
+                }
+              }
+              return const Locale('en');
+            },
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -94,10 +107,14 @@ class TimesApp extends StatelessWidget {
             ],
             routerConfig: _router,
             builder: (context, child) {
+              final content = child ?? const SizedBox.shrink();
               return NotificationRescheduleListener(
                 notificationService: notificationService,
                 child: AppSetupListener(
-                  child: child ?? const SizedBox.shrink(),
+                  child: Directionality(
+                    textDirection: textDirectionForLocale(locale),
+                    child: content,
+                  ),
                 ),
               );
             },

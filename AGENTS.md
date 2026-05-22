@@ -1,6 +1,6 @@
 # Times — Agent onboarding
 
-Prayer times app (Flutter, Material 3, flutter_bloc, adhan_dart). Targets **Android + iOS** only.
+Prayer times app (Flutter, Material 3, flutter_bloc, adhan_dart). Targets **Android + iOS** only. **MVP roadmap (Phases 0–9) is complete** — see `docs/BACKLOG.md` for follow-ups.
 
 ## Start here
 

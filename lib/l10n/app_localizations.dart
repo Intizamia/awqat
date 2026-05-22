@@ -603,6 +603,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Time for {prayer}'**
   String notificationPrayerBody(String prayer);
+
+  /// No description provided for @semanticsNextPrayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Next prayer: {prayer} at {time}'**
+  String semanticsNextPrayer(String prayer, String time);
+
+  /// No description provided for @semanticsPrayerTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{prayer} at {time}'**
+  String semanticsPrayerTime(String prayer, String time);
 }
 
 class _AppLocalizationsDelegate

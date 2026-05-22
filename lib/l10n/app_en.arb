@@ -104,5 +104,19 @@
         "type": "String"
       }
     }
+  },
+  "semanticsNextPrayer": "Next prayer: {prayer} at {time}",
+  "@semanticsNextPrayer": {
+    "placeholders": {
+      "prayer": { "type": "String" },
+      "time": { "type": "String" }
+    }
+  },
+  "semanticsPrayerTime": "{prayer} at {time}",
+  "@semanticsPrayerTime": {
+    "placeholders": {
+      "prayer": { "type": "String" },
+      "time": { "type": "String" }
+    }
   }
 }

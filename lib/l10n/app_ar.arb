@@ -97,5 +97,7 @@
   "notificationsMaster": "إشعارات مواقيت الصلاة",
   "notificationsMasterSubtitle": "يستخدم صوت إشعارات النظام",
   "notificationsPermissionDenied": "لم يُمنح إذن الإشعارات. فعّل الإشعارات من إعدادات النظام.",
-  "notificationPrayerBody": "حان وقت {prayer}"
+  "notificationPrayerBody": "حان وقت {prayer}",
+  "semanticsNextPrayer": "الصلاة القادمة: {prayer} الساعة {time}",
+  "semanticsPrayerTime": "{prayer} الساعة {time}"
 }
