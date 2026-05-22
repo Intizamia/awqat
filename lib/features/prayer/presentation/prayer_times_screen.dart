@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
+import 'package:times/features/settings/presentation/settings_state.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class PrayerTimesScreen extends StatelessWidget {
@@ -10,18 +11,28 @@ class PrayerTimesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final setup = context.watch<SettingsCubit>().state.setup;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.prayerTimesTitle)),
-      body: setup.isComplete
-          ? Center(
-              child: Text(
-                l10n.prayerTimesTitle,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            )
-          : _SetupRequiredBody(l10n: l10n),
+      body: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final setup = state.settings.setup;
+          if (!setup.isComplete) {
+            return _SetupRequiredBody(l10n: l10n);
+          }
+
+          return Center(
+            child: Text(
+              l10n.prayerTimesTitle,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          );
+        },
+      ),
     );
   }
 }

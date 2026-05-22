@@ -1,0 +1,4 @@
+enum MadhabId {
+  shafi,
+  hanafi,
+}

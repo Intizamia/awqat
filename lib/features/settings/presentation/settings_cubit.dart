@@ -1,33 +1,32 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/features/settings/domain/setup_completion_status.dart';
+import 'package:times/features/settings/data/settings_repository.dart';
+import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
 
-/// App-wide settings and setup completion (persistence in Phase 1).
 class SettingsCubit extends Cubit<SettingsState> {
-  SettingsCubit() : super(const SettingsState());
+  SettingsCubit(this._repository) : super(const SettingsState());
 
-  void setLocale(String code) {
-    emit(state.copyWith(localeCode: code));
+  final SettingsRepository _repository;
+
+  Future<void> load() async {
+    emit(state.copyWith(isLoading: true));
+    final settings = _repository.load();
+    emit(SettingsState(settings: settings, isLoading: false));
   }
 
-  void updateSetup(SetupCompletionStatus setup) {
-    emit(state.copyWith(setup: setup));
+  Future<void> setLocale(String code) async {
+    final updated = state.settings.copyWith(localeCode: code);
+    await _repository.save(updated);
+    emit(state.copyWith(settings: updated));
   }
 
-  /// Temporary helpers until SettingsRepository exists (Phase 1).
-  void markCalculationConfigured() {
-    emit(
-      state.copyWith(
-        setup: state.setup.copyWith(isCalculationConfigured: true),
-      ),
-    );
+  Future<void> setCalculationMethod(CalculationMethodId method) async {
+    await _repository.setCalculationMethod(method);
+    await load();
   }
 
-  void markLocationConfigured() {
-    emit(
-      state.copyWith(
-        setup: state.setup.copyWith(isLocationConfigured: true),
-      ),
-    );
+  Future<void> setLocationConfigured(bool value) async {
+    await _repository.setLocationConfigured(value);
+    await load();
   }
 }

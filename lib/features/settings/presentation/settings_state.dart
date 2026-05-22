@@ -1,25 +1,25 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/settings/domain/setup_completion_status.dart';
+import 'package:times/features/settings/domain/app_settings.dart';
 
 class SettingsState extends Equatable {
   const SettingsState({
-    this.setup = const SetupCompletionStatus(),
-    this.localeCode = 'en',
+    this.settings = const AppSettings(),
+    this.isLoading = true,
   });
 
-  final SetupCompletionStatus setup;
-  final String localeCode;
+  final AppSettings settings;
+  final bool isLoading;
 
   SettingsState copyWith({
-    SetupCompletionStatus? setup,
-    String? localeCode,
+    AppSettings? settings,
+    bool? isLoading,
   }) {
     return SettingsState(
-      setup: setup ?? this.setup,
-      localeCode: localeCode ?? this.localeCode,
+      settings: settings ?? this.settings,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 
   @override
-  List<Object?> get props => [setup, localeCode];
+  List<Object?> get props => [settings, isLoading];
 }

@@ -1,15 +1,15 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 0 complete → Phase 1 next  
-**Active branch:** `feature/phase-0-foundation`
+**Current phase:** Phase 1 complete → Phase 2 next  
+**Active branch:** `feature/phase-1-settings`
 
 ## Quick status
 
 - [x] Phase −1 Agent docs & rules
 - [x] Phase 0 Foundation
-- [ ] Phase 1 Settings domain & persistence
-- [ ] Phase 2 Calculation engine
+- [x] Phase 1 Settings domain & persistence
+- [ ] Phase 2 Calculation engine (adhan_dart mapper)
 - [ ] Phase 3 Location
 - [ ] Phase 4 Prayer Times UI
 - [ ] Phase 5 Settings UI
@@ -48,6 +48,15 @@
 - M3 Expressive tokens
 - More languages
 
+## Phase 1 — Settings domain
+
+- [x] `CalculationMethodId`, `MadhabId`, `HighLatitudeRuleId`
+- [x] `CalculationSettings` + `AppSettings` JSON serialization
+- [x] `SettingsRepository` (shared_preferences)
+- [x] `SettingsCubit` wired to persistence
+- [x] Method picker in Settings UI
+- [ ] adhan_dart mapper (Phase 2)
+
 ## Session notes
 
-- **2026-05-22:** Phase −1 merged. Phase 0 complete on `feature/phase-0-foundation` — shell, Bloc, l10n, nav. Next: Phase 1 settings persistence + calculation enums.
+- **2026-05-22:** Phase 1 on `feature/phase-1-settings` — settings persist; method must be chosen explicitly. Next: Phase 2 `AdhanCalculationEngine` + mapper tests.

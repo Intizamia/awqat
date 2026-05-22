@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:times/app/app.dart';
+import 'package:times/features/settings/data/settings_repository.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(TimesApp());
+  final settingsRepository = await SettingsRepository.create();
+  runApp(TimesApp(settingsRepository: settingsRepository));
 }

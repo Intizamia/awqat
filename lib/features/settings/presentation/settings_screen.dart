@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
+import 'package:times/features/settings/presentation/settings_state.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
+
+  static const _methods = <(CalculationMethodId, String)>[
+    (CalculationMethodId.muslimWorldLeague, 'Muslim World League'),
+    (CalculationMethodId.karachi, 'University of Islamic Sciences, Karachi'),
+    (CalculationMethodId.northAmerica, 'ISNA (North America)'),
+    (CalculationMethodId.ummAlQura, 'Umm Al-Qura, Makkah'),
+    (CalculationMethodId.egyptian, 'Egyptian General Authority'),
+    (CalculationMethodId.dubai, 'Dubai'),
+    (CalculationMethodId.qatar, 'Qatar'),
+    (CalculationMethodId.kuwait, 'Kuwait'),
+    (CalculationMethodId.singapore, 'Singapore (MUIS)'),
+    (CalculationMethodId.tehran, 'Tehran'),
+    (CalculationMethodId.turkey, 'Turkey (Diyanet)'),
+    (CalculationMethodId.moonsightingCommittee, 'Moonsighting Committee'),
+    (CalculationMethodId.other, 'Custom'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -12,45 +30,66 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsTitle)),
-      body: ListView(
-        children: [
-          ListTile(
-            title: Text(l10n.chooseCalculationMethod),
-            subtitle: const Text('Phase 1 — method picker'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              context.read<SettingsCubit>().markCalculationConfigured();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.chooseCalculationMethod)),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text('Location'),
-            subtitle: const Text('Phase 3 — GPS / city'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              context.read<SettingsCubit>().markLocationConfigured();
-            },
-          ),
-          const Divider(),
-          _LanguageSection(l10n: l10n),
-        ],
+      body: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final calc = state.settings.calculation;
+          final cubit = context.read<SettingsCubit>();
+
+          return ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Text(
+                  l10n.chooseCalculationMethod,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              ..._methods.map((entry) {
+                final (id, label) = entry;
+                final selected = calc.method == id;
+                return ListTile(
+                  title: Text(label),
+                  trailing: selected
+                      ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
+                      : null,
+                  onTap: () => cubit.setCalculationMethod(id),
+                );
+              }),
+              const Divider(),
+              SwitchListTile(
+                title: const Text('Location configured'),
+                subtitle: const Text('Phase 3 — replace with GPS / city picker'),
+                value: state.settings.isLocationConfigured,
+                onChanged: (v) => cubit.setLocationConfigured(v),
+              ),
+              const Divider(),
+              _LanguageSection(
+                localeCode: state.settings.localeCode,
+                onChanged: cubit.setLocale,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 class _LanguageSection extends StatelessWidget {
-  const _LanguageSection({required this.l10n});
+  const _LanguageSection({
+    required this.localeCode,
+    required this.onChanged,
+  });
 
-  final AppLocalizations l10n;
+  final String localeCode;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<SettingsCubit>();
-    final current = cubit.state.localeCode;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,16 +100,19 @@ class _LanguageSection extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
-        SegmentedButton<String>(
-          segments: const [
-            ButtonSegment(value: 'en', label: Text('EN')),
-            ButtonSegment(value: 'ur', label: Text('UR')),
-            ButtonSegment(value: 'ar', label: Text('AR')),
-          ],
-          selected: {current},
-          onSelectionChanged: (Set<String> selected) {
-            cubit.setLocale(selected.first);
-          },
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SegmentedButton<String>(
+            segments: const [
+              ButtonSegment(value: 'en', label: Text('EN')),
+              ButtonSegment(value: 'ur', label: Text('UR')),
+              ButtonSegment(value: 'ar', label: Text('AR')),
+            ],
+            selected: {localeCode},
+            onSelectionChanged: (Set<String> selected) {
+              onChanged(selected.first);
+            },
+          ),
         ),
         const SizedBox(height: 16),
       ],
