@@ -216,4 +216,15 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get initialSetupMessage =>
       'اپنے علاقے یا مسجد کا حساب کا طریقہ منتخب کریں۔';
+
+  @override
+  String get todayDate => 'آج';
+
+  @override
+  String get hijriSuffix => 'ھ';
+
+  @override
+  String hijriAdjustmentApplied(int days) {
+    return 'ہجری تاریخ $days دن سے ایڈجسٹ (مقامی رویت)';
+  }
 }

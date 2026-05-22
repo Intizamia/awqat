@@ -507,6 +507,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose the calculation method used by your local mosque or region.'**
   String get initialSetupMessage;
+
+  /// No description provided for @todayDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayDate;
+
+  /// No description provided for @hijriSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'AH'**
+  String get hijriSuffix;
+
+  /// No description provided for @hijriAdjustmentApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1 {Hijri date adjusted by 1 day for local moon sighting} other {Hijri date adjusted by {days} days for local moon sighting}}'**
+  String hijriAdjustmentApplied(int days);
 }
 
 class _AppLocalizationsDelegate

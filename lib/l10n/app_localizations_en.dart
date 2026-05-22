@@ -219,4 +219,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get initialSetupMessage =>
       'Choose the calculation method used by your local mosque or region.';
+
+  @override
+  String get todayDate => 'Today';
+
+  @override
+  String get hijriSuffix => 'AH';
+
+  @override
+  String hijriAdjustmentApplied(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Hijri date adjusted by $days days for local moon sighting',
+      one: 'Hijri date adjusted by 1 day for local moon sighting',
+    );
+    return '$_temp0';
+  }
 }

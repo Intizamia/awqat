@@ -20,6 +20,7 @@ dependencies:
   geolocator: ^13.0.4
   geocoding: ^4.0.0
   lat_lng_to_timezone: ^0.2.0
+  hijri: ^3.0.0
 
 dev_dependencies:
   flutter_test:

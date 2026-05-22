@@ -1,8 +1,8 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 5 complete → Phase 6 next  
-**Active branch:** `feature/phase-5-settings-ui`
+**Current phase:** Phase 6 complete → Phase 7 next  
+**Active branch:** `feature/phase-6-hijri`
 
 ## Quick status
 
@@ -13,7 +13,7 @@
 - [x] Phase 3 Location (GPS + city search)
 - [x] Phase 4 Prayer Times UI (done in Phase 2)
 - [x] Phase 5 Settings UI (full calculation & display)
-- [ ] Phase 6 Hijri display
+- [x] Phase 6 Hijri display
 - [ ] Phase 7 Qibla
 - [ ] Phase 8 Notifications
 - [ ] Phase 9 Polish
@@ -85,6 +85,14 @@
 - [x] Reset calculation / reset display actions
 - [x] Prayer list respects display settings
 
+## Phase 6 — Hijri display
+
+- [x] `hijri` package (Umm al-Qura tabular)
+- [x] `PrayerDateHeader` — Gregorian + Hijri on prayer screen
+- [x] Hijri adjustment (−2..+2) wired from settings
+- [x] Localized date symbols (en, ar, ur)
+- [x] Unit tests for Hijri formatting
+
 ## Session notes
 
-- **2026-05-22:** Phase 5 on `feature/phase-5-settings-ui`. Next: Phase 6 Hijri date on prayer screen.
+- **2026-05-22:** Phase 6 on `feature/phase-6-hijri`. Next: Phase 7 Qibla compass.

@@ -67,5 +67,15 @@
   "reset": "ری سیٹ",
   "cancel": "منسوخ",
   "initialSetupTitle": "ٹائمز میں خوش آمدید",
-  "initialSetupMessage": "اپنے علاقے یا مسجد کا حساب کا طریقہ منتخب کریں۔"
+  "initialSetupMessage": "اپنے علاقے یا مسجد کا حساب کا طریقہ منتخب کریں۔",
+  "todayDate": "آج",
+  "hijriSuffix": "ھ",
+  "hijriAdjustmentApplied": "ہجری تاریخ {days} دن سے ایڈجسٹ (مقامی رویت)",
+  "@hijriAdjustmentApplied": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  }
 }

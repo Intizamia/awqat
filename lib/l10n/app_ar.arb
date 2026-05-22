@@ -67,5 +67,15 @@
   "reset": "إعادة ضبط",
   "cancel": "إلغاء",
   "initialSetupTitle": "مرحباً بك في الأوقات",
-  "initialSetupMessage": "اختر طريقة الحساب المعتمدة في منطقتك أو مسجدك."
+  "initialSetupMessage": "اختر طريقة الحساب المعتمدة في منطقتك أو مسجدك.",
+  "todayDate": "اليوم",
+  "hijriSuffix": "هـ",
+  "hijriAdjustmentApplied": "تم تعديل التاريخ الهجري بمقدار {days} يوماً (حسب الرؤية المحلية)",
+  "@hijriAdjustmentApplied": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  }
 }

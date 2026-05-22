@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:times/core/utils/prayer_time_format.dart';
+import 'package:times/features/prayer/presentation/widgets/prayer_date_header.dart';
 import 'package:times/features/prayer/domain/prayer_name.dart';
 import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
 import 'package:times/features/prayer/presentation/prayer_times_cubit.dart';
@@ -111,9 +111,10 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                                     .onSurfaceVariant,
                               ),
                         ),
-                      Text(
-                        DateFormat.yMMMEd().format(schedule.date),
-                        style: Theme.of(context).textTheme.titleMedium,
+                      PrayerDateHeader(
+                        date: schedule.date,
+                        localeCode: appSettings.localeCode,
+                        hijriAdjustmentDays: appSettings.hijriAdjustmentDays,
                       ),
                       const SizedBox(height: 16),
                       Card(
