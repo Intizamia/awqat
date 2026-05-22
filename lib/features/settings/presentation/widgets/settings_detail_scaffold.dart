@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// Detail screen shell: [SliverAppBar.medium] + scrollable sliver body.
+/// Detail screen shell: [SliverAppBar.large] + scrollable sliver body.
+///
+/// Collapsed app bar shows [title] only; [subtitle] appears in the expanded header.
 class SettingsDetailScaffold extends StatelessWidget {
   const SettingsDetailScaffold({
     required this.title,
@@ -19,13 +21,54 @@ class SettingsDetailScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
-          SliverAppBar.medium(
-            title: _MediumAppBarTitle(title: title, subtitle: subtitle),
+          SliverAppBar.large(
             pinned: true,
+            title: Text(
+              title,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
+              expandedTitleScale: 1,
+              titlePadding: const EdgeInsetsDirectional.only(
+                start: 16,
+                bottom: 16,
+              ),
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
           ),
           if (isLoading)
             const SliverFillRemaining(
@@ -56,46 +99,6 @@ class SettingsGroupedCardSliver extends StatelessWidget {
     return SliverPadding(
       padding: padding,
       sliver: SliverToBoxAdapter(child: child),
-    );
-  }
-}
-
-class _MediumAppBarTitle extends StatelessWidget {
-  const _MediumAppBarTitle({
-    required this.title,
-    required this.subtitle,
-  });
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          title,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(height: 2),
-        Text(
-          subtitle,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: colorScheme.onSurfaceVariant,
-          ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
     );
   }
 }

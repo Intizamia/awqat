@@ -19,7 +19,7 @@ class SettingsVersionFooter extends StatelessWidget {
             : l10n.settingsVersionLabel(info.version, info.buildNumber);
 
         return Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
           child: Center(
             child: Text(
               label,
