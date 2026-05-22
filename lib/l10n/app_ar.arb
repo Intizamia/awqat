@@ -23,5 +23,14 @@
   "prayerDhuhr": "الظهر",
   "prayerAsr": "العصر",
   "prayerMaghrib": "المغرب",
-  "prayerIsha": "العشاء"
+  "prayerIsha": "العشاء",
+  "locationTitle": "الموقع",
+  "locationNotSet": "لم يتم اختيار موقع",
+  "locationUnknown": "مكان غير معروف",
+  "locationClear": "مسح الموقع",
+  "useMyLocation": "استخدم موقعي",
+  "locationAcquiring": "جاري تحديد الموقع…",
+  "searchCity": "ابحث عن مدينة",
+  "searchCityHint": "مثال: لندن، كراتشي، دبي",
+  "highLatitudeHint": "خط عرض مرتفع — فكّر في قاعدة خط العرض العالي في إعدادات الحساب."
 }

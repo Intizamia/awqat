@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:times/features/location/presentation/location_section.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/theme_mode_id.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
@@ -61,11 +62,8 @@ class SettingsScreen extends StatelessWidget {
                 );
               }),
               const Divider(),
-              SwitchListTile(
-                title: const Text('Location configured'),
-                subtitle: const Text('Phase 3 — replace with GPS / city picker'),
-                value: state.settings.isLocationConfigured,
-                onChanged: (v) => cubit.setLocationConfigured(v),
+              LocationSection(
+                currentLocation: state.settings.location,
               ),
               const Divider(),
               _LanguageSection(

@@ -35,7 +35,7 @@ class UserLocation extends Equatable {
   List<Object?> get props => [latitude, longitude, timeZoneId, label];
 }
 
-/// Placeholder until Phase 3 GPS/city picker (Karachi).
+/// Default fixture for tests.
 const kDefaultUserLocation = UserLocation(
   latitude: 24.8607,
   longitude: 67.0011,

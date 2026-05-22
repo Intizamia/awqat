@@ -17,11 +17,15 @@ dependencies:
   go_router: ^15.1.2
   adhan_dart: ^1.1.2
   shared_preferences: ^2.5.3
+  geolocator: ^13.0.4
+  geocoding: ^4.0.0
+  lat_lng_to_timezone: ^0.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  bloc_test: ^10.0.0
 
 flutter:
   uses-material-design: true

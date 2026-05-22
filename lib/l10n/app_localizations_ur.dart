@@ -80,4 +80,32 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get prayerIsha => 'عشاء';
+
+  @override
+  String get locationTitle => 'مقام';
+
+  @override
+  String get locationNotSet => 'کوئی مقام منتخب نہیں';
+
+  @override
+  String get locationUnknown => 'نامعلوم مقام';
+
+  @override
+  String get locationClear => 'مقام حذف کریں';
+
+  @override
+  String get useMyLocation => 'میرا مقام استعمال کریں';
+
+  @override
+  String get locationAcquiring => 'مقام حاصل ہو رہا ہے…';
+
+  @override
+  String get searchCity => 'شہر تلاش کریں';
+
+  @override
+  String get searchCityHint => 'مثلاً لندن، کراچی، دبئی';
+
+  @override
+  String get highLatitudeHint =>
+      'اعلی عرض بلد — حساب کی ترتیبات میں high-latitude rule غور کریں۔';
 }

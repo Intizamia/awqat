@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:times/features/settings/data/settings_repository.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/theme_mode_id.dart';
+import 'package:times/features/settings/domain/user_location.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
@@ -31,8 +32,13 @@ class SettingsCubit extends Cubit<SettingsState> {
     await load();
   }
 
-  Future<void> setLocationConfigured(bool value) async {
-    await _repository.setLocationConfigured(value);
+  Future<void> setLocation(UserLocation location) async {
+    await _repository.setLocation(location);
+    await load();
+  }
+
+  Future<void> clearLocation() async {
+    await _repository.setLocation(null);
     await load();
   }
 }

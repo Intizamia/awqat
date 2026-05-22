@@ -80,4 +80,32 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get prayerIsha => 'العشاء';
+
+  @override
+  String get locationTitle => 'الموقع';
+
+  @override
+  String get locationNotSet => 'لم يتم اختيار موقع';
+
+  @override
+  String get locationUnknown => 'مكان غير معروف';
+
+  @override
+  String get locationClear => 'مسح الموقع';
+
+  @override
+  String get useMyLocation => 'استخدم موقعي';
+
+  @override
+  String get locationAcquiring => 'جاري تحديد الموقع…';
+
+  @override
+  String get searchCity => 'ابحث عن مدينة';
+
+  @override
+  String get searchCityHint => 'مثال: لندن، كراتشي، دبي';
+
+  @override
+  String get highLatitudeHint =>
+      'خط عرض مرتفع — فكّر في قاعدة خط العرض العالي في إعدادات الحساب.';
 }

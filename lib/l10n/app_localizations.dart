@@ -243,6 +243,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Isha'**
   String get prayerIsha;
+
+  /// No description provided for @locationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get locationTitle;
+
+  /// No description provided for @locationNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'No location selected'**
+  String get locationNotSet;
+
+  /// No description provided for @locationUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown place'**
+  String get locationUnknown;
+
+  /// No description provided for @locationClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear location'**
+  String get locationClear;
+
+  /// No description provided for @useMyLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get useMyLocation;
+
+  /// No description provided for @locationAcquiring.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting location…'**
+  String get locationAcquiring;
+
+  /// No description provided for @searchCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Search city'**
+  String get searchCity;
+
+  /// No description provided for @searchCityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. London, Karachi, Dubai'**
+  String get searchCityHint;
+
+  /// No description provided for @highLatitudeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'High latitude detected — consider a high-latitude rule under calculation settings.'**
+  String get highLatitudeHint;
 }
 
 class _AppLocalizationsDelegate

@@ -23,5 +23,14 @@
   "prayerDhuhr": "Dhuhr",
   "prayerAsr": "Asr",
   "prayerMaghrib": "Maghrib",
-  "prayerIsha": "Isha"
+  "prayerIsha": "Isha",
+  "locationTitle": "Location",
+  "locationNotSet": "No location selected",
+  "locationUnknown": "Unknown place",
+  "locationClear": "Clear location",
+  "useMyLocation": "Use my location",
+  "locationAcquiring": "Getting location…",
+  "searchCity": "Search city",
+  "searchCityHint": "e.g. London, Karachi, Dubai",
+  "highLatitudeHint": "High latitude detected — consider a high-latitude rule under calculation settings."
 }

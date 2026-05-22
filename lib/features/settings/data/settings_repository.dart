@@ -45,12 +45,12 @@ class SettingsRepository {
     );
   }
 
-  Future<void> setLocationConfigured(bool value) async {
+  Future<void> setLocation(UserLocation? location) async {
     final current = load();
     await save(
       current.copyWith(
-        location: value ? kDefaultUserLocation : null,
-        clearLocation: !value,
+        location: location,
+        clearLocation: location == null,
       ),
     );
   }

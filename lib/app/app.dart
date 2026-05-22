@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:times/app/router.dart';
 import 'package:times/app/theme.dart';
+import 'package:times/features/location/data/geolocator_location_service.dart';
+import 'package:times/features/location/presentation/location_cubit.dart';
 import 'package:times/features/prayer/data/adhan_calculation_engine.dart';
 import 'package:times/features/prayer/presentation/prayer_times_cubit.dart';
 import 'package:times/features/settings/data/settings_repository.dart';
@@ -39,6 +41,12 @@ class TimesApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => SettingsCubit(settingsRepository)..load(),
+        ),
+        BlocProvider(
+          create: (context) => LocationCubit(
+            locationService: GeolocatorLocationService(),
+            settingsCubit: context.read<SettingsCubit>(),
+          ),
         ),
         BlocProvider(
           create: (_) => PrayerTimesCubit(AdhanCalculationEngine()),

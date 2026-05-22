@@ -81,4 +81,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerIsha => 'Isha';
+
+  @override
+  String get locationTitle => 'Location';
+
+  @override
+  String get locationNotSet => 'No location selected';
+
+  @override
+  String get locationUnknown => 'Unknown place';
+
+  @override
+  String get locationClear => 'Clear location';
+
+  @override
+  String get useMyLocation => 'Use my location';
+
+  @override
+  String get locationAcquiring => 'Getting location…';
+
+  @override
+  String get searchCity => 'Search city';
+
+  @override
+  String get searchCityHint => 'e.g. London, Karachi, Dubai';
+
+  @override
+  String get highLatitudeHint =>
+      'High latitude detected — consider a high-latitude rule under calculation settings.';
 }

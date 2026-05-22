@@ -23,5 +23,14 @@
   "prayerDhuhr": "ظہر",
   "prayerAsr": "عصر",
   "prayerMaghrib": "مغرب",
-  "prayerIsha": "عشاء"
+  "prayerIsha": "عشاء",
+  "locationTitle": "مقام",
+  "locationNotSet": "کوئی مقام منتخب نہیں",
+  "locationUnknown": "نامعلوم مقام",
+  "locationClear": "مقام حذف کریں",
+  "useMyLocation": "میرا مقام استعمال کریں",
+  "locationAcquiring": "مقام حاصل ہو رہا ہے…",
+  "searchCity": "شہر تلاش کریں",
+  "searchCityHint": "مثلاً لندن، کراچی، دبئی",
+  "highLatitudeHint": "اعلی عرض بلد — حساب کی ترتیبات میں high-latitude rule غور کریں۔"
 }
