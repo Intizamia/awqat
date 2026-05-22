@@ -297,6 +297,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'High latitude detected — consider a high-latitude rule under calculation settings.'**
   String get highLatitudeHint;
+
+  /// No description provided for @calculationSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation'**
+  String get calculationSectionTitle;
+
+  /// No description provided for @calculationSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Method and jurisprudence for prayer times'**
+  String get calculationSectionSubtitle;
+
+  /// No description provided for @madhabTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Madhab (Asr)'**
+  String get madhabTitle;
+
+  /// No description provided for @madhabShafi.
+  ///
+  /// In en, this message translates to:
+  /// **'Shafi'**
+  String get madhabShafi;
+
+  /// No description provided for @madhabHanafi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hanafi'**
+  String get madhabHanafi;
+
+  /// No description provided for @highLatitudeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'High latitude rule'**
+  String get highLatitudeTitle;
+
+  /// No description provided for @highLatitudeMiddle.
+  ///
+  /// In en, this message translates to:
+  /// **'Middle of the night'**
+  String get highLatitudeMiddle;
+
+  /// No description provided for @highLatitudeSeventh.
+  ///
+  /// In en, this message translates to:
+  /// **'One-seventh of night'**
+  String get highLatitudeSeventh;
+
+  /// No description provided for @highLatitudeAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Twilight angle'**
+  String get highLatitudeAngle;
+
+  /// No description provided for @advancedSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advancedSectionTitle;
+
+  /// No description provided for @advancedSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine-tune angles and offsets'**
+  String get advancedSectionSubtitle;
+
+  /// No description provided for @fajrAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fajr angle'**
+  String get fajrAngle;
+
+  /// No description provided for @ishaAngle.
+  ///
+  /// In en, this message translates to:
+  /// **'Isha angle'**
+  String get ishaAngle;
+
+  /// No description provided for @ishaIntervalMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Isha interval after Maghrib (minutes)'**
+  String get ishaIntervalMinutes;
+
+  /// No description provided for @globalOffsetMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Global offset (all prayers)'**
+  String get globalOffsetMinutes;
+
+  /// No description provided for @ramadanIshaBoost.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan Isha +30 min'**
+  String get ramadanIshaBoost;
+
+  /// No description provided for @ramadanIshaBoostSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended for Umm Al-Qura method'**
+  String get ramadanIshaBoostSubtitle;
+
+  /// No description provided for @perPrayerOffsets.
+  ///
+  /// In en, this message translates to:
+  /// **'Per-prayer offsets (minutes)'**
+  String get perPrayerOffsets;
+
+  /// No description provided for @displaySectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get displaySectionTitle;
+
+  /// No description provided for @displaySectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time format and calendar'**
+  String get displaySectionSubtitle;
+
+  /// No description provided for @timeFormatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time format'**
+  String get timeFormatTitle;
+
+  /// No description provided for @timeFormat24.
+  ///
+  /// In en, this message translates to:
+  /// **'24-hour'**
+  String get timeFormat24;
+
+  /// No description provided for @timeFormat12.
+  ///
+  /// In en, this message translates to:
+  /// **'12-hour'**
+  String get timeFormat12;
+
+  /// No description provided for @showSunrise.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Sunrise'**
+  String get showSunrise;
+
+  /// No description provided for @hijriAdjustmentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri date adjustment'**
+  String get hijriAdjustmentTitle;
+
+  /// No description provided for @hijriAdjustmentSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Days to add or subtract for local moon sighting'**
+  String get hijriAdjustmentSubtitle;
+
+  /// No description provided for @appearanceSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearanceSectionTitle;
+
+  /// No description provided for @resetCalculationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset calculation settings'**
+  String get resetCalculationTitle;
+
+  /// No description provided for @resetCalculationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset madhab, high-latitude rule, and offsets? Your method and location are kept.'**
+  String get resetCalculationMessage;
+
+  /// No description provided for @resetDisplayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset display & theme'**
+  String get resetDisplayTitle;
+
+  /// No description provided for @resetDisplayMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset language, theme, time format, and display options? Location and calculation method are kept.'**
+  String get resetDisplayMessage;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @initialSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Times'**
+  String get initialSetupTitle;
+
+  /// No description provided for @initialSetupMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the calculation method used by your local mosque or region.'**
+  String get initialSetupMessage;
 }
 
 class _AppLocalizationsDelegate

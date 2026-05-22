@@ -3,6 +3,7 @@ import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
 import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
 import 'package:times/features/settings/domain/madhab_id.dart';
+import 'package:times/features/settings/domain/prayer_offsets.dart';
 
 class CalculationSettingsMapper {
   const CalculationSettingsMapper();
@@ -51,19 +52,49 @@ class CalculationSettingsMapper {
       }
     }
 
-    if (settings.globalOffsetMinutes != 0) {
-      final offset = settings.globalOffsetMinutes;
-      params.adjustments = {
-        adhan.Prayer.fajr: offset,
-        adhan.Prayer.sunrise: offset,
-        adhan.Prayer.dhuhr: offset,
-        adhan.Prayer.asr: offset,
-        adhan.Prayer.maghrib: offset,
-        adhan.Prayer.isha: offset,
-      };
-    }
+    params.adjustments = _buildAdjustments(
+      base: params.adjustments,
+      methodAdjustments: params.methodAdjustments,
+      offsets: settings.prayerOffsets,
+      globalOffset: settings.globalOffsetMinutes,
+      ramadanIshaBoost: settings.ramadanIshaBoost &&
+          method == CalculationMethodId.ummAlQura,
+    );
 
     return params;
+  }
+
+  Map<adhan.Prayer, int> _buildAdjustments({
+    required Map<adhan.Prayer, int> base,
+    required Map<adhan.Prayer, int> methodAdjustments,
+    required PrayerOffsets offsets,
+    required int globalOffset,
+    required bool ramadanIshaBoost,
+  }) {
+    final result = <adhan.Prayer, int>{};
+    for (final prayer in adhan.Prayer.values) {
+      final methodAdj = methodAdjustments[prayer] ?? 0;
+      final baseAdj = base[prayer] ?? 0;
+      final perPrayer = _offsetForPrayer(offsets, prayer);
+      var total = baseAdj + methodAdj + perPrayer + globalOffset;
+      if (ramadanIshaBoost && prayer == adhan.Prayer.isha) {
+        total += 30;
+      }
+      result[prayer] = total;
+    }
+    return result;
+  }
+
+  int _offsetForPrayer(PrayerOffsets offsets, adhan.Prayer prayer) {
+    return switch (prayer) {
+      adhan.Prayer.fajr => offsets.fajr,
+      adhan.Prayer.sunrise => offsets.sunrise,
+      adhan.Prayer.dhuhr => offsets.dhuhr,
+      adhan.Prayer.asr => offsets.asr,
+      adhan.Prayer.maghrib => offsets.maghrib,
+      adhan.Prayer.isha => offsets.isha,
+      adhan.Prayer.ishaBefore || adhan.Prayer.fajrAfter => 0,
+    };
   }
 
   adhan.CalculationParameters _baseParameters(CalculationMethodId method) {

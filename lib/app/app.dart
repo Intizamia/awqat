@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:times/app/app_setup_listener.dart';
 import 'package:times/app/router.dart';
 import 'package:times/app/theme.dart';
 import 'package:times/features/location/data/geolocator_location_service.dart';
@@ -83,6 +84,9 @@ class TimesApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             routerConfig: _router,
+            builder: (context, child) {
+              return AppSetupListener(child: child ?? const SizedBox.shrink());
+            },
           );
         },
       ),

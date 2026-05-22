@@ -1,7 +1,14 @@
 import 'package:intl/intl.dart';
+import 'package:times/features/settings/domain/time_format_id.dart';
 
-String formatPrayerTime(DateTime time) {
-  return DateFormat.Hm().format(time);
+String formatPrayerTime(
+  DateTime time, {
+  TimeFormatId format = TimeFormatId.hour24,
+}) {
+  return switch (format) {
+    TimeFormatId.hour24 => DateFormat.Hm().format(time),
+    TimeFormatId.hour12 => DateFormat.jm().format(time),
+  };
 }
 
 String formatCountdown(Duration remaining) {

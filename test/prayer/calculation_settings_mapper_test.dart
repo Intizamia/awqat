@@ -6,6 +6,7 @@ import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
 import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
 import 'package:times/features/settings/domain/madhab_id.dart';
+import 'package:times/features/settings/domain/prayer_offsets.dart';
 import 'package:times/features/settings/domain/user_location.dart';
 
 void main() {
@@ -24,6 +25,19 @@ void main() {
     expect(params.fajrAngle, 18);
     expect(params.ishaAngle, 18);
     expect(params.madhab, adhan.Madhab.shafi);
+  });
+
+  test('applies per-prayer and global offsets', () {
+    const settings = CalculationSettings(
+      method: CalculationMethodId.karachi,
+      globalOffsetMinutes: 2,
+      prayerOffsets: PrayerOffsets(fajr: 3, isha: -1),
+    );
+
+    final params = mapper.toParameters(settings);
+
+    expect(params.adjustments[adhan.Prayer.fajr], greaterThan(2));
+    expect(params.adjustments[adhan.Prayer.isha], isNot(0));
   });
 
   test('maps Hanafi madhab and high latitude rule', () {

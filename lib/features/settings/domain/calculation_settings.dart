@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
 import 'package:times/features/settings/domain/madhab_id.dart';
+import 'package:times/features/settings/domain/prayer_offsets.dart';
 
 class CalculationSettings extends Equatable {
   const CalculationSettings({
@@ -12,6 +13,8 @@ class CalculationSettings extends Equatable {
     this.ishaAngle,
     this.ishaIntervalMinutes,
     this.globalOffsetMinutes = 0,
+    this.prayerOffsets = const PrayerOffsets(),
+    this.ramadanIshaBoost = false,
   });
 
   /// Null until user explicitly chooses (first-run requirement).
@@ -22,8 +25,14 @@ class CalculationSettings extends Equatable {
   final double? ishaAngle;
   final int? ishaIntervalMinutes;
   final int globalOffsetMinutes;
+  final PrayerOffsets prayerOffsets;
+
+  /// +30 min to Isha during Ramadan (recommended for Umm Al-Qura).
+  final bool ramadanIshaBoost;
 
   bool get isConfigured => method != null;
+
+  bool get isCustomMethod => method == CalculationMethodId.other;
 
   CalculationSettings copyWith({
     CalculationMethodId? method,
@@ -31,18 +40,27 @@ class CalculationSettings extends Equatable {
     MadhabId? madhab,
     HighLatitudeRuleId? highLatitudeRule,
     double? fajrAngle,
+    bool clearFajrAngle = false,
     double? ishaAngle,
+    bool clearIshaAngle = false,
     int? ishaIntervalMinutes,
+    bool clearIshaInterval = false,
     int? globalOffsetMinutes,
+    PrayerOffsets? prayerOffsets,
+    bool? ramadanIshaBoost,
   }) {
     return CalculationSettings(
       method: clearMethod ? null : (method ?? this.method),
       madhab: madhab ?? this.madhab,
       highLatitudeRule: highLatitudeRule ?? this.highLatitudeRule,
-      fajrAngle: fajrAngle ?? this.fajrAngle,
-      ishaAngle: ishaAngle ?? this.ishaAngle,
-      ishaIntervalMinutes: ishaIntervalMinutes ?? this.ishaIntervalMinutes,
+      fajrAngle: clearFajrAngle ? null : (fajrAngle ?? this.fajrAngle),
+      ishaAngle: clearIshaAngle ? null : (ishaAngle ?? this.ishaAngle),
+      ishaIntervalMinutes: clearIshaInterval
+          ? null
+          : (ishaIntervalMinutes ?? this.ishaIntervalMinutes),
       globalOffsetMinutes: globalOffsetMinutes ?? this.globalOffsetMinutes,
+      prayerOffsets: prayerOffsets ?? this.prayerOffsets,
+      ramadanIshaBoost: ramadanIshaBoost ?? this.ramadanIshaBoost,
     );
   }
 
@@ -54,6 +72,8 @@ class CalculationSettings extends Equatable {
         'ishaAngle': ishaAngle,
         'ishaIntervalMinutes': ishaIntervalMinutes,
         'globalOffsetMinutes': globalOffsetMinutes,
+        'prayerOffsets': prayerOffsets.toJson(),
+        'ramadanIshaBoost': ramadanIshaBoost,
       };
 
   factory CalculationSettings.fromJson(Map<String, dynamic> json) {
@@ -69,6 +89,10 @@ class CalculationSettings extends Equatable {
       ishaAngle: (json['ishaAngle'] as num?)?.toDouble(),
       ishaIntervalMinutes: json['ishaIntervalMinutes'] as int?,
       globalOffsetMinutes: json['globalOffsetMinutes'] as int? ?? 0,
+      prayerOffsets: PrayerOffsets.fromJson(
+        json['prayerOffsets'] as Map<String, dynamic>?,
+      ),
+      ramadanIshaBoost: json['ramadanIshaBoost'] as bool? ?? false,
     );
   }
 
@@ -81,5 +105,7 @@ class CalculationSettings extends Equatable {
         ishaAngle,
         ishaIntervalMinutes,
         globalOffsetMinutes,
+        prayerOffsets,
+        ramadanIshaBoost,
       ];
 }

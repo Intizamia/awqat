@@ -108,4 +108,112 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get highLatitudeHint =>
       'خط عرض مرتفع — فكّر في قاعدة خط العرض العالي في إعدادات الحساب.';
+
+  @override
+  String get calculationSectionTitle => 'الحساب';
+
+  @override
+  String get calculationSectionSubtitle => 'طريقة الحساب والفقه';
+
+  @override
+  String get madhabTitle => 'المذهب (العصر)';
+
+  @override
+  String get madhabShafi => 'شافعي';
+
+  @override
+  String get madhabHanafi => 'حنفي';
+
+  @override
+  String get highLatitudeTitle => 'قاعدة خط العرض العالي';
+
+  @override
+  String get highLatitudeMiddle => 'منتصف الليل';
+
+  @override
+  String get highLatitudeSeventh => 'سُبع الليل';
+
+  @override
+  String get highLatitudeAngle => 'زاوية الشفق';
+
+  @override
+  String get advancedSectionTitle => 'متقدم';
+
+  @override
+  String get advancedSectionSubtitle => 'ضبط الزوايا والإزاحات';
+
+  @override
+  String get fajrAngle => 'زاوية الفجر';
+
+  @override
+  String get ishaAngle => 'زاوية العشاء';
+
+  @override
+  String get ishaIntervalMinutes => 'فترة العشاء بعد المغرب (دقائق)';
+
+  @override
+  String get globalOffsetMinutes => 'إزاحة عامة (كل الصلوات)';
+
+  @override
+  String get ramadanIshaBoost => 'رمضان العشاء +30 د';
+
+  @override
+  String get ramadanIshaBoostSubtitle => 'موصى به لطريقة أم القرى';
+
+  @override
+  String get perPrayerOffsets => 'إزاحة لكل صلاة';
+
+  @override
+  String get displaySectionTitle => 'العرض';
+
+  @override
+  String get displaySectionSubtitle => 'تنسيق الوقت والتقويم';
+
+  @override
+  String get timeFormatTitle => 'تنسيق الوقت';
+
+  @override
+  String get timeFormat24 => '24 ساعة';
+
+  @override
+  String get timeFormat12 => '12 ساعة';
+
+  @override
+  String get showSunrise => 'إظهار الشروق';
+
+  @override
+  String get hijriAdjustmentTitle => 'تعديل التاريخ الهجري';
+
+  @override
+  String get hijriAdjustmentSubtitle => 'أيام للإضافة أو الطرح';
+
+  @override
+  String get appearanceSectionTitle => 'المظهر';
+
+  @override
+  String get resetCalculationTitle => 'إعادة ضبط الحساب';
+
+  @override
+  String get resetCalculationMessage =>
+      'إعادة المذهب والقواعد والإزاحات؟ تُبقى الطريقة والموقع.';
+
+  @override
+  String get resetDisplayTitle => 'إعادة ضبط العرض';
+
+  @override
+  String get resetDisplayMessage =>
+      'إعادة اللغة والمظهر والعرض؟ يُبقى الموقع وطريقة الحساب.';
+
+  @override
+  String get reset => 'إعادة ضبط';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get initialSetupTitle => 'مرحباً بك في الأوقات';
+
+  @override
+  String get initialSetupMessage =>
+      'اختر طريقة الحساب المعتمدة في منطقتك أو مسجدك.';
 }

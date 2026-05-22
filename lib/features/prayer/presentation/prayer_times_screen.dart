@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:times/core/utils/prayer_time_format.dart';
+import 'package:times/features/prayer/domain/prayer_name.dart';
 import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
 import 'package:times/features/prayer/presentation/prayer_times_cubit.dart';
 import 'package:times/features/prayer/presentation/prayer_times_state.dart';
@@ -83,10 +84,18 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                   return const SizedBox.shrink();
                 }
 
+                final appSettings = settingsState.settings;
+                final timeFormat = appSettings.timeFormat;
+                final visibleEntries = schedule.entries
+                    .where(
+                      (e) =>
+                          appSettings.showSunrise ||
+                          e.name != PrayerName.sunrise,
+                    )
+                    .toList();
                 final next = schedule.nextPrayer!;
                 final remaining = next.time.difference(DateTime.now());
-                final locationLabel =
-                    settingsState.settings.location?.label ?? '';
+                final locationLabel = appSettings.location?.label ?? '';
 
                 return RefreshIndicator(
                   onRefresh: () async => _refresh(),
@@ -139,7 +148,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '${formatPrayerTime(next.time)} · ${formatCountdown(remaining.isNegative ? Duration.zero : remaining)}',
+                                '${formatPrayerTime(next.time, format: timeFormat)} · ${formatCountdown(remaining.isNegative ? Duration.zero : remaining)}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -154,7 +163,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                         ),
                       ),
                       const SizedBox(height: 16),
-                      ...schedule.entries.map((entry) {
+                      ...visibleEntries.map((entry) {
                         final isNext = entry.name == next.name;
                         return ListTile(
                           leading: Icon(
@@ -165,7 +174,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                           ),
                           title: Text(entry.name.label(l10n)),
                           trailing: Text(
-                            formatPrayerTime(entry.time),
+                            formatPrayerTime(entry.time, format: timeFormat),
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         );

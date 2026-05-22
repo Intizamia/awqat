@@ -1,8 +1,8 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 3 complete → Phase 6/7 next  
-**Active branch:** `feature/phase-3-location`
+**Current phase:** Phase 5 complete → Phase 6 next  
+**Active branch:** `feature/phase-5-settings-ui`
 
 ## Quick status
 
@@ -12,7 +12,7 @@
 - [x] Phase 2 Calculation engine + theme mode
 - [x] Phase 3 Location (GPS + city search)
 - [x] Phase 4 Prayer Times UI (done in Phase 2)
-- [ ] Phase 5 Settings UI
+- [x] Phase 5 Settings UI (full calculation & display)
 - [ ] Phase 6 Hijri display
 - [ ] Phase 7 Qibla
 - [ ] Phase 8 Notifications
@@ -75,6 +75,16 @@
 - [x] High-latitude hint (|lat| > 48°)
 - [x] Tests (timezone resolver, location cubit)
 
+## Phase 5 — Settings UI
+
+- [x] Grouped sections: Calculation, Advanced, Location, Display, Appearance
+- [x] Madhab + high-latitude rule pickers
+- [x] Custom angles, global/per-prayer offsets, Ramadan Isha boost
+- [x] Time format 12h/24h, show Sunrise, Hijri adjustment (−2..+2)
+- [x] First-run calculation method dialog (non-dismissible)
+- [x] Reset calculation / reset display actions
+- [x] Prayer list respects display settings
+
 ## Session notes
 
-- **2026-05-22:** Phase 3 on `feature/phase-3-location` — real GPS and city search replace placeholder toggle. Next: Phase 5 full settings UI / Phase 6 Hijri / Phase 7 Qibla.
+- **2026-05-22:** Phase 5 on `feature/phase-5-settings-ui`. Next: Phase 6 Hijri date on prayer screen.

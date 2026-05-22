@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
 import 'package:times/features/settings/domain/setup_completion_status.dart';
 import 'package:times/features/settings/domain/theme_mode_id.dart';
+import 'package:times/features/settings/domain/time_format_id.dart';
 import 'package:times/features/settings/domain/user_location.dart';
 
 class AppSettings extends Equatable {
@@ -9,12 +10,18 @@ class AppSettings extends Equatable {
     this.calculation = const CalculationSettings(),
     this.localeCode = 'en',
     this.themeMode = ThemeModeId.system,
+    this.timeFormat = TimeFormatId.hour24,
+    this.hijriAdjustmentDays = 0,
+    this.showSunrise = true,
     this.location,
   });
 
   final CalculationSettings calculation;
   final String localeCode;
   final ThemeModeId themeMode;
+  final TimeFormatId timeFormat;
+  final int hijriAdjustmentDays;
+  final bool showSunrise;
   final UserLocation? location;
 
   bool get isLocationConfigured => location != null;
@@ -28,6 +35,9 @@ class AppSettings extends Equatable {
     CalculationSettings? calculation,
     String? localeCode,
     ThemeModeId? themeMode,
+    TimeFormatId? timeFormat,
+    int? hijriAdjustmentDays,
+    bool? showSunrise,
     UserLocation? location,
     bool clearLocation = false,
   }) {
@@ -35,6 +45,9 @@ class AppSettings extends Equatable {
       calculation: calculation ?? this.calculation,
       localeCode: localeCode ?? this.localeCode,
       themeMode: themeMode ?? this.themeMode,
+      timeFormat: timeFormat ?? this.timeFormat,
+      hijriAdjustmentDays: hijriAdjustmentDays ?? this.hijriAdjustmentDays,
+      showSunrise: showSunrise ?? this.showSunrise,
       location: clearLocation ? null : (location ?? this.location),
     );
   }
@@ -43,6 +56,9 @@ class AppSettings extends Equatable {
         'calculation': calculation.toJson(),
         'localeCode': localeCode,
         'themeMode': themeMode.name,
+        'timeFormat': timeFormat.name,
+        'hijriAdjustmentDays': hijriAdjustmentDays,
+        'showSunrise': showSunrise,
         'location': location?.toJson(),
         'isLocationConfigured': isLocationConfigured,
       };
@@ -54,7 +70,6 @@ class AppSettings extends Equatable {
         json['location'] as Map<String, dynamic>,
       );
     } else if (json['isLocationConfigured'] == true) {
-      // Migrate legacy flag-only saves.
       location = kDefaultUserLocation;
     }
 
@@ -66,10 +81,23 @@ class AppSettings extends Equatable {
       themeMode: ThemeModeId.values.byName(
         json['themeMode'] as String? ?? 'system',
       ),
+      timeFormat: TimeFormatId.values.byName(
+        json['timeFormat'] as String? ?? 'hour24',
+      ),
+      hijriAdjustmentDays: json['hijriAdjustmentDays'] as int? ?? 0,
+      showSunrise: json['showSunrise'] as bool? ?? true,
       location: location,
     );
   }
 
   @override
-  List<Object?> get props => [calculation, localeCode, themeMode, location];
+  List<Object?> get props => [
+        calculation,
+        localeCode,
+        themeMode,
+        timeFormat,
+        hijriAdjustmentDays,
+        showSunrise,
+        location,
+      ];
 }

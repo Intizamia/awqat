@@ -1,7 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:times/features/settings/data/settings_repository.dart';
+import 'package:times/features/settings/domain/app_settings.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
+import 'package:times/features/settings/domain/calculation_settings.dart';
+import 'package:times/features/settings/domain/default_app_settings.dart';
 import 'package:times/features/settings/domain/theme_mode_id.dart';
+import 'package:times/features/settings/domain/time_format_id.dart';
 import 'package:times/features/settings/domain/user_location.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
 
@@ -16,29 +20,64 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(SettingsState(settings: settings, isLoading: false));
   }
 
+  Future<void> _save(AppSettings settings) async {
+    await _repository.save(settings);
+    emit(state.copyWith(settings: settings));
+  }
+
   Future<void> setLocale(String code) async {
-    final updated = state.settings.copyWith(localeCode: code);
-    await _repository.save(updated);
-    emit(state.copyWith(settings: updated));
+    await _save(state.settings.copyWith(localeCode: code));
   }
 
   Future<void> setThemeMode(ThemeModeId mode) async {
-    await _repository.setThemeMode(mode);
-    await load();
+    await _save(state.settings.copyWith(themeMode: mode));
+  }
+
+  Future<void> setTimeFormat(TimeFormatId format) async {
+    await _save(state.settings.copyWith(timeFormat: format));
+  }
+
+  Future<void> setHijriAdjustmentDays(int days) async {
+    final clamped = days.clamp(-2, 2);
+    await _save(state.settings.copyWith(hijriAdjustmentDays: clamped));
+  }
+
+  Future<void> setShowSunrise(bool value) async {
+    await _save(state.settings.copyWith(showSunrise: value));
   }
 
   Future<void> setCalculationMethod(CalculationMethodId method) async {
-    await _repository.setCalculationMethod(method);
-    await load();
+    await updateCalculation(
+      state.settings.calculation.copyWith(method: method),
+    );
+  }
+
+  Future<void> updateCalculation(CalculationSettings calculation) async {
+    await _save(state.settings.copyWith(calculation: calculation));
   }
 
   Future<void> setLocation(UserLocation location) async {
-    await _repository.setLocation(location);
-    await load();
+    await _save(state.settings.copyWith(location: location));
   }
 
   Future<void> clearLocation() async {
-    await _repository.setLocation(null);
-    await load();
+    await _save(state.settings.copyWith(clearLocation: true));
+  }
+
+  Future<void> resetToDefaults() async {
+    final location = state.settings.location;
+    await _save(
+      kDefaultAppSettings.copyWith(
+        location: location,
+        calculation: state.settings.calculation.copyWith(method: state.settings.calculation.method),
+      ),
+    );
+  }
+
+  Future<void> resetCalculationToDefaults() async {
+    final method = state.settings.calculation.method;
+    await updateCalculation(
+      const CalculationSettings().copyWith(method: method),
+    );
   }
 }

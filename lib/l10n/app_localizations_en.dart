@@ -109,4 +109,114 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get highLatitudeHint =>
       'High latitude detected — consider a high-latitude rule under calculation settings.';
+
+  @override
+  String get calculationSectionTitle => 'Calculation';
+
+  @override
+  String get calculationSectionSubtitle =>
+      'Method and jurisprudence for prayer times';
+
+  @override
+  String get madhabTitle => 'Madhab (Asr)';
+
+  @override
+  String get madhabShafi => 'Shafi';
+
+  @override
+  String get madhabHanafi => 'Hanafi';
+
+  @override
+  String get highLatitudeTitle => 'High latitude rule';
+
+  @override
+  String get highLatitudeMiddle => 'Middle of the night';
+
+  @override
+  String get highLatitudeSeventh => 'One-seventh of night';
+
+  @override
+  String get highLatitudeAngle => 'Twilight angle';
+
+  @override
+  String get advancedSectionTitle => 'Advanced';
+
+  @override
+  String get advancedSectionSubtitle => 'Fine-tune angles and offsets';
+
+  @override
+  String get fajrAngle => 'Fajr angle';
+
+  @override
+  String get ishaAngle => 'Isha angle';
+
+  @override
+  String get ishaIntervalMinutes => 'Isha interval after Maghrib (minutes)';
+
+  @override
+  String get globalOffsetMinutes => 'Global offset (all prayers)';
+
+  @override
+  String get ramadanIshaBoost => 'Ramadan Isha +30 min';
+
+  @override
+  String get ramadanIshaBoostSubtitle => 'Recommended for Umm Al-Qura method';
+
+  @override
+  String get perPrayerOffsets => 'Per-prayer offsets (minutes)';
+
+  @override
+  String get displaySectionTitle => 'Display';
+
+  @override
+  String get displaySectionSubtitle => 'Time format and calendar';
+
+  @override
+  String get timeFormatTitle => 'Time format';
+
+  @override
+  String get timeFormat24 => '24-hour';
+
+  @override
+  String get timeFormat12 => '12-hour';
+
+  @override
+  String get showSunrise => 'Show Sunrise';
+
+  @override
+  String get hijriAdjustmentTitle => 'Hijri date adjustment';
+
+  @override
+  String get hijriAdjustmentSubtitle =>
+      'Days to add or subtract for local moon sighting';
+
+  @override
+  String get appearanceSectionTitle => 'Appearance';
+
+  @override
+  String get resetCalculationTitle => 'Reset calculation settings';
+
+  @override
+  String get resetCalculationMessage =>
+      'Reset madhab, high-latitude rule, and offsets? Your method and location are kept.';
+
+  @override
+  String get resetDisplayTitle => 'Reset display & theme';
+
+  @override
+  String get resetDisplayMessage =>
+      'Reset language, theme, time format, and display options? Location and calculation method are kept.';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get initialSetupTitle => 'Welcome to Times';
+
+  @override
+  String get initialSetupMessage =>
+      'Choose the calculation method used by your local mosque or region.';
 }

@@ -108,4 +108,112 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get highLatitudeHint =>
       'اعلی عرض بلد — حساب کی ترتیبات میں high-latitude rule غور کریں۔';
+
+  @override
+  String get calculationSectionTitle => 'حساب';
+
+  @override
+  String get calculationSectionSubtitle => 'طریقہ اور فقہ برائے اوقات';
+
+  @override
+  String get madhabTitle => 'مذہب (عصر)';
+
+  @override
+  String get madhabShafi => 'شافعی';
+
+  @override
+  String get madhabHanafi => 'حنفی';
+
+  @override
+  String get highLatitudeTitle => 'اعلی عرض بلد کا قاعدہ';
+
+  @override
+  String get highLatitudeMiddle => 'رات کا وسط';
+
+  @override
+  String get highLatitudeSeventh => 'ساتواں حصہ';
+
+  @override
+  String get highLatitudeAngle => 'شفق زاویہ';
+
+  @override
+  String get advancedSectionTitle => 'اعلی درجے';
+
+  @override
+  String get advancedSectionSubtitle => 'زاویے اور آفسیٹ';
+
+  @override
+  String get fajrAngle => 'فجر زاویہ';
+
+  @override
+  String get ishaAngle => 'عشاء زاویہ';
+
+  @override
+  String get ishaIntervalMinutes => 'عشاء کا وقفہ مغرب کے بعد (منٹ)';
+
+  @override
+  String get globalOffsetMinutes => 'عمومی آفسیٹ (تمام نمازیں)';
+
+  @override
+  String get ramadanIshaBoost => 'رمضان عشاء +30 منٹ';
+
+  @override
+  String get ramadanIshaBoostSubtitle => 'ام القریٰ کے لیے تجویز کردہ';
+
+  @override
+  String get perPrayerOffsets => 'ہر نماز کا آفسیٹ';
+
+  @override
+  String get displaySectionTitle => 'ڈسپلے';
+
+  @override
+  String get displaySectionSubtitle => 'وقت اور کیلنڈر';
+
+  @override
+  String get timeFormatTitle => 'وقت کی شکل';
+
+  @override
+  String get timeFormat24 => '24 گھنٹے';
+
+  @override
+  String get timeFormat12 => '12 گھنٹے';
+
+  @override
+  String get showSunrise => 'طلوع دکھائیں';
+
+  @override
+  String get hijriAdjustmentTitle => 'ہجری تاریخ کی ترتیب';
+
+  @override
+  String get hijriAdjustmentSubtitle => 'مقامی رویت کے لیے دن';
+
+  @override
+  String get appearanceSectionTitle => 'ظاہری شکل';
+
+  @override
+  String get resetCalculationTitle => 'حساب کی ترتیبات ری سیٹ';
+
+  @override
+  String get resetCalculationMessage =>
+      'مذہب، قاعدہ اور آفسیٹ ری سیٹ؟ طریقہ اور مقام محفوظ رہیں گے۔';
+
+  @override
+  String get resetDisplayTitle => 'ڈسپلے اور تھیم ری سیٹ';
+
+  @override
+  String get resetDisplayMessage =>
+      'زبان، تھیم اور ڈسپلے ری سیٹ؟ مقام اور طریقہ محفوظ رہیں گے۔';
+
+  @override
+  String get reset => 'ری سیٹ';
+
+  @override
+  String get cancel => 'منسوخ';
+
+  @override
+  String get initialSetupTitle => 'ٹائمز میں خوش آمدید';
+
+  @override
+  String get initialSetupMessage =>
+      'اپنے علاقے یا مسجد کا حساب کا طریقہ منتخب کریں۔';
 }
