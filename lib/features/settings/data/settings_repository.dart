@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:times/features/settings/domain/app_settings.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
+import 'package:times/features/settings/domain/theme_mode_id.dart';
+import 'package:times/features/settings/domain/user_location.dart';
+
 const _kSettingsKey = 'app_settings_v1';
 
 class SettingsRepository {
@@ -44,6 +47,16 @@ class SettingsRepository {
 
   Future<void> setLocationConfigured(bool value) async {
     final current = load();
-    await save(current.copyWith(isLocationConfigured: value));
+    await save(
+      current.copyWith(
+        location: value ? kDefaultUserLocation : null,
+        clearLocation: !value,
+      ),
+    );
+  }
+
+  Future<void> setThemeMode(ThemeModeId mode) async {
+    final current = load();
+    await save(current.copyWith(themeMode: mode));
   }
 }

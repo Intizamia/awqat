@@ -11,5 +11,17 @@
   "setup": "إعداد",
   "setupRequiredTitle": "أكمل الإعداد",
   "setupRequiredMessage": "اختر طريقة الحساب والموقع لعرض مواقيت الصلاة.",
-  "chooseCalculationMethod": "اختر طريقة الحساب"
+  "chooseCalculationMethod": "اختر طريقة الحساب",
+  "language": "اللغة",
+  "themeMode": "المظهر",
+  "themeSystem": "النظام",
+  "themeLight": "فاتح",
+  "themeDark": "داكن",
+  "nextPrayer": "الصلاة القادمة",
+  "prayerFajr": "الفجر",
+  "prayerSunrise": "الشروق",
+  "prayerDhuhr": "الظهر",
+  "prayerAsr": "العصر",
+  "prayerMaghrib": "المغرب",
+  "prayerIsha": "العشاء"
 }

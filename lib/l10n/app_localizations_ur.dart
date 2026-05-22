@@ -44,4 +44,40 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get chooseCalculationMethod => 'حساب کا طریقہ منتخب کریں';
+
+  @override
+  String get language => 'زبان';
+
+  @override
+  String get themeMode => 'تھیم';
+
+  @override
+  String get themeSystem => 'سسٹم';
+
+  @override
+  String get themeLight => 'لائٹ';
+
+  @override
+  String get themeDark => 'ڈارک';
+
+  @override
+  String get nextPrayer => 'اگلی نماز';
+
+  @override
+  String get prayerFajr => 'فجر';
+
+  @override
+  String get prayerSunrise => 'طلوع';
+
+  @override
+  String get prayerDhuhr => 'ظہر';
+
+  @override
+  String get prayerAsr => 'عصر';
+
+  @override
+  String get prayerMaghrib => 'مغرب';
+
+  @override
+  String get prayerIsha => 'عشاء';
 }

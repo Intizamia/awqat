@@ -11,5 +11,17 @@
   "setup": "Setup",
   "setupRequiredTitle": "Complete setup",
   "setupRequiredMessage": "Choose your calculation method and location to see prayer times.",
-  "chooseCalculationMethod": "Choose calculation method"
+  "chooseCalculationMethod": "Choose calculation method",
+  "language": "Language",
+  "themeMode": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "nextPrayer": "Next prayer",
+  "prayerFajr": "Fajr",
+  "prayerSunrise": "Sunrise",
+  "prayerDhuhr": "Dhuhr",
+  "prayerAsr": "Asr",
+  "prayerMaghrib": "Maghrib",
+  "prayerIsha": "Isha"
 }

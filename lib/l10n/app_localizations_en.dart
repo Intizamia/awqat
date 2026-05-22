@@ -45,4 +45,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseCalculationMethod => 'Choose calculation method';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get themeMode => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get nextPrayer => 'Next prayer';
+
+  @override
+  String get prayerFajr => 'Fajr';
+
+  @override
+  String get prayerSunrise => 'Sunrise';
+
+  @override
+  String get prayerDhuhr => 'Dhuhr';
+
+  @override
+  String get prayerAsr => 'Asr';
+
+  @override
+  String get prayerMaghrib => 'Maghrib';
+
+  @override
+  String get prayerIsha => 'Isha';
 }

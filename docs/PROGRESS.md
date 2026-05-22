@@ -1,15 +1,15 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 1 complete → Phase 2 next  
-**Active branch:** `feature/phase-1-settings`
+**Current phase:** Phase 2 complete → Phase 3 next  
+**Active branch:** `feature/phase-2-calculation`
 
 ## Quick status
 
 - [x] Phase −1 Agent docs & rules
 - [x] Phase 0 Foundation
 - [x] Phase 1 Settings domain & persistence
-- [ ] Phase 2 Calculation engine (adhan_dart mapper)
+- [x] Phase 2 Calculation engine + theme mode
 - [ ] Phase 3 Location
 - [ ] Phase 4 Prayer Times UI
 - [ ] Phase 5 Settings UI
@@ -55,8 +55,16 @@
 - [x] `SettingsRepository` (shared_preferences)
 - [x] `SettingsCubit` wired to persistence
 - [x] Method picker in Settings UI
-- [ ] adhan_dart mapper (Phase 2)
+
+## Phase 2 — Calculation engine
+
+- [x] `CalculationSettingsMapper` → adhan_dart
+- [x] `AdhanCalculationEngine` + `PrayerSchedule`
+- [x] `PrayerTimesCubit` + prayer list UI (next prayer card)
+- [x] `UserLocation` model (placeholder Karachi until Phase 3)
+- [x] Theme mode: System / Light / Dark (persisted, end of Settings)
+- [x] Unit tests (mapper + engine + app settings theme)
 
 ## Session notes
 
-- **2026-05-22:** Phase 1 on `feature/phase-1-settings` — settings persist; method must be chosen explicitly. Next: Phase 2 `AdhanCalculationEngine` + mapper tests.
+- **2026-05-22:** Phase 2 on `feature/phase-2-calculation` — live prayer times when method + location set; theme toggle at bottom of Settings. Next: Phase 3 GPS/city picker.

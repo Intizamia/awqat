@@ -44,4 +44,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chooseCalculationMethod => 'اختر طريقة الحساب';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get themeMode => 'المظهر';
+
+  @override
+  String get themeSystem => 'النظام';
+
+  @override
+  String get themeLight => 'فاتح';
+
+  @override
+  String get themeDark => 'داكن';
+
+  @override
+  String get nextPrayer => 'الصلاة القادمة';
+
+  @override
+  String get prayerFajr => 'الفجر';
+
+  @override
+  String get prayerSunrise => 'الشروق';
+
+  @override
+  String get prayerDhuhr => 'الظهر';
+
+  @override
+  String get prayerAsr => 'العصر';
+
+  @override
+  String get prayerMaghrib => 'المغرب';
+
+  @override
+  String get prayerIsha => 'العشاء';
 }

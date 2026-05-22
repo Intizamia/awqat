@@ -24,7 +24,8 @@ Expose `SetupCompletionStatus`: `isCalculationConfigured`, `isLocationConfigured
 
 ## Display & app
 
-- Time format 12h/24h, language, theme, Hijri adjustment (−2..+2)
+- **Theme mode:** system / light / dark (`ThemeModeId`, end of Settings)
+- Time format 12h/24h, language, Hijri adjustment (−2..+2)
 - Notifications: master + per-prayer; MVP sound = system default only
 
 ## Persistence
