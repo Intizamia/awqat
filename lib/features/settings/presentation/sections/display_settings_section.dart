@@ -6,6 +6,7 @@ import 'package:times/features/settings/domain/time_format_id.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/utils/settings_value_labels.dart';
 import 'package:times/features/settings/presentation/widgets/settings_check_row.dart';
+import 'package:times/features/settings/presentation/widgets/settings_switch_row.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class DisplaySettingsBody extends StatelessWidget {
@@ -33,9 +34,8 @@ class DisplaySettingsBody extends StatelessWidget {
           ),
         ],
         const ScheduleGrooveDivider(),
-        SwitchListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(l10n.showSunrise),
+        SettingsSwitchRow(
+          title: l10n.showSunrise,
           value: settings.showSunrise,
           onChanged: cubit.setShowSunrise,
         ),
@@ -48,7 +48,7 @@ class DisplaySettingsBody extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
           child: Text(
             l10n.hijriAdjustmentSubtitle,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(

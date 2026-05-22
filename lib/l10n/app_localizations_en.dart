@@ -34,6 +34,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTitle => 'Settings';
 
   @override
+  String settingsVersionLabel(String version, String build) {
+    return 'Times $version ($build)';
+  }
+
+  @override
   String get setup => 'Setup';
 
   @override

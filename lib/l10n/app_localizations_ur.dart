@@ -33,6 +33,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsTitle => 'ترتیبات';
 
   @override
+  String settingsVersionLabel(String version, String build) {
+    return 'Times $version ($build)';
+  }
+
+  @override
   String get setup => 'سیٹ اپ';
 
   @override

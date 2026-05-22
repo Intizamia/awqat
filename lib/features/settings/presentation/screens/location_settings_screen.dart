@@ -16,27 +16,19 @@ class LocationSettingsScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.locationTitle,
-            subtitle: l10n.locationSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         return SettingsDetailScaffold(
           title: l10n.locationTitle,
           subtitle: l10n.locationSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   LocationSectionBody(currentLocation: state.settings.location),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

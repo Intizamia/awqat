@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:times/features/settings/presentation/widgets/settings_row_metrics.dart';
 
 /// Selectable row with trailing check for single-choice lists.
 class SettingsCheckRow extends StatelessWidget {
@@ -18,33 +19,40 @@ class SettingsCheckRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
 
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: Theme.of(context).textTheme.titleMedium),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle!,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                    ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: SettingsRowMetrics.minHeight,
+        ),
+        child: Padding(
+          padding: SettingsRowMetrics.contentPadding,
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(title, style: theme.textTheme.titleMedium),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
-            ),
-            if (selected)
-              Icon(Icons.check_circle, color: colorScheme.primary),
-          ],
+              if (selected)
+                Icon(Icons.check_circle, color: colorScheme.primary),
+            ],
+          ),
         ),
       ),
     );

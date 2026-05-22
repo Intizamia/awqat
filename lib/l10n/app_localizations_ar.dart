@@ -33,6 +33,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsTitle => 'الإعدادات';
 
   @override
+  String settingsVersionLabel(String version, String build) {
+    return 'Times $version ($build)';
+  }
+
+  @override
   String get setup => 'إعداد';
 
   @override

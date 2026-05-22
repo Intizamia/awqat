@@ -8,6 +8,7 @@
   "comingSoonMessage": "هذه الميزة قادمة في تحديث لاحق.",
   "prayerTimesTitle": "مواقيت الصلاة",
   "settingsTitle": "الإعدادات",
+  "settingsVersionLabel": "Times {version} ({build})",
   "setup": "إعداد",
   "setupRequiredTitle": "أكمل الإعداد",
   "setupRequiredMessage": "اختر طريقة الحساب والموقع لعرض مواقيت الصلاة.",

@@ -18,23 +18,15 @@ class ThemeScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.themeMode,
-            subtitle: l10n.themeSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         final cubit = context.read<SettingsCubit>();
 
         return SettingsDetailScaffold(
           title: l10n.themeMode,
           subtitle: l10n.themeSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   for (final mode in ThemeModeId.values)
                     SettingsCheckRow(
@@ -47,8 +39,8 @@ class ThemeScreen extends StatelessWidget {
                     ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

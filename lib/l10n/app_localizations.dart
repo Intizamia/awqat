@@ -148,6 +148,12 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settingsTitle;
 
+  /// No description provided for @settingsVersionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Times {version} ({build})'**
+  String settingsVersionLabel(String version, String build);
+
   /// No description provided for @setup.
   ///
   /// In en, this message translates to:

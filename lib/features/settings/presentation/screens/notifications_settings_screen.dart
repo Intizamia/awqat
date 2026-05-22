@@ -22,21 +22,13 @@ class NotificationsSettingsScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.notificationsSectionTitle,
-            subtitle: l10n.notificationsSectionSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         return SettingsDetailScaffold(
           title: l10n.notificationsSectionTitle,
           subtitle: l10n.notificationsSectionSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   NotificationSettingsBody(
                     settings: state.settings,
@@ -44,8 +36,8 @@ class NotificationsSettingsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

@@ -16,27 +16,19 @@ class DisplaySettingsScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.displaySectionTitle,
-            subtitle: l10n.displaySectionSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         return SettingsDetailScaffold(
           title: l10n.displaySectionTitle,
           subtitle: l10n.displaySectionSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   DisplaySettingsBody(settings: state.settings),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

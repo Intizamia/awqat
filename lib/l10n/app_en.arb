@@ -8,6 +8,13 @@
   "comingSoonMessage": "This feature is on the way. Check back in a future update.",
   "prayerTimesTitle": "Prayer Times",
   "settingsTitle": "Settings",
+  "settingsVersionLabel": "Times {version} ({build})",
+  "@settingsVersionLabel": {
+    "placeholders": {
+      "version": { "type": "String" },
+      "build": { "type": "String" }
+    }
+  },
   "setup": "Setup",
   "setupRequiredTitle": "Complete setup",
   "setupRequiredMessage": "Choose your calculation method and location to see prayer times.",

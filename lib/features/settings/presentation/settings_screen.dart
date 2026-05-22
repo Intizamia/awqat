@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:times/core/navigation/primary_scroll_registry.dart';
 import 'package:times/core/widgets/settings_grouped_card.dart';
 import 'package:times/features/notifications/data/prayer_notification_service.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
@@ -9,15 +10,45 @@ import 'package:times/features/settings/presentation/utils/calculation_method_la
 import 'package:times/features/settings/presentation/utils/settings_value_labels.dart';
 import 'package:times/features/settings/presentation/widgets/settings_group_label.dart';
 import 'package:times/features/settings/presentation/widgets/settings_nav_row.dart';
+import 'package:times/features/settings/presentation/widgets/settings_version_footer.dart';
 import 'package:times/l10n/app_localizations.dart';
 
-class SettingsScreen extends StatelessWidget {
+/// Bottom-nav branch index for the settings tab.
+const kSettingsBranchIndex = 2;
+
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
     required this.notificationService,
     super.key,
   });
 
   final PrayerNotificationService notificationService;
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    PrimaryScrollRegistry.instance.register(
+      kSettingsBranchIndex,
+      _scrollController,
+    );
+  }
+
+  @override
+  void dispose() {
+    PrimaryScrollRegistry.instance.unregister(
+      kSettingsBranchIndex,
+      _scrollController,
+    );
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +66,7 @@ class SettingsScreen extends StatelessWidget {
           final calc = settings.calculation;
 
           return ListView(
+            controller: _scrollController,
             children: [
               SettingsGroupLabel(label: l10n.settingsGroupCalculation),
               SettingsGroupedCard(
@@ -126,7 +158,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SettingsVersionFooter(),
             ],
           );
         },

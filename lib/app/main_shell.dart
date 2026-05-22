@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:times/core/navigation/primary_scroll_registry.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class MainShell extends StatelessWidget {
@@ -11,10 +12,12 @@ class MainShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   void _onTap(int index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
-    );
+    if (index == navigationShell.currentIndex) {
+      PrimaryScrollRegistry.instance.scrollToTop(index);
+      navigationShell.goBranch(index, initialLocation: true);
+      return;
+    }
+    navigationShell.goBranch(index);
   }
 
   @override

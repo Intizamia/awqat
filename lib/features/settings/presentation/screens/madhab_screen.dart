@@ -18,24 +18,16 @@ class MadhabScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.madhabTitle,
-            subtitle: l10n.madhabSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         final calculation = state.settings.calculation;
         final cubit = context.read<SettingsCubit>();
 
         return SettingsDetailScaffold(
           title: l10n.madhabTitle,
           subtitle: l10n.madhabSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   for (final madhab in MadhabId.values)
                     SettingsCheckRow(
@@ -50,8 +42,8 @@ class MadhabScreen extends StatelessWidget {
                     ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

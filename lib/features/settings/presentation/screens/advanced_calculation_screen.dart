@@ -16,29 +16,21 @@ class AdvancedCalculationScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.advancedSectionTitle,
-            subtitle: l10n.advancedSectionSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         return SettingsDetailScaffold(
           title: l10n.advancedSectionTitle,
           subtitle: l10n.advancedSectionSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   AdvancedCalculationBody(
                     calculation: state.settings.calculation,
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

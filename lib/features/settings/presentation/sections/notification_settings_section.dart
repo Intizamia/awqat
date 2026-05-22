@@ -6,6 +6,7 @@ import 'package:times/features/prayer/domain/prayer_name.dart';
 import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
 import 'package:times/features/settings/domain/app_settings.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
+import 'package:times/features/settings/presentation/widgets/settings_switch_row.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class NotificationSettingsBody extends StatelessWidget {
@@ -24,10 +25,9 @@ class NotificationSettingsBody extends StatelessWidget {
     final cubit = context.read<SettingsCubit>();
 
     final children = <Widget>[
-      SwitchListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-        title: Text(l10n.notificationsMaster),
-        subtitle: Text(l10n.notificationsMasterSubtitle),
+      SettingsSwitchRow(
+        title: l10n.notificationsMaster,
+        subtitle: l10n.notificationsMasterSubtitle,
         value: settings.notifications.enabled,
         onChanged: (value) async {
           if (value) {
@@ -50,9 +50,8 @@ class NotificationSettingsBody extends StatelessWidget {
       for (final prayer in PrayerName.values) {
         children.addAll([
           const ScheduleGrooveDivider(),
-          SwitchListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-            title: Text(prayer.label(l10n)),
+          SettingsSwitchRow(
+            title: prayer.label(l10n),
             value: settings.notifications.isPrayerEnabled(prayer),
             onChanged: (value) =>
                 cubit.setPrayerNotificationEnabled(prayer, value),

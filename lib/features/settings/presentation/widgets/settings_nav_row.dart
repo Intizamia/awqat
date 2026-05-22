@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:times/core/theme/app_surface_tokens.dart';
+import 'package:times/features/settings/presentation/widgets/settings_row_metrics.dart';
 
 /// Hub row: title, current value, chevron — opens a detail screen.
 class SettingsNavRow extends StatelessWidget {
@@ -23,46 +24,52 @@ class SettingsNavRow extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            if (icon != null) ...[
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppSurfaceTokens.scheduleGridIconWellColor(theme),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(icon, color: colorScheme.primary, size: 22),
-              ),
-              const SizedBox(width: 14),
-            ],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 2),
-                  Text(
-                    value,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: SettingsRowMetrics.minHeight,
+        ),
+        child: Padding(
+          padding: SettingsRowMetrics.contentPadding,
+          child: Row(
+            children: [
+              if (icon != null) ...[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppSurfaceTokens.scheduleGridIconWellColor(theme),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ],
+                  child: Icon(icon, color: colorScheme.primary, size: 22),
+                ),
+                const SizedBox(width: 14),
+              ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(title, style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 2),
+                    Text(
+                      value,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? Icons.chevron_left
-                  : Icons.chevron_right,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ],
+              Icon(
+                Directionality.of(context) == TextDirection.rtl
+                    ? Icons.chevron_left
+                    : Icons.chevron_right,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:times/core/widgets/settings_grouped_card.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/widgets/settings_detail_scaffold.dart';
+import 'package:times/features/settings/presentation/widgets/settings_row_metrics.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class ResetSettingsScreen extends StatelessWidget {
@@ -16,10 +17,9 @@ class ResetSettingsScreen extends StatelessWidget {
     return SettingsDetailScaffold(
       title: l10n.resetSectionTitle,
       subtitle: l10n.resetSectionSubtitle,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        children: [
-          SettingsGroupedCard(
+      slivers: [
+        SettingsGroupedCardSliver(
+          child: SettingsGroupedCard(
             children: [
               _ResetRow(
                 title: l10n.resetCalculationTitle,
@@ -53,8 +53,8 @@ class ResetSettingsScreen extends StatelessWidget {
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -97,22 +97,30 @@ class _ResetRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-            ),
-          ],
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minHeight: SettingsRowMetrics.minHeight,
+        ),
+        child: Padding(
+          padding: SettingsRowMetrics.contentPadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(title, style: theme.textTheme.titleMedium),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

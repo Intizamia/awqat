@@ -18,24 +18,16 @@ class HighLatitudeScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return SettingsDetailScaffold(
-            title: l10n.highLatitudeTitle,
-            subtitle: l10n.highLatitudeSubtitle,
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         final calculation = state.settings.calculation;
         final cubit = context.read<SettingsCubit>();
 
         return SettingsDetailScaffold(
           title: l10n.highLatitudeTitle,
           subtitle: l10n.highLatitudeSubtitle,
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: [
-              SettingsGroupedCard(
+          isLoading: state.isLoading,
+          slivers: [
+            SettingsGroupedCardSliver(
+              child: SettingsGroupedCard(
                 children: [
                   for (final rule in HighLatitudeRuleId.values)
                     SettingsCheckRow(
@@ -50,8 +42,8 @@ class HighLatitudeScreen extends StatelessWidget {
                     ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

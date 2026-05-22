@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:times/core/navigation/primary_scroll_registry.dart';
 import 'package:times/core/utils/prayer_time_format.dart';
 import 'package:times/features/prayer/presentation/widgets/prayer_date_header.dart';
 import 'package:times/features/prayer/domain/prayer_name.dart';
@@ -20,16 +21,23 @@ class PrayerTimesScreen extends StatefulWidget {
 
 class _PrayerTimesScreenState extends State<PrayerTimesScreen>
     with WidgetsBindingObserver {
+  static const _branchIndex = 0;
+
+  final _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    PrimaryScrollRegistry.instance.register(_branchIndex, _scrollController);
     WidgetsBinding.instance.addPostFrameCallback((_) => _refresh());
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    PrimaryScrollRegistry.instance.unregister(_branchIndex, _scrollController);
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -123,6 +131,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
                 return RefreshIndicator(
                   onRefresh: () async => _refresh(),
                   child: ListView(
+                    controller: _scrollController,
                     padding: const EdgeInsets.all(16),
                     children: [
                       if (locationLabel.isNotEmpty)
