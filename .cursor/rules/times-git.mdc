@@ -1,0 +1,36 @@
+---
+description: Git workflow for Times — branches, commits, and progress tracking
+alwaysApply: true
+---
+
+# Version control
+
+## Branches
+
+- `main` — stable, merge-ready code only
+- **One branch per phase or feature:** `feature/phase-0-foundation`, `feature/phase-1-settings`, etc.
+- Do not mix unrelated phases on one branch
+
+## Commits
+
+- **Conventional Commits:** `feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`
+- Commit at end of each **logical unit** within a phase (not one giant commit per phase unless tiny)
+- Message should state *why* when non-obvious
+- Never commit: `.env`, API keys, `local.properties` secrets, build artifacts
+
+## Progress file
+
+- Update `docs/PROGRESS.md` when starting or finishing a phase item
+- Add brief **Session notes** when stopping mid-phase (branch name, what's next)
+
+## Before merging to main
+
+- `flutter analyze` passes
+- Relevant `flutter test` passes for the phase
+- `docs/PROGRESS.md` checkboxes accurate
+
+## Do not
+
+- Force-push `main`
+- Skip hooks unless user explicitly requests
+- Amend pushed commits without user request

@@ -1,0 +1,33 @@
+---
+description: Times prayer app — product context, stack, and locked decisions
+alwaysApply: true
+---
+
+# Times — Prayer Times App
+
+Offline-first Islamic prayer times for **Android and iOS only**. Package: `com.intizamia.times`.
+
+## Stack
+
+- **Flutter** + **Material 3** (green seed: `Color(0xFF2E7D32)`)
+- **flutter_bloc** for state (not Riverpod)
+- **go_router** with bottom `NavigationBar`
+- **adhan_dart** for local prayer calculation
+- **i18n:** English (default), Urdu, Arabic (RTL for ur/ar)
+
+## Navigation
+
+1. Prayer Times — main timetable; **Setup** CTA if method/location not configured
+2. Coming Soon — placeholder middle tab
+3. Settings — full calculation and app preferences
+
+## Locked decisions
+
+- First run: user **must** choose calculation method (no silent default)
+- Notifications MVP: **system default** sound only
+- Middle tab: localized "Coming Soon"
+- Read `docs/PROGRESS.md` at session start; update when completing work
+
+## Roadmap
+
+Full plan: `.cursor/plans/` or project docs. Follow phases in `docs/PROGRESS.md`.

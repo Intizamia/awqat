@@ -1,0 +1,37 @@
+---
+description: Flutter/Dart structure and Bloc conventions for Times
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Flutter conventions
+
+## Layout
+
+```
+lib/
+  app/           # MaterialApp, router, theme
+  l10n/          # ARB + generated localizations
+  core/          # shared utils, constants
+  features/<name>/
+    data/
+    domain/
+    presentation/  # bloc, screen, widgets
+  shared/widgets/
+```
+
+## Bloc
+
+- One `Bloc` or `Cubit` per feature flow; `equatable` for states/events
+- Provide blocs at shell via `MultiBlocProvider`
+- UI: `BlocBuilder` / `BlocListener`; no business logic in widgets
+
+## UI
+
+- Material 3 only (`useMaterial3: true`)
+- Colors from `Theme.of(context).colorScheme`
+- Use generated `AppLocalizations` — no hardcoded user-facing strings
+
+## Platforms
+
+- Android + iOS only — do not add web/desktop targets

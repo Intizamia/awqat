@@ -1,0 +1,33 @@
+---
+description: Prayer calculation settings catalog and mapper rules
+globs: lib/features/settings/**
+alwaysApply: false
+---
+
+# Settings domain
+
+## Required for first timetable
+
+1. User-chosen **calculation method** (explicit, first run)
+2. **Location** (GPS or saved city) + timezone
+
+Expose `SetupCompletionStatus`: `isCalculationConfigured`, `isLocationConfigured`.
+
+## Calculation (maps to adhan_dart)
+
+- Method presets: MWL, ISNA, Karachi, Egyptian, Umm Al-Qura, Dubai, Qatar, Kuwait, Singapore, Turkey, Tehran, Jafari, Moonsighting, North America, Custom
+- Madhab: Shafi (default) / Hanafi (Asr only)
+- High-latitude rule: middle of night / one-seventh / twilight angle
+- Custom: fajr/isha/maghrib angles, isha interval minutes
+- Per-prayer minute adjustments + global offset
+- Conditional UI: Shafaq when method = Moonsighting; custom angles when method = Custom
+
+## Display & app
+
+- Time format 12h/24h, language, theme, Hijri adjustment (−2..+2)
+- Notifications: master + per-prayer; MVP sound = system default only
+
+## Persistence
+
+- Canonical enums in domain; single mapper to `CalculationParameters`
+- Reserve API adapter fields for v2 (Aladhan/IslamicFinder) without breaking local-first MVP
