@@ -77,5 +77,19 @@
         "type": "int"
       }
     }
-  }
+  },
+  "qiblaTitle": "القبلة",
+  "qiblaDirectionToKaaba": "اتجاه الكعبة من موقعك المحفوظ",
+  "qiblaBearingDegrees": "{degrees}° من الشمال",
+  "@qiblaBearingDegrees": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "qiblaCalibratedHint": "أمسك الهاتف بشكل مستوٍ ودوّره حتى يشير السهم للأعلى",
+  "qiblaAligned": "أنت باتجاه القبلة",
+  "qiblaSensorUnavailable": "بوصلة الجهاز غير متوفرة. يُعرض الاتجاه لموقعك.",
+  "qiblaLocationRequired": "حدد موقعك في الإعدادات لعرض اتجاه القبلة."
 }

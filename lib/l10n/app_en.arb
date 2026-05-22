@@ -77,5 +77,19 @@
         "type": "int"
       }
     }
-  }
+  },
+  "qiblaTitle": "Qibla",
+  "qiblaDirectionToKaaba": "Direction to the Kaaba from your saved location",
+  "qiblaBearingDegrees": "{degrees}° from north",
+  "@qiblaBearingDegrees": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "qiblaCalibratedHint": "Hold your phone flat and rotate until the arrow points up",
+  "qiblaAligned": "You are facing the Qibla",
+  "qiblaSensorUnavailable": "Compass sensor unavailable on this device. Bearing shown for your location.",
+  "qiblaLocationRequired": "Set your location in Settings to see the Qibla direction."
 }

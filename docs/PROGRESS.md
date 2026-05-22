@@ -1,8 +1,8 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 6 complete → Phase 7 next  
-**Active branch:** `feature/phase-6-hijri`
+**Current phase:** Phase 7 complete → Phase 8 next  
+**Active branch:** `feature/phase-7-qibla`
 
 ## Quick status
 
@@ -14,7 +14,7 @@
 - [x] Phase 4 Prayer Times UI (done in Phase 2)
 - [x] Phase 5 Settings UI (full calculation & display)
 - [x] Phase 6 Hijri display
-- [ ] Phase 7 Qibla
+- [x] Phase 7 Qibla
 - [ ] Phase 8 Notifications
 - [ ] Phase 9 Polish
 
@@ -93,6 +93,15 @@
 - [x] Localized date symbols (en, ar, ur)
 - [x] Unit tests for Hijri formatting
 
+## Phase 7 — Qibla
+
+- [x] `flutter_qiblah` + `adhan_dart` Qibla bearing from saved location
+- [x] `QiblaScreen` with live compass dial (`flutter_compass_v2`)
+- [x] Static bearing fallback when sensor unavailable
+- [x] Route `/qibla` + compass action on Prayer Times app bar
+- [x] l10n (en, ur, ar)
+- [x] Unit tests for bearing + pointer math
+
 ## Session notes
 
-- **2026-05-22:** Phase 6 on `feature/phase-6-hijri`. Next: Phase 7 Qibla compass.
+- **2026-05-22:** Phase 7 on `feature/phase-7-qibla`. Next: Phase 8 notifications.

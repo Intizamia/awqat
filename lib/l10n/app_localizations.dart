@@ -525,6 +525,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{days, plural, =1 {Hijri date adjusted by 1 day for local moon sighting} other {Hijri date adjusted by {days} days for local moon sighting}}'**
   String hijriAdjustmentApplied(int days);
+
+  /// No description provided for @qiblaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Qibla'**
+  String get qiblaTitle;
+
+  /// No description provided for @qiblaDirectionToKaaba.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction to the Kaaba from your saved location'**
+  String get qiblaDirectionToKaaba;
+
+  /// No description provided for @qiblaBearingDegrees.
+  ///
+  /// In en, this message translates to:
+  /// **'{degrees}° from north'**
+  String qiblaBearingDegrees(String degrees);
+
+  /// No description provided for @qiblaCalibratedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold your phone flat and rotate until the arrow points up'**
+  String get qiblaCalibratedHint;
+
+  /// No description provided for @qiblaAligned.
+  ///
+  /// In en, this message translates to:
+  /// **'You are facing the Qibla'**
+  String get qiblaAligned;
+
+  /// No description provided for @qiblaSensorUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass sensor unavailable on this device. Bearing shown for your location.'**
+  String get qiblaSensorUnavailable;
+
+  /// No description provided for @qiblaLocationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your location in Settings to see the Qibla direction.'**
+  String get qiblaLocationRequired;
 }
 
 class _AppLocalizationsDelegate

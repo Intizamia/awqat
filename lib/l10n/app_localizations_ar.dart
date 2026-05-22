@@ -227,4 +227,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String hijriAdjustmentApplied(int days) {
     return 'تم تعديل التاريخ الهجري بمقدار $days يوماً (حسب الرؤية المحلية)';
   }
+
+  @override
+  String get qiblaTitle => 'القبلة';
+
+  @override
+  String get qiblaDirectionToKaaba => 'اتجاه الكعبة من موقعك المحفوظ';
+
+  @override
+  String qiblaBearingDegrees(String degrees) {
+    return '$degrees° من الشمال';
+  }
+
+  @override
+  String get qiblaCalibratedHint =>
+      'أمسك الهاتف بشكل مستوٍ ودوّره حتى يشير السهم للأعلى';
+
+  @override
+  String get qiblaAligned => 'أنت باتجاه القبلة';
+
+  @override
+  String get qiblaSensorUnavailable =>
+      'بوصلة الجهاز غير متوفرة. يُعرض الاتجاه لموقعك.';
+
+  @override
+  String get qiblaLocationRequired =>
+      'حدد موقعك في الإعدادات لعرض اتجاه القبلة.';
 }

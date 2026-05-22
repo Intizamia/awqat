@@ -227,4 +227,30 @@ class AppLocalizationsUr extends AppLocalizations {
   String hijriAdjustmentApplied(int days) {
     return 'ہجری تاریخ $days دن سے ایڈجسٹ (مقامی رویت)';
   }
+
+  @override
+  String get qiblaTitle => 'قبلہ';
+
+  @override
+  String get qiblaDirectionToKaaba => 'آپ کے محفوظ مقام سے کعبہ کی سمت';
+
+  @override
+  String qiblaBearingDegrees(String degrees) {
+    return 'شمال سے $degrees°';
+  }
+
+  @override
+  String get qiblaCalibratedHint =>
+      'فون کو سیدھا رکھیں اور تیر اوپر آنے تک گھمائیں';
+
+  @override
+  String get qiblaAligned => 'آپ قبلہ کی سمت میں ہیں';
+
+  @override
+  String get qiblaSensorUnavailable =>
+      'اس ڈیوائس پر کمپاس دستیاب نہیں۔ مقام کے لیے سمت دکھائی گئی ہے۔';
+
+  @override
+  String get qiblaLocationRequired =>
+      'قبلہ کی سمت کے لیے ترتیبات میں مقام سیٹ کریں۔';
 }

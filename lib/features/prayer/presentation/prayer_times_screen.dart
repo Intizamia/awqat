@@ -58,7 +58,26 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
         context.read<PrayerTimesCubit>().refresh(state.settings);
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(l10n.prayerTimesTitle)),
+        appBar: AppBar(
+          title: Text(l10n.prayerTimesTitle),
+          actions: [
+            BlocBuilder<SettingsCubit, SettingsState>(
+              buildWhen: (prev, curr) =>
+                  prev.settings.setup.isComplete !=
+                  curr.settings.setup.isComplete,
+              builder: (context, settingsState) {
+                if (!settingsState.settings.setup.isComplete) {
+                  return const SizedBox.shrink();
+                }
+                return IconButton(
+                  icon: const Icon(Icons.explore_outlined),
+                  tooltip: l10n.qiblaTitle,
+                  onPressed: () => context.push('/qibla'),
+                );
+              },
+            ),
+          ],
+        ),
         body: BlocBuilder<SettingsCubit, SettingsState>(
           builder: (context, settingsState) {
             if (settingsState.isLoading) {

@@ -236,4 +236,31 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get qiblaTitle => 'Qibla';
+
+  @override
+  String get qiblaDirectionToKaaba =>
+      'Direction to the Kaaba from your saved location';
+
+  @override
+  String qiblaBearingDegrees(String degrees) {
+    return '$degrees° from north';
+  }
+
+  @override
+  String get qiblaCalibratedHint =>
+      'Hold your phone flat and rotate until the arrow points up';
+
+  @override
+  String get qiblaAligned => 'You are facing the Qibla';
+
+  @override
+  String get qiblaSensorUnavailable =>
+      'Compass sensor unavailable on this device. Bearing shown for your location.';
+
+  @override
+  String get qiblaLocationRequired =>
+      'Set your location in Settings to see the Qibla direction.';
 }
