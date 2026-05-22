@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:times/features/location/presentation/location_section.dart';
+import 'package:times/features/notifications/data/prayer_notification_service.dart';
+import 'package:times/features/settings/presentation/sections/notification_settings_section.dart';
 import 'package:times/features/settings/presentation/sections/advanced_calculation_section.dart';
 import 'package:times/features/settings/presentation/sections/calculation_settings_section.dart';
 import 'package:times/features/settings/presentation/sections/display_settings_section.dart';
@@ -11,7 +13,12 @@ import 'package:times/features/settings/presentation/widgets/settings_language_t
 import 'package:times/l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({
+    required this.notificationService,
+    super.key,
+  });
+
+  final PrayerNotificationService notificationService;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,11 @@ class SettingsScreen extends StatelessWidget {
               AdvancedCalculationSection(calculation: settings.calculation),
               const Divider(height: 1),
               LocationSection(currentLocation: settings.location),
+              const Divider(height: 1),
+              NotificationSettingsSection(
+                settings: settings,
+                notificationService: notificationService,
+              ),
               const Divider(height: 1),
               DisplaySettingsSection(settings: settings),
               const Divider(height: 1),

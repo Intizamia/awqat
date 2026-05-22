@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:times/app/app_setup_listener.dart';
 import 'package:times/app/router.dart';
+import 'package:times/features/notifications/data/prayer_notification_service.dart';
+import 'package:times/features/notifications/presentation/notification_reschedule_listener.dart';
 import 'package:times/app/theme.dart';
 import 'package:times/features/location/data/geolocator_location_service.dart';
 import 'package:times/features/location/presentation/location_cubit.dart';
@@ -15,10 +17,17 @@ import 'package:times/features/settings/presentation/settings_state.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class TimesApp extends StatelessWidget {
-  TimesApp({required this.settingsRepository, super.key});
+  TimesApp({
+    required this.settingsRepository,
+    required this.notificationService,
+    super.key,
+  });
 
   final SettingsRepository settingsRepository;
-  final _router = createRouter();
+  final PrayerNotificationService notificationService;
+  late final _router = createRouter(
+    notificationService: notificationService,
+  );
 
   static Locale localeFromCode(String code) {
     return switch (code) {
@@ -85,7 +94,12 @@ class TimesApp extends StatelessWidget {
             ],
             routerConfig: _router,
             builder: (context, child) {
-              return AppSetupListener(child: child ?? const SizedBox.shrink());
+              return NotificationRescheduleListener(
+                notificationService: notificationService,
+                child: AppSetupListener(
+                  child: child ?? const SizedBox.shrink(),
+                ),
+              );
             },
           );
         },

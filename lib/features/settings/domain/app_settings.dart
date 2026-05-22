@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
+import 'package:times/features/settings/domain/notification_settings.dart';
 import 'package:times/features/settings/domain/setup_completion_status.dart';
 import 'package:times/features/settings/domain/theme_mode_id.dart';
 import 'package:times/features/settings/domain/time_format_id.dart';
@@ -14,6 +15,7 @@ class AppSettings extends Equatable {
     this.hijriAdjustmentDays = 0,
     this.showSunrise = true,
     this.location,
+    this.notifications = const NotificationSettings(),
   });
 
   final CalculationSettings calculation;
@@ -23,6 +25,7 @@ class AppSettings extends Equatable {
   final int hijriAdjustmentDays;
   final bool showSunrise;
   final UserLocation? location;
+  final NotificationSettings notifications;
 
   bool get isLocationConfigured => location != null;
 
@@ -40,6 +43,7 @@ class AppSettings extends Equatable {
     bool? showSunrise,
     UserLocation? location,
     bool clearLocation = false,
+    NotificationSettings? notifications,
   }) {
     return AppSettings(
       calculation: calculation ?? this.calculation,
@@ -49,6 +53,7 @@ class AppSettings extends Equatable {
       hijriAdjustmentDays: hijriAdjustmentDays ?? this.hijriAdjustmentDays,
       showSunrise: showSunrise ?? this.showSunrise,
       location: clearLocation ? null : (location ?? this.location),
+      notifications: notifications ?? this.notifications,
     );
   }
 
@@ -61,6 +66,7 @@ class AppSettings extends Equatable {
         'showSunrise': showSunrise,
         'location': location?.toJson(),
         'isLocationConfigured': isLocationConfigured,
+        'notifications': notifications.toJson(),
       };
 
   factory AppSettings.fromJson(Map<String, dynamic> json) {
@@ -87,6 +93,9 @@ class AppSettings extends Equatable {
       hijriAdjustmentDays: json['hijriAdjustmentDays'] as int? ?? 0,
       showSunrise: json['showSunrise'] as bool? ?? true,
       location: location,
+      notifications: NotificationSettings.fromJson(
+        json['notifications'] as Map<String, dynamic>?,
+      ),
     );
   }
 
@@ -99,5 +108,6 @@ class AppSettings extends Equatable {
         hijriAdjustmentDays,
         showSunrise,
         location,
+        notifications,
       ];
 }

@@ -4,11 +4,14 @@ import 'package:times/app/main_shell.dart';
 import 'package:times/features/coming_soon/presentation/coming_soon_screen.dart';
 import 'package:times/features/prayer/presentation/prayer_times_screen.dart';
 import 'package:times/features/qibla/presentation/qibla_screen.dart';
+import 'package:times/features/notifications/data/prayer_notification_service.dart';
 import 'package:times/features/settings/presentation/settings_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-GoRouter createRouter() {
+GoRouter createRouter({
+  required PrayerNotificationService notificationService,
+}) {
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/prayer',
@@ -43,7 +46,9 @@ GoRouter createRouter() {
             routes: [
               GoRoute(
                 path: '/settings',
-                builder: (context, state) => const SettingsScreen(),
+                builder: (context, state) => SettingsScreen(
+                  notificationService: notificationService,
+                ),
               ),
             ],
           ),

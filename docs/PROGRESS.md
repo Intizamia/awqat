@@ -1,8 +1,8 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase 7 complete → Phase 8 next  
-**Active branch:** `feature/phase-7-qibla`
+**Current phase:** Phase 8 complete → Phase 9 next  
+**Active branch:** `feature/phase-8-notifications`
 
 ## Quick status
 
@@ -15,7 +15,7 @@
 - [x] Phase 5 Settings UI (full calculation & display)
 - [x] Phase 6 Hijri display
 - [x] Phase 7 Qibla
-- [ ] Phase 8 Notifications
+- [x] Phase 8 Notifications
 - [ ] Phase 9 Polish
 
 ## Phase −1 — Agent docs
@@ -102,6 +102,16 @@
 - [x] l10n (en, ur, ar)
 - [x] Unit tests for bearing + pointer math
 
+## Phase 8 — Notifications
+
+- [x] `flutter_local_notifications` + `timezone` (zoned schedules)
+- [x] `NotificationSettings` master + per-prayer toggles (persisted)
+- [x] `PrayerNotificationService` schedules next 3 days; reschedules on change/resume
+- [x] Settings notifications section + permission prompt
+- [x] Android exact-alarm manifest, boot receiver, desugaring
+- [x] l10n (en, ur, ar); system default sound
+- [x] Unit tests (settings, planner)
+
 ## Session notes
 
-- **2026-05-22:** Phase 7 on `feature/phase-7-qibla`. Next: Phase 8 notifications.
+- **2026-05-22:** Phase 8 on `feature/phase-8-notifications`. Next: Phase 9 polish.

@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:times/features/settings/domain/app_settings.dart';
+import 'package:times/features/prayer/domain/prayer_name.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
+import 'package:times/features/settings/domain/notification_settings.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
 import 'package:times/features/settings/domain/prayer_offsets.dart';
 import 'package:times/features/settings/domain/theme_mode_id.dart';
@@ -21,6 +23,10 @@ void main() {
       hijriAdjustmentDays: 1,
       showSunrise: false,
       location: kDefaultUserLocation,
+      notifications: NotificationSettings(
+        enabled: true,
+        prayerEnabled: {PrayerName.fajr: true, PrayerName.isha: false},
+      ),
     );
 
     final restored = AppSettings.fromJson(original.toJson());
@@ -32,6 +38,8 @@ void main() {
     expect(restored.showSunrise, isFalse);
     expect(restored.calculation.prayerOffsets.isha, 2);
     expect(restored.location?.latitude, kDefaultUserLocation.latitude);
+    expect(restored.notifications.enabled, isTrue);
+    expect(restored.notifications.isPrayerEnabled(PrayerName.isha), isFalse);
     expect(restored.setup.isComplete, isTrue);
   });
 }

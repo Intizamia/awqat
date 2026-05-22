@@ -567,6 +567,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set your location in Settings to see the Qibla direction.'**
   String get qiblaLocationRequired;
+
+  /// No description provided for @notificationsSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsSectionTitle;
+
+  /// No description provided for @notificationsSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer time alerts on this device'**
+  String get notificationsSectionSubtitle;
+
+  /// No description provided for @notificationsMaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer time notifications'**
+  String get notificationsMaster;
+
+  /// No description provided for @notificationsMasterSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses your system notification sound'**
+  String get notificationsMasterSubtitle;
+
+  /// No description provided for @notificationsPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification permission was denied. Enable notifications in system settings.'**
+  String get notificationsPermissionDenied;
+
+  /// No description provided for @notificationPrayerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Time for {prayer}'**
+  String notificationPrayerBody(String prayer);
 }
 
 class _AppLocalizationsDelegate

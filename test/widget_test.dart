@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:times/app/app.dart';
+import 'package:times/features/notifications/data/prayer_notification_service.dart';
 import 'package:times/features/settings/data/settings_repository.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
@@ -19,7 +20,13 @@ void main() {
       }),
     });
     final repo = await SettingsRepository.create();
-    await tester.pumpWidget(TimesApp(settingsRepository: repo));
+    final notificationService = PrayerNotificationService(skipPlatformCalls: true);
+    await tester.pumpWidget(
+      TimesApp(
+        settingsRepository: repo,
+        notificationService: notificationService,
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byType(NavigationBar), findsOneWidget);

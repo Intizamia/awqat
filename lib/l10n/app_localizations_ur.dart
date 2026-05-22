@@ -253,4 +253,27 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get qiblaLocationRequired =>
       'قبلہ کی سمت کے لیے ترتیبات میں مقام سیٹ کریں۔';
+
+  @override
+  String get notificationsSectionTitle => 'اطلاعات';
+
+  @override
+  String get notificationsSectionSubtitle =>
+      'اس ڈیوائس پر نماز کے وقت کی یاددہانی';
+
+  @override
+  String get notificationsMaster => 'نماز کے وقت کی اطلاعات';
+
+  @override
+  String get notificationsMasterSubtitle =>
+      'سسٹم کی اطلاع کی آواز استعمال ہوگی';
+
+  @override
+  String get notificationsPermissionDenied =>
+      'اطلاع کی اجازت نہیں ملی۔ سسٹم ترتیبات سے اطلاعات چالو کریں۔';
+
+  @override
+  String notificationPrayerBody(String prayer) {
+    return '$prayer کا وقت ہو گیا';
+  }
 }

@@ -91,5 +91,11 @@
   "qiblaCalibratedHint": "فون کو سیدھا رکھیں اور تیر اوپر آنے تک گھمائیں",
   "qiblaAligned": "آپ قبلہ کی سمت میں ہیں",
   "qiblaSensorUnavailable": "اس ڈیوائس پر کمپاس دستیاب نہیں۔ مقام کے لیے سمت دکھائی گئی ہے۔",
-  "qiblaLocationRequired": "قبلہ کی سمت کے لیے ترتیبات میں مقام سیٹ کریں۔"
+  "qiblaLocationRequired": "قبلہ کی سمت کے لیے ترتیبات میں مقام سیٹ کریں۔",
+  "notificationsSectionTitle": "اطلاعات",
+  "notificationsSectionSubtitle": "اس ڈیوائس پر نماز کے وقت کی یاددہانی",
+  "notificationsMaster": "نماز کے وقت کی اطلاعات",
+  "notificationsMasterSubtitle": "سسٹم کی اطلاع کی آواز استعمال ہوگی",
+  "notificationsPermissionDenied": "اطلاع کی اجازت نہیں ملی۔ سسٹم ترتیبات سے اطلاعات چالو کریں۔",
+  "notificationPrayerBody": "{prayer} کا وقت ہو گیا"
 }

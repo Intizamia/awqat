@@ -91,5 +91,11 @@
   "qiblaCalibratedHint": "أمسك الهاتف بشكل مستوٍ ودوّره حتى يشير السهم للأعلى",
   "qiblaAligned": "أنت باتجاه القبلة",
   "qiblaSensorUnavailable": "بوصلة الجهاز غير متوفرة. يُعرض الاتجاه لموقعك.",
-  "qiblaLocationRequired": "حدد موقعك في الإعدادات لعرض اتجاه القبلة."
+  "qiblaLocationRequired": "حدد موقعك في الإعدادات لعرض اتجاه القبلة.",
+  "notificationsSectionTitle": "الإشعارات",
+  "notificationsSectionSubtitle": "تنبيهات مواقيت الصلاة على هذا الجهاز",
+  "notificationsMaster": "إشعارات مواقيت الصلاة",
+  "notificationsMasterSubtitle": "يستخدم صوت إشعارات النظام",
+  "notificationsPermissionDenied": "لم يُمنح إذن الإشعارات. فعّل الإشعارات من إعدادات النظام.",
+  "notificationPrayerBody": "حان وقت {prayer}"
 }

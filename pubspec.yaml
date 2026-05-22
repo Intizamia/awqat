@@ -23,6 +23,8 @@ dependencies:
   hijri: ^3.0.0
   flutter_qiblah: ^3.1.0+1
   flutter_compass_v2: ^1.0.3
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
 
 dev_dependencies:
   flutter_test:

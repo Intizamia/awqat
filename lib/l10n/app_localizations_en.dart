@@ -263,4 +263,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get qiblaLocationRequired =>
       'Set your location in Settings to see the Qibla direction.';
+
+  @override
+  String get notificationsSectionTitle => 'Notifications';
+
+  @override
+  String get notificationsSectionSubtitle =>
+      'Prayer time alerts on this device';
+
+  @override
+  String get notificationsMaster => 'Prayer time notifications';
+
+  @override
+  String get notificationsMasterSubtitle =>
+      'Uses your system notification sound';
+
+  @override
+  String get notificationsPermissionDenied =>
+      'Notification permission was denied. Enable notifications in system settings.';
+
+  @override
+  String notificationPrayerBody(String prayer) {
+    return 'Time for $prayer';
+  }
 }

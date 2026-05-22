@@ -253,4 +253,26 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get qiblaLocationRequired =>
       'حدد موقعك في الإعدادات لعرض اتجاه القبلة.';
+
+  @override
+  String get notificationsSectionTitle => 'الإشعارات';
+
+  @override
+  String get notificationsSectionSubtitle =>
+      'تنبيهات مواقيت الصلاة على هذا الجهاز';
+
+  @override
+  String get notificationsMaster => 'إشعارات مواقيت الصلاة';
+
+  @override
+  String get notificationsMasterSubtitle => 'يستخدم صوت إشعارات النظام';
+
+  @override
+  String get notificationsPermissionDenied =>
+      'لم يُمنح إذن الإشعارات. فعّل الإشعارات من إعدادات النظام.';
+
+  @override
+  String notificationPrayerBody(String prayer) {
+    return 'حان وقت $prayer';
+  }
 }

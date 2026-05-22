@@ -91,5 +91,18 @@
   "qiblaCalibratedHint": "Hold your phone flat and rotate until the arrow points up",
   "qiblaAligned": "You are facing the Qibla",
   "qiblaSensorUnavailable": "Compass sensor unavailable on this device. Bearing shown for your location.",
-  "qiblaLocationRequired": "Set your location in Settings to see the Qibla direction."
+  "qiblaLocationRequired": "Set your location in Settings to see the Qibla direction.",
+  "notificationsSectionTitle": "Notifications",
+  "notificationsSectionSubtitle": "Prayer time alerts on this device",
+  "notificationsMaster": "Prayer time notifications",
+  "notificationsMasterSubtitle": "Uses your system notification sound",
+  "notificationsPermissionDenied": "Notification permission was denied. Enable notifications in system settings.",
+  "notificationPrayerBody": "Time for {prayer}",
+  "@notificationPrayerBody": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  }
 }

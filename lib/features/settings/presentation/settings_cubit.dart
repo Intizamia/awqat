@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:times/features/settings/data/settings_repository.dart';
 import 'package:times/features/settings/domain/app_settings.dart';
+import 'package:times/features/prayer/domain/prayer_name.dart';
 import 'package:times/features/settings/domain/calculation_method_id.dart';
 import 'package:times/features/settings/domain/calculation_settings.dart';
 import 'package:times/features/settings/domain/default_app_settings.dart';
@@ -44,6 +45,22 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   Future<void> setShowSunrise(bool value) async {
     await _save(state.settings.copyWith(showSunrise: value));
+  }
+
+  Future<void> setNotificationsEnabled(bool value) async {
+    await _save(
+      state.settings.copyWith(
+        notifications: state.settings.notifications.copyWith(enabled: value),
+      ),
+    );
+  }
+
+  Future<void> setPrayerNotificationEnabled(PrayerName prayer, bool value) async {
+    await _save(
+      state.settings.copyWith(
+        notifications: state.settings.notifications.copyWithPrayer(prayer, value),
+      ),
+    );
   }
 
   Future<void> setCalculationMethod(CalculationMethodId method) async {
