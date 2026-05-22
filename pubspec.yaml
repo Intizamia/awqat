@@ -1,5 +1,5 @@
 name: times
-description: "A new Flutter project."
+description: "Islamic prayer times app — offline-first, Material 3."
 publish_to: 'none'
 version: 0.1.0+1
 
@@ -9,6 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.7
+  go_router: ^15.1.2
+  adhan_dart: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +24,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true

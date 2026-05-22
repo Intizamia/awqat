@@ -1,0 +1,15 @@
+{
+  "@@locale": "ur",
+  "appTitle": "ٹائمز",
+  "navPrayerTimes": "نماز کے اوقات",
+  "navComingSoon": "جلد آ رہا ہے",
+  "navSettings": "ترتیبات",
+  "comingSoonTitle": "جلد آ رہا ہے",
+  "comingSoonMessage": "یہ فیچر جلد دستیاب ہوگا۔",
+  "prayerTimesTitle": "نماز کے اوقات",
+  "settingsTitle": "ترتیبات",
+  "setup": "سیٹ اپ",
+  "setupRequiredTitle": "سیٹ اپ مکمل کریں",
+  "setupRequiredMessage": "نماز کے اوقات دیکھنے کے لیے حساب کا طریقہ اور مقام منتخب کریں۔",
+  "chooseCalculationMethod": "حساب کا طریقہ منتخب کریں"
+}

@@ -1,13 +1,13 @@
 # Times — Development Progress
 
 **Last updated:** 2026-05-22  
-**Current phase:** Phase −1 → Phase 0  
-**Active branch:** `feature/phase-minus1-agent-docs`
+**Current phase:** Phase 0 complete → Phase 1 next  
+**Active branch:** `feature/phase-0-foundation`
 
 ## Quick status
 
 - [x] Phase −1 Agent docs & rules
-- [ ] Phase 0 Foundation
+- [x] Phase 0 Foundation
 - [ ] Phase 1 Settings domain & persistence
 - [ ] Phase 2 Calculation engine
 - [ ] Phase 3 Location
@@ -29,13 +29,15 @@
 
 ## Phase 0 — Foundation
 
-- [ ] Dependencies in `pubspec.yaml`
-- [ ] `lib/` folder structure
-- [ ] M3 green theme
-- [ ] go_router + 3-tab NavigationBar
-- [ ] l10n ARB (en, ur, ar)
-- [ ] Placeholder feature screens
-- [ ] `flutter analyze` clean
+- [x] Dependencies in `pubspec.yaml`
+- [x] `lib/` folder structure
+- [x] M3 green theme
+- [x] go_router + 3-tab NavigationBar
+- [x] l10n ARB (en, ur, ar)
+- [x] Placeholder feature screens (prayer setup CTA, coming soon, settings)
+- [x] `SettingsCubit` + `SetupCompletionStatus` skeleton
+- [x] `flutter analyze` clean
+- [x] Basic widget test
 
 ## Post-MVP backlog
 
@@ -48,4 +50,4 @@
 
 ## Session notes
 
-- **2026-05-22:** Phase −1 complete. Starting Phase 0 on `feature/phase-0-foundation`.
+- **2026-05-22:** Phase −1 merged. Phase 0 complete on `feature/phase-0-foundation` — shell, Bloc, l10n, nav. Next: Phase 1 settings persistence + calculation enums.

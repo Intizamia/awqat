@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "appTitle": "Times",
+  "navPrayerTimes": "Prayer Times",
+  "navComingSoon": "Coming Soon",
+  "navSettings": "Settings",
+  "comingSoonTitle": "Coming Soon",
+  "comingSoonMessage": "This feature is on the way. Check back in a future update.",
+  "prayerTimesTitle": "Prayer Times",
+  "settingsTitle": "Settings",
+  "setup": "Setup",
+  "setupRequiredTitle": "Complete setup",
+  "setupRequiredMessage": "Choose your calculation method and location to see prayer times.",
+  "chooseCalculationMethod": "Choose calculation method"
+}
