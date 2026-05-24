@@ -28,15 +28,25 @@ class NotificationsSettingsScreen extends StatelessWidget {
           isLoading: state.isLoading,
           slivers: [
             SettingsGroupedCardSliver(
+              padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
               child: SettingsGroupedCard(
                 children: [
-                  NotificationSettingsBody(
+                  NotificationMasterSwitch(
                     settings: state.settings,
                     notificationService: notificationService,
                   ),
                 ],
               ),
             ),
+            if (state.settings.notifications.enabled)
+              SettingsGroupedCardSliver(
+                padding: const EdgeInsets.fromLTRB(0, 4, 0, 12),
+                child: SettingsGroupedCard(
+                  children: [
+                    NotificationPrayerToggles(settings: state.settings),
+                  ],
+                ),
+              ),
           ],
         );
       },

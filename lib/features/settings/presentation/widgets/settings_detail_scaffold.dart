@@ -22,7 +22,6 @@ class SettingsDetailScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,36 +37,9 @@ class SettingsDetailScaffold extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: false,
-              expandedTitleScale: 1,
-              titlePadding: const EdgeInsetsDirectional.only(
-                start: 16,
-                bottom: 16,
-              ),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: theme.textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+            flexibleSpace: _SettingsLargeAppBarFlexibleSpace(
+              title: title,
+              subtitle: subtitle,
             ),
           ),
           if (isLoading)
@@ -83,12 +55,77 @@ class SettingsDetailScaffold extends StatelessWidget {
   }
 }
 
+/// Expanded header for [SliverAppBar.large]: title + subtitle fade out on collapse.
+///
+/// Do not use [FlexibleSpaceBar] here — it keeps painting its title while the
+/// pinned toolbar title fades in, which causes overlap.
+class _SettingsLargeAppBarFlexibleSpace extends StatelessWidget {
+  const _SettingsLargeAppBarFlexibleSpace({
+    required this.title,
+    required this.subtitle,
+  });
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context
+        .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
+    if (settings == null) {
+      return const SizedBox.shrink();
+    }
+
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final delta = settings.maxExtent - settings.minExtent;
+    final t = delta > 0
+        ? ((settings.currentExtent - settings.minExtent) / delta)
+            .clamp(0.0, 1.0)
+        : 0.0;
+
+    return Opacity(
+      opacity: t,
+      child: Align(
+        alignment: AlignmentDirectional.bottomStart,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: colorScheme.onSurface,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Wraps a [SettingsGroupedCard] (or similar) as a sliver with standard padding.
 class SettingsGroupedCardSliver extends StatelessWidget {
   const SettingsGroupedCardSliver({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.symmetric(vertical: 16),
+    this.padding = const EdgeInsets.symmetric(vertical: 12),
   });
 
   final Widget child;

@@ -33,10 +33,7 @@ class LanguageScreen extends StatelessWidget {
                     SettingsCheckRow(
                       title: languageLabel(code),
                       selected: state.settings.localeCode == code,
-                      onTap: () {
-                        cubit.setLocale(code);
-                        if (context.mounted) Navigator.of(context).pop();
-                      },
+                      onTap: () => cubit.setLocale(code),
                     ),
                 ],
               ),

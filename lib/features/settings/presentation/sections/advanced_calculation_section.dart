@@ -37,8 +37,9 @@ class AdvancedCalculationSection extends StatelessWidget {
   }
 }
 
-class AdvancedCalculationBody extends StatelessWidget {
-  const AdvancedCalculationBody({
+/// Sliders and toggles outside the per-prayer grouped card.
+class AdvancedCalculationGeneralBody extends StatelessWidget {
+  const AdvancedCalculationGeneralBody({
     required this.calculation,
     super.key,
   });
@@ -61,7 +62,7 @@ class AdvancedCalculationBody extends StatelessWidget {
             calculation.copyWith(fajrAngle: v),
           ),
         ),
-        const ScheduleGrooveDivider(),
+        const SizedBox(height: 16),
         _AngleField(
           label: l10n.ishaAngle,
           value: calculation.ishaAngle ?? 17,
@@ -69,7 +70,7 @@ class AdvancedCalculationBody extends StatelessWidget {
             calculation.copyWith(ishaAngle: v),
           ),
         ),
-        const ScheduleGrooveDivider(),
+        const SizedBox(height: 16),
         _IntervalField(
           label: l10n.ishaIntervalMinutes,
           value: calculation.ishaIntervalMinutes ?? 0,
@@ -77,7 +78,7 @@ class AdvancedCalculationBody extends StatelessWidget {
             calculation.copyWith(ishaIntervalMinutes: v),
           ),
         ),
-        const ScheduleGrooveDivider(),
+        const SizedBox(height: 16),
       ]);
     }
 
@@ -96,9 +97,9 @@ class AdvancedCalculationBody extends StatelessWidget {
 
     if (calculation.method == CalculationMethodId.ummAlQura) {
       rows.addAll([
-        const ScheduleGrooveDivider(),
+        const SizedBox(height: 8),
         SwitchListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          contentPadding: EdgeInsets.zero,
           title: Text(l10n.ramadanIshaBoost),
           subtitle: Text(l10n.ramadanIshaBoostSubtitle),
           value: calculation.ramadanIshaBoost,
@@ -109,55 +110,66 @@ class AdvancedCalculationBody extends StatelessWidget {
       ]);
     }
 
-    rows.addAll([
-      const ScheduleGrooveDivider(),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-        child: Text(
-          l10n.perPrayerOffsets,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-      ),
-      _OffsetTile(
-        label: l10n.prayerFajr,
-        value: calculation.prayerOffsets.fajr,
-        onChanged: (v) => _updateOffsets(cubit, calculation, fajr: v),
-      ),
-      const ScheduleGrooveDivider(),
-      _OffsetTile(
-        label: l10n.prayerSunrise,
-        value: calculation.prayerOffsets.sunrise,
-        onChanged: (v) => _updateOffsets(cubit, calculation, sunrise: v),
-      ),
-      const ScheduleGrooveDivider(),
-      _OffsetTile(
-        label: l10n.prayerDhuhr,
-        value: calculation.prayerOffsets.dhuhr,
-        onChanged: (v) => _updateOffsets(cubit, calculation, dhuhr: v),
-      ),
-      const ScheduleGrooveDivider(),
-      _OffsetTile(
-        label: l10n.prayerAsr,
-        value: calculation.prayerOffsets.asr,
-        onChanged: (v) => _updateOffsets(cubit, calculation, asr: v),
-      ),
-      const ScheduleGrooveDivider(),
-      _OffsetTile(
-        label: l10n.prayerMaghrib,
-        value: calculation.prayerOffsets.maghrib,
-        onChanged: (v) => _updateOffsets(cubit, calculation, maghrib: v),
-      ),
-      const ScheduleGrooveDivider(),
-      _OffsetTile(
-        label: l10n.prayerIsha,
-        value: calculation.prayerOffsets.isha,
-        onChanged: (v) => _updateOffsets(cubit, calculation, isha: v),
-      ),
-    ]);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: rows,
+    );
+  }
+}
+
+/// Per-prayer offset sliders — intended for a [SettingsGroupedCard].
+class AdvancedCalculationPrayerOffsetsBody extends StatelessWidget {
+  const AdvancedCalculationPrayerOffsetsBody({
+    required this.calculation,
+    super.key,
+  });
+
+  final CalculationSettings calculation;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final cubit = context.read<SettingsCubit>();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _OffsetTile(
+          label: l10n.prayerFajr,
+          value: calculation.prayerOffsets.fajr,
+          onChanged: (v) => _updateOffsets(cubit, calculation, fajr: v),
+        ),
+        const ScheduleGrooveDivider(),
+        _OffsetTile(
+          label: l10n.prayerSunrise,
+          value: calculation.prayerOffsets.sunrise,
+          onChanged: (v) => _updateOffsets(cubit, calculation, sunrise: v),
+        ),
+        const ScheduleGrooveDivider(),
+        _OffsetTile(
+          label: l10n.prayerDhuhr,
+          value: calculation.prayerOffsets.dhuhr,
+          onChanged: (v) => _updateOffsets(cubit, calculation, dhuhr: v),
+        ),
+        const ScheduleGrooveDivider(),
+        _OffsetTile(
+          label: l10n.prayerAsr,
+          value: calculation.prayerOffsets.asr,
+          onChanged: (v) => _updateOffsets(cubit, calculation, asr: v),
+        ),
+        const ScheduleGrooveDivider(),
+        _OffsetTile(
+          label: l10n.prayerMaghrib,
+          value: calculation.prayerOffsets.maghrib,
+          onChanged: (v) => _updateOffsets(cubit, calculation, maghrib: v),
+        ),
+        const ScheduleGrooveDivider(),
+        _OffsetTile(
+          label: l10n.prayerIsha,
+          value: calculation.prayerOffsets.isha,
+          onChanged: (v) => _updateOffsets(cubit, calculation, isha: v),
+        ),
+      ],
     );
   }
 
@@ -182,6 +194,36 @@ class AdvancedCalculationBody extends StatelessWidget {
           isha: isha,
         ),
       ),
+    );
+  }
+}
+
+class AdvancedCalculationBody extends StatelessWidget {
+  const AdvancedCalculationBody({
+    required this.calculation,
+    super.key,
+  });
+
+  final CalculationSettings calculation;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        AdvancedCalculationGeneralBody(calculation: calculation),
+        const SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Text(
+            l10n.perPrayerOffsets,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        AdvancedCalculationPrayerOffsetsBody(calculation: calculation),
+      ],
     );
   }
 }
@@ -310,7 +352,7 @@ class _OffsetTile extends StatelessWidget {
         children: [
           Expanded(child: Text(label)),
           SizedBox(
-            width: 140,
+            width: 168,
             child: Slider(
               value: value.toDouble(),
               min: -15,

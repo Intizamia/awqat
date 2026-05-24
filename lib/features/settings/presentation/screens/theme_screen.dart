@@ -32,10 +32,7 @@ class ThemeScreen extends StatelessWidget {
                     SettingsCheckRow(
                       title: themeModeLabel(l10n, mode),
                       selected: state.settings.themeMode == mode,
-                      onTap: () {
-                        cubit.setThemeMode(mode);
-                        if (context.mounted) Navigator.of(context).pop();
-                      },
+                      onTap: () => cubit.setThemeMode(mode),
                     ),
                 ],
               ),
