@@ -49,6 +49,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose your calculation method and location to see prayer times.';
 
   @override
+  String get setupChecklistGroupLabel => 'REQUIRED STEPS';
+
+  @override
   String get chooseCalculationMethod => 'Choose calculation method';
 
   @override
@@ -380,5 +383,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String semanticsPrayerTime(String prayer, String time) {
     return '$prayer at $time';
+  }
+
+  @override
+  String semanticsSetupStep(String title, String value) {
+    return '$title, $value';
   }
 }

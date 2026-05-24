@@ -48,6 +48,9 @@ class AppLocalizationsUr extends AppLocalizations {
       'نماز کے اوقات دیکھنے کے لیے حساب کا طریقہ اور مقام منتخب کریں۔';
 
   @override
+  String get setupChecklistGroupLabel => 'ضروری مراحل';
+
+  @override
   String get chooseCalculationMethod => 'حساب کا طریقہ منتخب کریں';
 
   @override
@@ -363,5 +366,10 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String semanticsPrayerTime(String prayer, String time) {
     return '$prayer، $time';
+  }
+
+  @override
+  String semanticsSetupStep(String title, String value) {
+    return '$title، $value';
   }
 }

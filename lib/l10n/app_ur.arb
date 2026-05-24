@@ -12,6 +12,7 @@
   "setup": "سیٹ اپ",
   "setupRequiredTitle": "سیٹ اپ مکمل کریں",
   "setupRequiredMessage": "نماز کے اوقات دیکھنے کے لیے حساب کا طریقہ اور مقام منتخب کریں۔",
+  "setupChecklistGroupLabel": "ضروری مراحل",
   "chooseCalculationMethod": "حساب کا طریقہ منتخب کریں",
   "language": "زبان",
   "themeMode": "تھیم",
@@ -122,5 +123,6 @@
   "notificationsPermissionDenied": "اطلاع کی اجازت نہیں ملی۔ سسٹم ترتیبات سے اطلاعات چالو کریں۔",
   "notificationPrayerBody": "{prayer} کا وقت ہو گیا",
   "semanticsNextPrayer": "اگلی نماز: {prayer}، {time}",
-  "semanticsPrayerTime": "{prayer}، {time}"
+  "semanticsPrayerTime": "{prayer}، {time}",
+  "semanticsSetupStep": "{title}، {value}"
 }

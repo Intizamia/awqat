@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:times/app/app_setup_listener.dart';
 import 'package:times/app/router.dart';
 import 'package:times/features/notifications/data/prayer_notification_service.dart';
 import 'package:times/features/notifications/presentation/notification_reschedule_listener.dart';
@@ -110,11 +109,9 @@ class TimesApp extends StatelessWidget {
               final content = child ?? const SizedBox.shrink();
               return NotificationRescheduleListener(
                 notificationService: notificationService,
-                child: AppSetupListener(
-                  child: Directionality(
-                    textDirection: textDirectionForLocale(locale),
-                    child: content,
-                  ),
+                child: Directionality(
+                  textDirection: textDirectionForLocale(locale),
+                  child: content,
                 ),
               );
             },

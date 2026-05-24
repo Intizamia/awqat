@@ -31,6 +31,16 @@ GoRouter createRouter({
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => const QiblaScreen(),
       ),
+      GoRoute(
+        path: '/setup/calculation-method',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const CalculationMethodScreen(),
+      ),
+      GoRoute(
+        path: '/setup/location',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const LocationSettingsScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return MainShell(navigationShell: navigationShell);

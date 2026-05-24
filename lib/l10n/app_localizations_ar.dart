@@ -48,6 +48,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'اختر طريقة الحساب والموقع لعرض مواقيت الصلاة.';
 
   @override
+  String get setupChecklistGroupLabel => 'الخطوات المطلوبة';
+
+  @override
   String get chooseCalculationMethod => 'اختر طريقة الحساب';
 
   @override
@@ -363,5 +366,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String semanticsPrayerTime(String prayer, String time) {
     return '$prayer الساعة $time';
+  }
+
+  @override
+  String semanticsSetupStep(String title, String value) {
+    return '$title، $value';
   }
 }

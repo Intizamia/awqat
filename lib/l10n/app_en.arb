@@ -18,6 +18,7 @@
   "setup": "Setup",
   "setupRequiredTitle": "Complete setup",
   "setupRequiredMessage": "Choose your calculation method and location to see prayer times.",
+  "setupChecklistGroupLabel": "REQUIRED STEPS",
   "chooseCalculationMethod": "Choose calculation method",
   "language": "Language",
   "themeMode": "Theme",
@@ -161,6 +162,13 @@
     "placeholders": {
       "prayer": { "type": "String" },
       "time": { "type": "String" }
+    }
+  },
+  "semanticsSetupStep": "{title}, {value}",
+  "@semanticsSetupStep": {
+    "placeholders": {
+      "title": { "type": "String" },
+      "value": { "type": "String" }
     }
   }
 }

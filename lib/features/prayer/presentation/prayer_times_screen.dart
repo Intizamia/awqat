@@ -8,6 +8,7 @@ import 'package:times/features/prayer/domain/prayer_name.dart';
 import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
 import 'package:times/features/prayer/presentation/prayer_times_cubit.dart';
 import 'package:times/features/prayer/presentation/prayer_times_state.dart';
+import 'package:times/features/prayer/presentation/widgets/setup_checklist_body.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
 import 'package:times/l10n/app_localizations.dart';
@@ -97,7 +98,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
             }
 
             if (!settingsState.settings.setup.isComplete) {
-              return _SetupRequiredBody(l10n: l10n);
+              return SetupChecklistBody(settings: settingsState.settings);
             }
 
             return BlocBuilder<PrayerTimesCubit, PrayerTimesState>(
@@ -232,55 +233,6 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class _SetupRequiredBody extends StatelessWidget {
-  const _SetupRequiredBody({required this.l10n});
-
-  final AppLocalizations l10n;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.settings_suggest_outlined,
-            size: 64,
-            color: colorScheme.primary,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            l10n.setupRequiredTitle,
-            style: Theme.of(context).textTheme.headlineSmall,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            l10n.setupRequiredMessage,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 32),
-          Semantics(
-            button: true,
-            label: l10n.setup,
-            child: FilledButton.icon(
-              onPressed: () => context.go('/settings'),
-              icon: const Icon(Icons.navigate_next),
-              label: Text(l10n.setup),
-            ),
-          ),
-        ],
       ),
     );
   }

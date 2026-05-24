@@ -118,4 +118,5 @@ See [`docs/BACKLOG.md`](BACKLOG.md).
 
 ## Session notes
 
+- **2026-05-24:** Onboarding overhaul — home-screen setup checklist replaces first-run method dialog; `/setup/*` routes open method/location pickers and return to Prayer Times tab.
 - **2026-05-22:** Phase 9 on `feature/phase-9-polish`. **MVP roadmap complete.**

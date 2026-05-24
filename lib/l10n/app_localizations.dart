@@ -172,6 +172,12 @@ abstract class AppLocalizations {
   /// **'Choose your calculation method and location to see prayer times.'**
   String get setupRequiredMessage;
 
+  /// No description provided for @setupChecklistGroupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'REQUIRED STEPS'**
+  String get setupChecklistGroupLabel;
+
   /// No description provided for @chooseCalculationMethod.
   ///
   /// In en, this message translates to:
@@ -753,6 +759,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{prayer} at {time}'**
   String semanticsPrayerTime(String prayer, String time);
+
+  /// No description provided for @semanticsSetupStep.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}, {value}'**
+  String semanticsSetupStep(String title, String value);
 }
 
 class _AppLocalizationsDelegate
