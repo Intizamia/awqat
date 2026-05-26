@@ -10,7 +10,6 @@ Items deferred after the MVP roadmap (Phases 0–9). Prioritize with user feedba
 | API prayer sources | Aladhan / IslamicFinder adapters; keep local `adhan_dart` as default |
 | Home screen widgets | Today’s times + next prayer on Android/iOS widgets |
 | Custom adhan sounds | Per-prayer notification sounds beyond system default |
-| M3 Expressive | Optional expressive color/motion tokens |
 | More languages | Expand beyond en / ur / ar |
 
 ## Technical
