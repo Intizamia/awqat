@@ -62,7 +62,7 @@ class AdvancedCalculationGeneralBody extends StatelessWidget {
             calculation.copyWith(fajrAngle: v),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         _AngleField(
           label: l10n.ishaAngle,
           value: calculation.ishaAngle ?? 17,
@@ -70,7 +70,7 @@ class AdvancedCalculationGeneralBody extends StatelessWidget {
             calculation.copyWith(ishaAngle: v),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         _IntervalField(
           label: l10n.ishaIntervalMinutes,
           value: calculation.ishaIntervalMinutes ?? 0,
@@ -78,7 +78,7 @@ class AdvancedCalculationGeneralBody extends StatelessWidget {
             calculation.copyWith(ishaIntervalMinutes: v),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
       ]);
     }
 
@@ -97,7 +97,7 @@ class AdvancedCalculationGeneralBody extends StatelessWidget {
 
     if (calculation.method == CalculationMethodId.ummAlQura) {
       rows.addAll([
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.ramadanIshaBoost),
@@ -241,21 +241,15 @@ class _AngleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.titleSmall),
-          Slider(
-            value: value,
-            min: 10,
-            max: 22,
-            divisions: 24,
-            label: '${value.toStringAsFixed(1)}°',
-            onChanged: onChanged,
-          ),
-        ],
+    return _LabeledSliderField(
+      label: label,
+      child: _FullWidthSlider(
+        value: value,
+        min: 10,
+        max: 22,
+        divisions: 24,
+        label: '${value.toStringAsFixed(1)}°',
+        onChanged: onChanged,
       ),
     );
   }
@@ -274,21 +268,15 @@ class _IntervalField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.titleSmall),
-          Slider(
-            value: value.toDouble(),
-            min: 0,
-            max: 120,
-            divisions: 24,
-            label: '$value min',
-            onChanged: (v) => onChanged(v.round()),
-          ),
-        ],
+    return _LabeledSliderField(
+      label: label,
+      child: _FullWidthSlider(
+        value: value.toDouble(),
+        min: 0,
+        max: 120,
+        divisions: 24,
+        label: '$value min',
+        onChanged: (v) => onChanged(v.round()),
       ),
     );
   }
@@ -313,21 +301,78 @@ class _OffsetField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _LabeledSliderField(
+      label: label,
+      padding: const EdgeInsets.only(top: 2),
+      child: _FullWidthSlider(
+        value: value.toDouble(),
+        min: min.toDouble(),
+        max: max.toDouble(),
+        divisions: divisions,
+        label: '$value min',
+        onChanged: (v) => onChanged(v.round()),
+      ),
+    );
+  }
+}
+
+class _LabeledSliderField extends StatelessWidget {
+  const _LabeledSliderField({
+    required this.label,
+    required this.child,
+    this.padding = EdgeInsets.zero,
+  });
+
+  final String label;
+  final Widget child;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+      padding: padding,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(label, style: Theme.of(context).textTheme.titleSmall),
-          Slider(
-            value: value.toDouble(),
-            min: min.toDouble(),
-            max: max.toDouble(),
-            divisions: divisions,
-            label: '$value min',
-            onChanged: (v) => onChanged(v.round()),
-          ),
+          child,
         ],
+      ),
+    );
+  }
+}
+
+class _FullWidthSlider extends StatelessWidget {
+  const _FullWidthSlider({
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.divisions,
+    required this.label,
+    required this.onChanged,
+  });
+
+  final double value;
+  final double min;
+  final double max;
+  final int divisions;
+  final String label;
+  final ValueChanged<double> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        padding: EdgeInsets.zero,
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
+      ),
+      child: Slider(
+        value: value,
+        min: min,
+        max: max,
+        divisions: divisions,
+        label: label,
+        onChanged: onChanged,
       ),
     );
   }
@@ -347,7 +392,7 @@ class _OffsetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: Row(
         children: [
           Expanded(child: Text(label)),

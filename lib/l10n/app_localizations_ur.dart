@@ -96,6 +96,33 @@ class AppLocalizationsUr extends AppLocalizations {
   String get locationNotSet => 'کوئی مقام منتخب نہیں';
 
   @override
+  String get locationEmptyMessage =>
+      'نماز کے اوقات آپ کے مقام کے مطابق حساب ہوتے ہیں۔ GPS استعمال کریں یا شہر تلاش کریں۔';
+
+  @override
+  String get locationCurrentTitle => 'موجودہ مقام';
+
+  @override
+  String get locationUseGpsSubtitle => 'GPS سے خودکار طور پر معلوم کریں';
+
+  @override
+  String get locationGetLocationSectionLabel => 'آلہ کا مقام';
+
+  @override
+  String get locationSearchSectionLabel => 'شہر تلاش کریں';
+
+  @override
+  String get locationSearching => 'تلاش جاری ہے…';
+
+  @override
+  String get locationSearchNotFoundTitle => 'کوئی مقام نہیں ملا';
+
+  @override
+  String locationSearchNotFoundMessage(String query) {
+    return '\"$query\" سے کوئی نتیجہ نہیں ملا۔ مختلف نام یا املا آزمائیں۔';
+  }
+
+  @override
   String get locationUnknown => 'نامعلوم مقام';
 
   @override

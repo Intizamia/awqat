@@ -32,10 +32,7 @@ class CalculationMethodScreen extends StatelessWidget {
                     SettingsCheckRow(
                       title: label,
                       selected: calculation.method == id,
-                      onTap: () {
-                        cubit.setCalculationMethod(id);
-                        if (context.mounted) Navigator.of(context).pop();
-                      },
+                      onTap: () => cubit.setCalculationMethod(id),
                     ),
                 ],
               ),

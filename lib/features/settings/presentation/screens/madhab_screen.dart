@@ -33,12 +33,9 @@ class MadhabScreen extends StatelessWidget {
                     SettingsCheckRow(
                       title: madhabLabel(l10n, madhab),
                       selected: calculation.madhab == madhab,
-                      onTap: () {
-                        cubit.updateCalculation(
-                          calculation.copyWith(madhab: madhab),
-                        );
-                        if (context.mounted) Navigator.of(context).pop();
-                      },
+                      onTap: () => cubit.updateCalculation(
+                        calculation.copyWith(madhab: madhab),
+                      ),
                     ),
                 ],
               ),

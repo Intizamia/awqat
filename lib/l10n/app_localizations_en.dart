@@ -97,6 +97,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationNotSet => 'No location selected';
 
   @override
+  String get locationEmptyMessage =>
+      'Prayer times are calculated from where you are. Use your device location or search for a city.';
+
+  @override
+  String get locationCurrentTitle => 'Current location';
+
+  @override
+  String get locationUseGpsSubtitle => 'Detect automatically using GPS';
+
+  @override
+  String get locationGetLocationSectionLabel => 'DEVICE LOCATION';
+
+  @override
+  String get locationSearchSectionLabel => 'SEARCH BY CITY';
+
+  @override
+  String get locationSearching => 'Searching…';
+
+  @override
+  String get locationSearchNotFoundTitle => 'No places found';
+
+  @override
+  String locationSearchNotFoundMessage(String query) {
+    return 'Nothing matched \"$query\". Try a different city name or spelling.';
+  }
+
+  @override
   String get locationUnknown => 'Unknown place';
 
   @override

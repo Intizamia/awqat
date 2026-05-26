@@ -10,6 +10,7 @@ import 'package:times/features/settings/presentation/screens/calculation_method_
 import 'package:times/features/settings/presentation/screens/display_settings_screen.dart';
 import 'package:times/features/settings/presentation/screens/high_latitude_screen.dart';
 import 'package:times/features/settings/presentation/screens/language_screen.dart';
+import 'package:times/features/location/presentation/location_screen.dart';
 import 'package:times/features/settings/presentation/screens/location_settings_screen.dart';
 import 'package:times/features/settings/presentation/screens/madhab_screen.dart';
 import 'package:times/features/settings/presentation/screens/notifications_settings_screen.dart';
@@ -39,7 +40,7 @@ GoRouter createRouter({
       GoRoute(
         path: '/setup/location',
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const LocationSettingsScreen(),
+        builder: (context, state) => const LocationScreen(popOnSelect: true),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

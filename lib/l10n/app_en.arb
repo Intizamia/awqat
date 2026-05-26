@@ -34,6 +34,19 @@
   "prayerIsha": "Isha",
   "locationTitle": "Location",
   "locationNotSet": "No location selected",
+  "locationEmptyMessage": "Prayer times are calculated from where you are. Use your device location or search for a city.",
+  "locationCurrentTitle": "Current location",
+  "locationUseGpsSubtitle": "Detect automatically using GPS",
+  "locationGetLocationSectionLabel": "DEVICE LOCATION",
+  "locationSearchSectionLabel": "SEARCH BY CITY",
+  "locationSearching": "Searching…",
+  "locationSearchNotFoundTitle": "No places found",
+  "locationSearchNotFoundMessage": "Nothing matched \"{query}\". Try a different city name or spelling.",
+  "@locationSearchNotFoundMessage": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  },
   "locationUnknown": "Unknown place",
   "locationClear": "Clear location",
   "useMyLocation": "Use my location",

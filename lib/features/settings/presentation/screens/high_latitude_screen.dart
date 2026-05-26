@@ -33,12 +33,9 @@ class HighLatitudeScreen extends StatelessWidget {
                     SettingsCheckRow(
                       title: highLatitudeLabel(l10n, rule),
                       selected: calculation.highLatitudeRule == rule,
-                      onTap: () {
-                        cubit.updateCalculation(
-                          calculation.copyWith(highLatitudeRule: rule),
-                        );
-                        if (context.mounted) Navigator.of(context).pop();
-                      },
+                      onTap: () => cubit.updateCalculation(
+                        calculation.copyWith(highLatitudeRule: rule),
+                      ),
                     ),
                 ],
               ),

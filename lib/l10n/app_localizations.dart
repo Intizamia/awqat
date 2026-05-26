@@ -268,6 +268,54 @@ abstract class AppLocalizations {
   /// **'No location selected'**
   String get locationNotSet;
 
+  /// No description provided for @locationEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer times are calculated from where you are. Use your device location or search for a city.'**
+  String get locationEmptyMessage;
+
+  /// No description provided for @locationCurrentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current location'**
+  String get locationCurrentTitle;
+
+  /// No description provided for @locationUseGpsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Detect automatically using GPS'**
+  String get locationUseGpsSubtitle;
+
+  /// No description provided for @locationGetLocationSectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'DEVICE LOCATION'**
+  String get locationGetLocationSectionLabel;
+
+  /// No description provided for @locationSearchSectionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SEARCH BY CITY'**
+  String get locationSearchSectionLabel;
+
+  /// No description provided for @locationSearching.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching…'**
+  String get locationSearching;
+
+  /// No description provided for @locationSearchNotFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No places found'**
+  String get locationSearchNotFoundTitle;
+
+  /// No description provided for @locationSearchNotFoundMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matched \"{query}\". Try a different city name or spelling.'**
+  String locationSearchNotFoundMessage(String query);
+
   /// No description provided for @locationUnknown.
   ///
   /// In en, this message translates to:

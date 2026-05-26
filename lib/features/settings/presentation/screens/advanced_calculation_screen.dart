@@ -23,7 +23,7 @@ class AdvancedCalculationScreen extends StatelessWidget {
           isLoading: state.isLoading,
           slivers: [
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
               sliver: SliverToBoxAdapter(
                 child: AdvancedCalculationGeneralBody(
                   calculation: state.settings.calculation,
@@ -31,7 +31,7 @@ class AdvancedCalculationScreen extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
               sliver: SliverToBoxAdapter(
                 child: Text(
                   l10n.perPrayerOffsets,

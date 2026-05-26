@@ -96,6 +96,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get locationNotSet => 'لم يتم اختيار موقع';
 
   @override
+  String get locationEmptyMessage =>
+      'تُحسب مواقيت الصلاة حسب موقعك. استخدم موقع الجهاز أو ابحث عن مدينتك.';
+
+  @override
+  String get locationCurrentTitle => 'الموقع الحالي';
+
+  @override
+  String get locationUseGpsSubtitle => 'اكتشاف تلقائي عبر GPS';
+
+  @override
+  String get locationGetLocationSectionLabel => 'موقع الجهاز';
+
+  @override
+  String get locationSearchSectionLabel => 'البحث عن مدينة';
+
+  @override
+  String get locationSearching => 'جارٍ البحث…';
+
+  @override
+  String get locationSearchNotFoundTitle => 'لم يتم العثور على أماكن';
+
+  @override
+  String locationSearchNotFoundMessage(String query) {
+    return 'لا توجد نتائج لـ \"$query\". جرّب اسم مدينة أو تهجئة مختلفة.';
+  }
+
+  @override
   String get locationUnknown => 'مكان غير معروف';
 
   @override

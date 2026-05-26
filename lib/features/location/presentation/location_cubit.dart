@@ -40,21 +40,46 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
+  void beginSearch() {
+    emit(
+      state.copyWith(
+        isSearching: true,
+        searchReturnedEmpty: false,
+        clearResults: true,
+        clearError: true,
+      ),
+    );
+  }
+
   Future<void> searchCities(String query) async {
     final trimmed = query.trim();
     if (trimmed.length < 2) {
-      emit(state.copyWith(clearResults: true, clearError: true, isSearching: false));
+      emit(
+        state.copyWith(
+          clearResults: true,
+          clearError: true,
+          isSearching: false,
+          searchReturnedEmpty: false,
+        ),
+      );
       return;
     }
 
-    emit(state.copyWith(isSearching: true, clearError: true));
+    emit(
+      state.copyWith(
+        isSearching: true,
+        clearError: true,
+        clearResults: true,
+        searchReturnedEmpty: false,
+      ),
+    );
     try {
       final results = await _locationService.searchCities(trimmed);
       emit(
         state.copyWith(
           isSearching: false,
           searchResults: results,
-          errorMessage: results.isEmpty ? const LocationSearchFailed().message : null,
+          searchReturnedEmpty: results.isEmpty,
         ),
       );
     } on LocationException catch (e) {
@@ -62,6 +87,7 @@ class LocationCubit extends Cubit<LocationState> {
         state.copyWith(
           isSearching: false,
           clearResults: true,
+          searchReturnedEmpty: false,
           errorMessage: e.message,
         ),
       );
@@ -70,6 +96,7 @@ class LocationCubit extends Cubit<LocationState> {
         state.copyWith(
           isSearching: false,
           clearResults: true,
+          searchReturnedEmpty: false,
           errorMessage: const LocationSearchFailed().message,
         ),
       );
@@ -97,7 +124,14 @@ class LocationCubit extends Cubit<LocationState> {
   }
 
   void clearSearch() {
-    emit(state.copyWith(clearResults: true, clearError: true, isSearching: false));
+    emit(
+      state.copyWith(
+        clearResults: true,
+        clearError: true,
+        isSearching: false,
+        searchReturnedEmpty: false,
+      ),
+    );
   }
 
   Future<void> clearLocation() async {
