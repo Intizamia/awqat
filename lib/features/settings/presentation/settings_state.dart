@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
+import '../domain/app_settings.dart';
 
 class SettingsState extends Equatable {
   const SettingsState({

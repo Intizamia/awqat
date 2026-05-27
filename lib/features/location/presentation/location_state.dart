@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:awqat/features/location/domain/city_search_result.dart';
+import '../domain/city_search_result.dart';
 
 class LocationState extends Equatable {
   const LocationState({

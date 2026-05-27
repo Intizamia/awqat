@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/features/location/data/location_service.dart';
-import 'package:awqat/features/location/domain/city_search_result.dart';
-import 'package:awqat/features/location/domain/location_exception.dart';
-import 'package:awqat/features/location/presentation/location_state.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import '../data/location_service.dart';
+import '../domain/city_search_result.dart';
+import '../domain/location_exception.dart';
+import 'location_state.dart';
+import '../../settings/domain/user_location.dart';
+import '../../settings/presentation/settings_cubit.dart';
 
 class LocationCubit extends Cubit<LocationState> {
   LocationCubit({

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
-import 'package:awqat/features/settings/presentation/utils/calculation_method_labels.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/widgets/cohere_settings_widgets.dart';
+import '../../domain/calculation_method_id.dart';
+import '../settings_cubit.dart';
+import '../settings_state.dart';
+import '../utils/calculation_method_labels.dart';
+import '../../../../l10n/app_localizations.dart';
 
 const _kMethodDescriptions = <CalculationMethodId, String>{
   CalculationMethodId.muslimWorldLeague:

@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:awqat/app/app.dart';
-import 'package:awqat/features/notifications/data/prayer_notification_planner.dart';
-import 'package:awqat/features/notifications/domain/scheduled_prayer_notification.dart';
-import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../app/app.dart';
+import 'prayer_notification_planner.dart';
+import '../domain/scheduled_prayer_notification.dart';
+import '../../prayer/data/adhan_calculation_engine.dart';
+import '../../settings/domain/app_settings.dart';
+import '../../../l10n/app_localizations.dart';
 
 const _channelId = 'prayer_times';
 const _channelName = 'Prayer times';

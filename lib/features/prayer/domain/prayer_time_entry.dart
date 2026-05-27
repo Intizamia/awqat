@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'prayer_name.dart';
 
 class PrayerTimeEntry extends Equatable {
   const PrayerTimeEntry({required this.name, required this.time});

@@ -1,10 +1,10 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:awqat/core/utils/timezone_resolver.dart';
-import 'package:awqat/features/location/data/location_service.dart';
-import 'package:awqat/features/location/domain/city_search_result.dart';
-import 'package:awqat/features/location/domain/location_exception.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
+import '../../../core/utils/timezone_resolver.dart';
+import 'location_service.dart';
+import '../domain/city_search_result.dart';
+import '../domain/location_exception.dart';
+import '../../settings/domain/user_location.dart';
 
 class GeolocatorLocationService implements LocationService {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:awqat/features/settings/presentation/widgets/settings_row_metrics.dart';
+import 'settings_row_metrics.dart';
 
 /// Toggle row with the same minimum height as hub navigation rows.
 class SettingsSwitchRow extends StatelessWidget {

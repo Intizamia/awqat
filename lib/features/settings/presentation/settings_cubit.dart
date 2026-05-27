@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/features/settings/data/settings_repository.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
-import 'package:awqat/features/settings/domain/calculation_settings.dart';
-import 'package:awqat/features/settings/domain/default_app_settings.dart';
-import 'package:awqat/features/settings/domain/theme_mode_id.dart';
-import 'package:awqat/features/settings/domain/time_format_id.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
+import '../data/settings_repository.dart';
+import '../domain/app_settings.dart';
+import '../../prayer/domain/prayer_name.dart';
+import '../domain/calculation_method_id.dart';
+import '../domain/calculation_settings.dart';
+import '../domain/default_app_settings.dart';
+import '../domain/theme_mode_id.dart';
+import '../domain/time_format_id.dart';
+import '../domain/user_location.dart';
+import 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit(this._repository) : super(const SettingsState());

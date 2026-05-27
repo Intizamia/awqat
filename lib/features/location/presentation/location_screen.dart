@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
-import 'package:awqat/features/location/domain/city_search_result.dart';
-import 'package:awqat/features/location/presentation/location_cubit.dart';
-import 'package:awqat/features/location/presentation/location_state.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../app/theme.dart';
+import '../../../core/theme/cohere_colors.dart';
+import '../../../core/widgets/cohere_settings_widgets.dart';
+import '../domain/city_search_result.dart';
+import 'location_cubit.dart';
+import 'location_state.dart';
+import '../../settings/domain/user_location.dart';
+import '../../settings/presentation/settings_cubit.dart';
+import '../../settings/presentation/settings_state.dart';
+import '../../../l10n/app_localizations.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({this.popOnSelect = false, super.key});

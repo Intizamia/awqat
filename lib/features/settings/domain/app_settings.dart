@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:awqat/features/settings/domain/calculation_settings.dart';
-import 'package:awqat/features/settings/domain/notification_settings.dart';
-import 'package:awqat/features/settings/domain/setup_completion_status.dart';
-import 'package:awqat/features/settings/domain/theme_mode_id.dart';
-import 'package:awqat/features/settings/domain/time_format_id.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
+import 'calculation_settings.dart';
+import 'notification_settings.dart';
+import 'setup_completion_status.dart';
+import 'theme_mode_id.dart';
+import 'time_format_id.dart';
+import 'user_location.dart';
 
 class AppSettings extends Equatable {
   const AppSettings({

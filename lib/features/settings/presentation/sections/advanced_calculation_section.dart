@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/core/widgets/schedule_groove_divider.dart';
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
-import 'package:awqat/features/settings/domain/calculation_settings.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/widgets/settings_section_header.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/widgets/schedule_groove_divider.dart';
+import '../../domain/calculation_method_id.dart';
+import '../../domain/calculation_settings.dart';
+import '../settings_cubit.dart';
+import '../widgets/settings_section_header.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class AdvancedCalculationSection extends StatelessWidget {
   const AdvancedCalculationSection({

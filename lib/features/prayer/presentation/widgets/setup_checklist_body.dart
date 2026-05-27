@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/settings/presentation/utils/calculation_method_labels.dart';
-import 'package:awqat/features/settings/presentation/utils/settings_value_labels.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../app/theme.dart';
+import '../../../../core/theme/cohere_colors.dart';
+import '../../../../core/widgets/cohere_settings_widgets.dart';
+import '../../../settings/domain/app_settings.dart';
+import '../../../settings/presentation/utils/calculation_method_labels.dart';
+import '../../../settings/presentation/utils/settings_value_labels.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class SetupChecklistBody extends StatelessWidget {
   const SetupChecklistBody({required this.settings, super.key});

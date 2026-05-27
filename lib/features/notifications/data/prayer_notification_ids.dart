@@ -1,4 +1,4 @@
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import '../../prayer/domain/prayer_name.dart';
 
 /// Stable notification ids: day bucket × prayer index (keeps pending count low).
 int prayerNotificationId({required PrayerName prayer, required int dayOffset}) {

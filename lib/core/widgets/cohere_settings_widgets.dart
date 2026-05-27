@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
+import '../../app/theme.dart';
+import '../theme/cohere_colors.dart';
 
 // ─── Section label ──────────────────────────────────────────────────────────
 

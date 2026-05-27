@@ -1,5 +1,5 @@
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../domain/prayer_name.dart';
+import '../../../l10n/app_localizations.dart';
 
 extension PrayerNameL10n on PrayerName {
   String label(AppLocalizations l10n) {

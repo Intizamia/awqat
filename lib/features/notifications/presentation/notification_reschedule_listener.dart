@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_cubit.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_state.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
+import '../data/prayer_notification_service.dart';
+import '../../prayer/presentation/prayer_times_cubit.dart';
+import '../../prayer/presentation/prayer_times_state.dart';
+import '../../settings/presentation/settings_cubit.dart';
+import '../../settings/presentation/settings_state.dart';
 
 /// Reschedules local prayer notifications when settings or times change.
 class NotificationRescheduleListener extends StatefulWidget {

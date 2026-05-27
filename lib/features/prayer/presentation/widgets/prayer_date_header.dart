@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/core/utils/hijri_date_format.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../app/theme.dart';
+import '../../../../core/theme/cohere_colors.dart';
+import '../../../../core/utils/hijri_date_format.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class PrayerDateHeader extends StatelessWidget {
   const PrayerDateHeader({

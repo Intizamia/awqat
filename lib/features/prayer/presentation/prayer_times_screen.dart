@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/navigation/primary_scroll_registry.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/core/utils/prayer_time_format.dart';
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
-import 'package:awqat/features/prayer/domain/prayer_time_entry.dart';
-import 'package:awqat/features/prayer/presentation/prayer_name_l10n.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_cubit.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_state.dart';
-import 'package:awqat/features/prayer/presentation/widgets/prayer_date_header.dart';
-import 'package:awqat/features/prayer/presentation/widgets/setup_checklist_body.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/settings/domain/time_format_id.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../app/theme.dart';
+import '../../../core/navigation/primary_scroll_registry.dart';
+import '../../../core/theme/cohere_colors.dart';
+import '../../../core/utils/prayer_time_format.dart';
+import '../domain/prayer_name.dart';
+import '../domain/prayer_time_entry.dart';
+import 'prayer_name_l10n.dart';
+import 'prayer_times_cubit.dart';
+import 'prayer_times_state.dart';
+import 'widgets/prayer_date_header.dart';
+import 'widgets/setup_checklist_body.dart';
+import '../../settings/domain/app_settings.dart';
+import '../../settings/domain/time_format_id.dart';
+import '../../settings/presentation/settings_cubit.dart';
+import '../../settings/presentation/settings_state.dart';
+import '../../../l10n/app_localizations.dart';
 
 const _kArabicNames = {
   PrayerName.fajr: 'الفجر',

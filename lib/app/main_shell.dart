@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/navigation/primary_scroll_registry.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import 'theme.dart';
+import '../core/navigation/primary_scroll_registry.dart';
+import '../core/theme/cohere_colors.dart';
+import '../l10n/app_localizations.dart';
 
 class MainShell extends StatelessWidget {
   const MainShell({required this.navigationShell, super.key});

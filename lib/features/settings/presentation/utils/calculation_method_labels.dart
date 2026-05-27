@@ -1,4 +1,4 @@
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import '../../domain/calculation_method_id.dart';
 
 const kCalculationMethods = <(CalculationMethodId, String)>[
   (CalculationMethodId.muslimWorldLeague, 'Muslim World League'),

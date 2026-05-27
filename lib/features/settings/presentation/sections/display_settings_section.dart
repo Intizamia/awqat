@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/core/widgets/schedule_groove_divider.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/settings/domain/time_format_id.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/utils/settings_value_labels.dart';
-import 'package:awqat/features/settings/presentation/widgets/settings_check_row.dart';
-import 'package:awqat/features/settings/presentation/widgets/settings_switch_row.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/widgets/schedule_groove_divider.dart';
+import '../../domain/app_settings.dart';
+import '../../domain/time_format_id.dart';
+import '../settings_cubit.dart';
+import '../utils/settings_value_labels.dart';
+import '../widgets/settings_check_row.dart';
+import '../widgets/settings_switch_row.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class DisplaySettingsBody extends StatelessWidget {
   const DisplaySettingsBody({required this.settings, super.key});

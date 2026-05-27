@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:awqat/app/router.dart';
-import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
-import 'package:awqat/features/notifications/presentation/notification_reschedule_listener.dart';
-import 'package:awqat/app/theme.dart';
-import 'package:awqat/core/l10n/locale_config.dart';
-import 'package:awqat/features/location/data/geolocator_location_service.dart';
-import 'package:awqat/features/location/presentation/location_cubit.dart';
-import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_cubit.dart';
-import 'package:awqat/features/settings/data/settings_repository.dart';
-import 'package:awqat/features/settings/domain/theme_mode_id.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import 'router.dart';
+import '../features/notifications/data/prayer_notification_service.dart';
+import '../features/notifications/presentation/notification_reschedule_listener.dart';
+import 'theme.dart';
+import '../core/l10n/locale_config.dart';
+import '../features/location/data/geolocator_location_service.dart';
+import '../features/location/presentation/location_cubit.dart';
+import '../features/prayer/data/adhan_calculation_engine.dart';
+import '../features/prayer/presentation/prayer_times_cubit.dart';
+import '../features/settings/data/settings_repository.dart';
+import '../features/settings/domain/theme_mode_id.dart';
+import '../features/settings/presentation/settings_cubit.dart';
+import '../features/settings/presentation/settings_state.dart';
+import '../l10n/app_localizations.dart';
 
 class AwqatApp extends StatelessWidget {
   AwqatApp({

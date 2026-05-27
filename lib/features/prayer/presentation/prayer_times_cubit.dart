@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_state.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
+import '../data/adhan_calculation_engine.dart';
+import 'prayer_times_state.dart';
+import '../../settings/domain/app_settings.dart';
 
 class PrayerTimesCubit extends Cubit<PrayerTimesState> {
   PrayerTimesCubit(this._engine) : super(const PrayerTimesState());

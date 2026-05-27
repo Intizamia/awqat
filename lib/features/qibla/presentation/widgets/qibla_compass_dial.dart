@@ -2,8 +2,8 @@ import 'dart:math' show pi, cos, sin;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_compass_v2/flutter_compass_v2.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/theme/cohere_colors.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class QiblaCompassDial extends StatelessWidget {
   const QiblaCompassDial({

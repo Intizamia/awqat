@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
-import 'package:awqat/features/settings/domain/theme_mode_id.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
+import '../domain/app_settings.dart';
+import '../domain/calculation_method_id.dart';
+import '../domain/theme_mode_id.dart';
+import '../domain/user_location.dart';
 
 const _kSettingsKey = 'app_settings_v1';
 

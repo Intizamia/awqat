@@ -1,10 +1,10 @@
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:awqat/features/settings/domain/madhab_id.dart';
-import 'package:awqat/features/settings/domain/theme_mode_id.dart';
-import 'package:awqat/features/settings/domain/time_format_id.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../domain/app_settings.dart';
+import '../../domain/high_latitude_rule_id.dart';
+import '../../domain/madhab_id.dart';
+import '../../domain/theme_mode_id.dart';
+import '../../domain/time_format_id.dart';
+import '../../domain/user_location.dart';
+import '../../../../l10n/app_localizations.dart';
 
 String madhabLabel(AppLocalizations l10n, MadhabId madhab) {
   return switch (madhab) {

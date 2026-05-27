@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
-import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:awqat/features/settings/domain/madhab_id.dart';
-import 'package:awqat/features/settings/domain/prayer_offsets.dart';
+import 'calculation_method_id.dart';
+import 'high_latitude_rule_id.dart';
+import 'madhab_id.dart';
+import 'prayer_offsets.dart';
 
 class CalculationSettings extends Equatable {
   const CalculationSettings({

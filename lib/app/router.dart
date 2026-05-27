@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:awqat/app/main_shell.dart';
-import 'package:awqat/features/discover/presentation/discover_screen.dart';
-import 'package:awqat/features/prayer/presentation/prayer_times_screen.dart';
-import 'package:awqat/features/qibla/presentation/qibla_screen.dart';
-import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
-import 'package:awqat/features/settings/presentation/screens/advanced_calculation_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/calculation_method_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/high_latitude_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/language_screen.dart';
-import 'package:awqat/features/location/presentation/location_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/location_settings_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/madhab_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/notifications_settings_screen.dart';
-import 'package:awqat/features/settings/presentation/screens/reset_settings_screen.dart';
-import 'package:awqat/features/settings/presentation/settings_screen.dart';
+import 'main_shell.dart';
+import '../features/discover/presentation/discover_screen.dart';
+import '../features/prayer/presentation/prayer_times_screen.dart';
+import '../features/qibla/presentation/qibla_screen.dart';
+import '../features/notifications/data/prayer_notification_service.dart';
+import '../features/settings/presentation/screens/advanced_calculation_screen.dart';
+import '../features/settings/presentation/screens/calculation_method_screen.dart';
+import '../features/settings/presentation/screens/high_latitude_screen.dart';
+import '../features/settings/presentation/screens/language_screen.dart';
+import '../features/location/presentation/location_screen.dart';
+import '../features/settings/presentation/screens/location_settings_screen.dart';
+import '../features/settings/presentation/screens/madhab_screen.dart';
+import '../features/settings/presentation/screens/notifications_settings_screen.dart';
+import '../features/settings/presentation/screens/reset_settings_screen.dart';
+import '../features/settings/presentation/settings_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 

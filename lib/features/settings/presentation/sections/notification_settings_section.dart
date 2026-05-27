@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/core/widgets/schedule_groove_divider.dart';
-import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
-import 'package:awqat/features/prayer/presentation/prayer_name_l10n.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/widgets/settings_switch_row.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/widgets/schedule_groove_divider.dart';
+import '../../../notifications/data/prayer_notification_service.dart';
+import '../../../prayer/domain/prayer_name.dart';
+import '../../../prayer/presentation/prayer_name_l10n.dart';
+import '../../domain/app_settings.dart';
+import '../settings_cubit.dart';
+import '../widgets/settings_switch_row.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class NotificationMasterSwitch extends StatelessWidget {
   const NotificationMasterSwitch({

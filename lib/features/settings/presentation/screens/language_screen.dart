@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/features/settings/presentation/settings_state.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/widgets/cohere_settings_widgets.dart';
+import '../settings_cubit.dart';
+import '../settings_state.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});

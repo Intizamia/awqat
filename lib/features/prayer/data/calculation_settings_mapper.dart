@@ -1,9 +1,9 @@
 import 'package:adhan_dart/adhan_dart.dart' as adhan;
-import 'package:awqat/features/settings/domain/calculation_method_id.dart';
-import 'package:awqat/features/settings/domain/calculation_settings.dart';
-import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:awqat/features/settings/domain/madhab_id.dart';
-import 'package:awqat/features/settings/domain/prayer_offsets.dart';
+import '../../settings/domain/calculation_method_id.dart';
+import '../../settings/domain/calculation_settings.dart';
+import '../../settings/domain/high_latitude_rule_id.dart';
+import '../../settings/domain/madhab_id.dart';
+import '../../settings/domain/prayer_offsets.dart';
 
 class CalculationSettingsMapper {
   const CalculationSettingsMapper();

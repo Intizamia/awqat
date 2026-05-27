@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
-import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
-import 'package:awqat/features/settings/presentation/settings_cubit.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import '../../../../core/theme/cohere_colors.dart';
+import '../../../../core/widgets/cohere_settings_widgets.dart';
+import '../settings_cubit.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ResetSettingsScreen extends StatelessWidget {
   const ResetSettingsScreen({super.key});

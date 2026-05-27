@@ -1,5 +1,5 @@
-import 'package:awqat/features/location/domain/city_search_result.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
+import '../domain/city_search_result.dart';
+import '../../settings/domain/user_location.dart';
 
 /// Resolves GPS position and city search into [UserLocation].
 abstract class LocationService {

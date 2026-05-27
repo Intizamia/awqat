@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:awqat/features/settings/domain/time_format_id.dart';
+import '../../features/settings/domain/time_format_id.dart';
 
 String formatPrayerTime(
   DateTime time, {

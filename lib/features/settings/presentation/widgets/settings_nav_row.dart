@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:awqat/core/theme/app_surface_tokens.dart';
-import 'package:awqat/features/settings/presentation/widgets/settings_row_metrics.dart';
+import '../../../../core/theme/app_surface_tokens.dart';
+import 'settings_row_metrics.dart';
 
 /// Hub row: title, current value, chevron — opens a detail screen.
 class SettingsNavRow extends StatelessWidget {

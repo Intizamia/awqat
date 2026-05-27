@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:awqat/core/theme/cohere_colors.dart';
+import '../core/theme/cohere_colors.dart';
 
 ThemeData buildLightTheme() => _buildTheme(Brightness.light);
 ThemeData buildDarkTheme() => _buildTheme(Brightness.dark);

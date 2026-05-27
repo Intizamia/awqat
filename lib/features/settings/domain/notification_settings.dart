@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import '../../prayer/domain/prayer_name.dart';
 
 /// Per-prayer notification toggles and master enable flag.
 class NotificationSettings extends Equatable {

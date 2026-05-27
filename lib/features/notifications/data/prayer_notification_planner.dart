@@ -1,10 +1,10 @@
-import 'package:awqat/features/notifications/data/prayer_notification_ids.dart';
-import 'package:awqat/features/notifications/domain/scheduled_prayer_notification.dart';
-import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:awqat/features/prayer/domain/prayer_schedule.dart';
-import 'package:awqat/features/prayer/presentation/prayer_name_l10n.dart';
-import 'package:awqat/features/settings/domain/app_settings.dart';
-import 'package:awqat/l10n/app_localizations.dart';
+import 'prayer_notification_ids.dart';
+import '../domain/scheduled_prayer_notification.dart';
+import '../../prayer/data/adhan_calculation_engine.dart';
+import '../../prayer/domain/prayer_schedule.dart';
+import '../../prayer/presentation/prayer_name_l10n.dart';
+import '../../settings/domain/app_settings.dart';
+import '../../../l10n/app_localizations.dart';
 
 /// Builds upcoming prayer notifications for the next few days.
 List<ScheduledPrayerNotification> planPrayerNotifications({
