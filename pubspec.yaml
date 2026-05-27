@@ -38,24 +38,27 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: assets/branding/icon.png
-  adaptive_icon_background: "#2E7D32"
-  adaptive_icon_foreground: assets/branding/icon.png
-
 flutter_native_splash:
-  color: "#2E7D32"
-  image: assets/branding/icon.png
-  android_12:
-    color: "#2E7D32"
-    image: assets/branding/icon.png
-  ios: true
   android: true
+  ios: true
+
+  image: "assets/app_icon/app_icon_960_foreground.png"
+
+  color: "#000000"
+
+  android_12:
+    color: "#000000"
+
+flutter_launcher_icons:
+  image_path: "assets/app_icon/app_icon_960.png"
+
+  android: true
+  ios: true
+  remove_alpha_ios: true
+
+  adaptive_icon_background: "assets/app_icon/app_icon_960_background.png"
+  adaptive_icon_foreground: "assets/app_icon/app_icon_960_foreground.png"
 
 flutter:
   uses-material-design: true
   generate: true
-  assets:
-    - assets/branding/icon.png
