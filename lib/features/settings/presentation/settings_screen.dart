@@ -31,14 +31,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    PrimaryScrollRegistry.instance
-        .register(kSettingsBranchIndex, _scrollController);
+    PrimaryScrollRegistry.instance.register(
+      kSettingsBranchIndex,
+      _scrollController,
+    );
   }
 
   @override
   void dispose() {
-    PrimaryScrollRegistry.instance
-        .unregister(kSettingsBranchIndex, _scrollController);
+    PrimaryScrollRegistry.instance.unregister(
+      kSettingsBranchIndex,
+      _scrollController,
+    );
     _scrollController.dispose();
     super.dispose();
   }
@@ -78,10 +82,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Text(
                       l10n.navSettings.toUpperCase(),
-                      style: cohereMonoLabel(context,
-                          fontSize: 11,
-                          letterSpacing: 0.12,
-                          color: inkDim),
+                      style: cohereMonoLabel(
+                        context,
+                        fontSize: 11,
+                        letterSpacing: 0.12,
+                        color: inkDim,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -133,7 +139,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CohereSectionLabel(label: l10n.settingsGroupDisplay),
               _InlineRadioSection(
                 label: 'Appearance',
-                isFirst: true,
                 rule: rule,
                 ink: ink,
                 inkMute: inkMute,
@@ -141,11 +146,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   value: settings.themeMode,
                   options: [
                     CohereRadioOption(
-                        value: ThemeModeId.system, label: l10n.themeSystem),
+                      value: ThemeModeId.system,
+                      label: l10n.themeSystem,
+                    ),
                     CohereRadioOption(
-                        value: ThemeModeId.light, label: l10n.themeLight),
+                      value: ThemeModeId.light,
+                      label: l10n.themeLight,
+                    ),
                     CohereRadioOption(
-                        value: ThemeModeId.dark, label: l10n.themeDark),
+                      value: ThemeModeId.dark,
+                      label: l10n.themeDark,
+                    ),
                   ],
                   onChanged: cubit.setThemeMode,
                 ),
@@ -159,9 +170,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   value: settings.timeFormat,
                   options: [
                     CohereRadioOption(
-                        value: TimeFormatId.hour12, label: l10n.timeFormat12),
+                      value: TimeFormatId.hour12,
+                      label: l10n.timeFormat12,
+                    ),
                     CohereRadioOption(
-                        value: TimeFormatId.hour24, label: l10n.timeFormat24),
+                      value: TimeFormatId.hour24,
+                      label: l10n.timeFormat24,
+                    ),
                   ],
                   onChanged: cubit.setTimeFormat,
                 ),
@@ -183,7 +198,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 min: -2,
                 max: 2,
                 unit: 'day',
-                isFirst: true,
                 onChanged: cubit.setHijriAdjustmentDays,
               ),
               Container(height: 1, color: rule),
@@ -219,7 +233,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // Version footer
               _VersionFooter(ink: inkMute),
-              const SizedBox(height: 100),
             ],
           );
         },
@@ -235,11 +248,9 @@ class _InlineRadioSection extends StatelessWidget {
     required this.ink,
     required this.inkMute,
     required this.child,
-    this.isFirst = false,
   });
 
   final String label;
-  final bool isFirst;
   final Color rule;
   final Color ink;
   final Color inkMute;
@@ -248,10 +259,9 @@ class _InlineRadioSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: isFirst
-          ? null
-          : BoxDecoration(
-              border: Border(top: BorderSide(color: rule, width: 1))),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: rule, width: 1)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -260,8 +270,7 @@ class _InlineRadioSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label,
-                    style: TextStyle(fontSize: 15, color: ink)),
+                Text(label, style: TextStyle(fontSize: 15, color: ink)),
               ],
             ),
           ),
@@ -290,14 +299,16 @@ class _VersionFooter extends StatelessWidget {
             : l10n.settingsVersionLabel(info.version, info.buildNumber);
 
         return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
           child: Center(
             child: Text(
               label,
-              style: cohereMonoLabel(context,
-                  fontSize: 11,
-                  letterSpacing: 0.14,
-                  color: ink.withValues(alpha: 0.55)),
+              style: cohereMonoLabel(
+                context,
+                fontSize: 11,
+                letterSpacing: 0.14,
+                color: ink.withValues(alpha: 0.55),
+              ),
             ),
           ),
         );
