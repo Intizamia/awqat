@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/settings_grouped_card.dart';
+import 'package:times/core/widgets/cohere_settings_widgets.dart';
 import 'package:times/features/settings/domain/madhab_id.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/features/settings/presentation/utils/settings_value_labels.dart';
-import 'package:times/features/settings/presentation/widgets/settings_check_row.dart';
-import 'package:times/features/settings/presentation/widgets/settings_detail_scaffold.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class MadhabScreen extends StatelessWidget {
@@ -21,24 +18,25 @@ class MadhabScreen extends StatelessWidget {
         final calculation = state.settings.calculation;
         final cubit = context.read<SettingsCubit>();
 
-        return SettingsDetailScaffold(
+        return CohereDetailScaffold(
           title: l10n.madhabTitle,
-          subtitle: l10n.madhabSubtitle,
-          isLoading: state.isLoading,
-          slivers: [
-            SettingsGroupedCardSliver(
-              child: SettingsGroupedCard(
-                children: [
-                  for (final madhab in MadhabId.values)
-                    SettingsCheckRow(
-                      title: madhabLabel(l10n, madhab),
-                      selected: calculation.madhab == madhab,
-                      onTap: () => cubit.updateCalculation(
-                        calculation.copyWith(madhab: madhab),
-                      ),
-                    ),
-                ],
-              ),
+          intro: l10n.madhabSubtitle,
+          children: [
+            CohereSectionLabel(label: 'Choose madhab'),
+            CohereMethodRow(
+              title: l10n.madhabShafi,
+              sub: 'Shadow length = 1× object height.',
+              isSelected: calculation.madhab == MadhabId.shafi,
+              isFirst: true,
+              onTap: () => cubit.updateCalculation(
+                  calculation.copyWith(madhab: MadhabId.shafi)),
+            ),
+            CohereMethodRow(
+              title: l10n.madhabHanafi,
+              sub: 'Shadow length = 2× object height. Later Asr.',
+              isSelected: calculation.madhab == MadhabId.hanafi,
+              onTap: () => cubit.updateCalculation(
+                  calculation.copyWith(madhab: MadhabId.hanafi)),
             ),
           ],
         );

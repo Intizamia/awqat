@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:times/app/theme.dart';
+import 'package:times/core/theme/cohere_colors.dart';
+import 'package:times/core/widgets/cohere_settings_widgets.dart';
 import 'package:times/features/location/domain/city_search_result.dart';
 import 'package:times/features/location/presentation/location_cubit.dart';
 import 'package:times/features/location/presentation/location_state.dart';
@@ -10,31 +13,33 @@ import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
 import 'package:times/l10n/app_localizations.dart';
 
-/// Location picker: current status, device GPS, and city search.
 class LocationScreen extends StatelessWidget {
   const LocationScreen({this.popOnSelect = false, super.key});
 
-  /// When true, pops after the user selects a location (setup flow).
   final bool popOnSelect;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final brightness = Theme.of(context).brightness;
+    final surfPage = CohereColors.surfPage(brightness);
+    final statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         if (state.isLoading) {
           return Scaffold(
-            appBar: AppBar(title: Text(l10n.locationTitle)),
+            backgroundColor: surfPage,
             body: const Center(child: CircularProgressIndicator()),
           );
         }
 
         return Scaffold(
-          appBar: AppBar(title: Text(l10n.locationTitle)),
-          body: _LocationScreenBody(
+          backgroundColor: surfPage,
+          body: _LocationBody(
             currentLocation: state.settings.location,
             popOnSelect: popOnSelect,
+            statusBarHeight: statusBarHeight,
+            brightness: brightness,
           ),
         );
       },
@@ -42,20 +47,24 @@ class LocationScreen extends StatelessWidget {
   }
 }
 
-class _LocationScreenBody extends StatefulWidget {
-  const _LocationScreenBody({
+class _LocationBody extends StatefulWidget {
+  const _LocationBody({
     required this.currentLocation,
     required this.popOnSelect,
+    required this.statusBarHeight,
+    required this.brightness,
   });
 
   final UserLocation? currentLocation;
   final bool popOnSelect;
+  final double statusBarHeight;
+  final Brightness brightness;
 
   @override
-  State<_LocationScreenBody> createState() => _LocationScreenBodyState();
+  State<_LocationBody> createState() => _LocationBodyState();
 }
 
-class _LocationScreenBodyState extends State<_LocationScreenBody> {
+class _LocationBodyState extends State<_LocationBody> {
   final _searchController = TextEditingController();
   Timer? _debounce;
 
@@ -88,6 +97,13 @@ class _LocationScreenBodyState extends State<_LocationScreenBody> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final brightness = widget.brightness;
+    final ink = CohereColors.inkColor(brightness);
+    final inkDim = CohereColors.inkDim(brightness);
+    final inkMute = CohereColors.inkMute(brightness);
+    final accent = CohereColors.accentColor(brightness);
+    final rule = CohereColors.surfRule(brightness);
+    final surfElev = CohereColors.surfElevColor(brightness);
 
     return MultiBlocListener(
       listeners: [
@@ -123,91 +139,191 @@ class _LocationScreenBodyState extends State<_LocationScreenBody> {
       child: BlocBuilder<LocationCubit, LocationState>(
         builder: (context, locationState) {
           final cubit = context.read<LocationCubit>();
-          final location = widget.currentLocation;
           final isBusy =
               locationState.isAcquiringGps || locationState.isSearching;
+          final location = widget.currentLocation;
+          final hasSearch = _searchController.text.trim().length >= 2;
 
           return ListView(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
             children: [
-              Text(
-                l10n.locationSubtitle,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+              SizedBox(height: widget.statusBarHeight + 8),
+              // Back button
+              Row(
+                children: [
+                  const SizedBox(width: 4),
+                  TextButton.icon(
+                    onPressed: () => Navigator.of(context).maybePop(),
+                    style: TextButton.styleFrom(
+                      foregroundColor: accent,
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-              ),
-              const SizedBox(height: 24),
-              _LocationStatusCard(location: location),
-              const SizedBox(height: 28),
-              Text(
-                l10n.locationGetLocationSectionLabel,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.6,
+                    icon: Icon(
+                      Directionality.of(context) == TextDirection.rtl
+                          ? Icons.chevron_right
+                          : Icons.chevron_left,
+                      size: 18,
                     ),
-              ),
-              const SizedBox(height: 10),
-              _GpsActionCard(
-                isAcquiring: locationState.isAcquiringGps,
-                enabled: !isBusy,
-                onTap: cubit.useCurrentLocation,
-              ),
-              const SizedBox(height: 28),
-              Text(
-                l10n.locationSearchSectionLabel,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.6,
-                    ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _searchController,
-                textInputAction: TextInputAction.search,
-                decoration: InputDecoration(
-                  hintText: l10n.searchCityHint,
-                  labelText: l10n.searchCity,
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: _searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            _searchController.clear();
-                            cubit.clearSearch();
-                            setState(() {});
-                          },
-                        )
-                      : null,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    label: const Text('Settings',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500)),
                   ),
+                ],
+              ),
+              // Header
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 4, 24, 22),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'SETTINGS',
+                      style: cohereMonoLabel(context,
+                          fontSize: 11, color: inkMute),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.locationTitle,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ],
                 ),
-                onChanged: (value) {
-                  setState(() {});
-                  _onSearchChanged(value);
+              ),
+
+              // Use device location toggle
+              CohereToggleRow(
+                label: l10n.useMyLocation,
+                sub: l10n.locationUseGpsSubtitle,
+                isFirst: true,
+                value: locationState.isAcquiringGps,
+                onChanged: (v) {
+                  if (v && !locationState.isAcquiringGps) {
+                    cubit.useCurrentLocation();
+                  }
                 },
               ),
-              if (_searchController.text.trim().length >= 2) ...[
+
+              // Current / recent location
+              if (location != null) ...[
+                CohereSectionLabel(label: 'Current'),
+                CohereMethodRow(
+                  title: location.label ?? l10n.locationUnknown,
+                  sub: location.timeZoneId,
+                  isSelected: true,
+                  isFirst: true,
+                  onTap: null,
+                ),
+              ],
+
+              // Search section
+              CohereSectionLabel(label: l10n.locationSearchSectionLabel),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: TextField(
+                  controller: _searchController,
+                  textInputAction: TextInputAction.search,
+                  style: TextStyle(fontSize: 15, color: ink),
+                  decoration: InputDecoration(
+                    hintText: l10n.searchCityHint,
+                    hintStyle: TextStyle(color: inkMute),
+                    prefixIcon: Icon(Icons.search, color: inkMute, size: 20),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon: Icon(Icons.clear, color: inkMute, size: 18),
+                            onPressed: () {
+                              _searchController.clear();
+                              cubit.clearSearch();
+                              setState(() {});
+                            },
+                          )
+                        : null,
+                    filled: true,
+                    fillColor: surfElev,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 14),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: rule),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: rule),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: accent, width: 1.5),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {});
+                    _onSearchChanged(value);
+                  },
+                ),
+              ),
+
+              if (hasSearch) ...[
                 const SizedBox(height: 12),
                 if (locationState.isSearching)
-                  const _SearchLoadingCard()
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: accent),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(l10n.locationSearching,
+                            style: TextStyle(fontSize: 14, color: inkMute)),
+                      ],
+                    ),
+                  )
                 else if (locationState.searchReturnedEmpty)
-                  _SearchNotFoundCard(query: _searchController.text.trim())
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+                    child: Text(
+                      l10n.locationSearchNotFoundMessage(
+                          _searchController.text.trim()),
+                      style: TextStyle(
+                          fontSize: 14, color: inkMute, height: 1.5),
+                    ),
+                  )
                 else if (locationState.searchResults.isNotEmpty)
-                  _SearchResultsCard(
-                    results: locationState.searchResults,
-                    enabled: !locationState.isSearching,
-                    onSelect: (result) {
-                      _searchController.clear();
-                      cubit.clearSearch();
-                      cubit.selectSearchResult(result);
-                      setState(() {});
-                    },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      children: [
+                        for (var i = 0;
+                            i < locationState.searchResults.length;
+                            i++)
+                          _SearchResultRow(
+                            result: locationState.searchResults[i],
+                            isFirst: i == 0,
+                            enabled: !isBusy,
+                            ink: ink,
+                            inkMute: inkMute,
+                            inkDim: inkDim,
+                            rule: rule,
+                            onTap: () {
+                              _searchController.clear();
+                              cubit.clearSearch();
+                              cubit.selectSearchResult(
+                                  locationState.searchResults[i]);
+                              setState(() {});
+                            },
+                          ),
+                      ],
+                    ),
                   ),
               ],
+
+              const SizedBox(height: 100),
             ],
           );
         },
@@ -216,359 +332,48 @@ class _LocationScreenBodyState extends State<_LocationScreenBody> {
   }
 }
 
-class _LocationStatusCard extends StatelessWidget {
-  const _LocationStatusCard({required this.location});
-
-  final UserLocation? location;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    if (location == null) {
-      return Card(
-        elevation: 0,
-        color: colorScheme.surfaceContainerHighest,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: colorScheme.outlineVariant),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHigh,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.location_off_outlined,
-                  size: 28,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                l10n.locationNotSet,
-                style: theme.textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.locationEmptyMessage,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    return Card(
-      elevation: 0,
-      color: colorScheme.primaryContainer,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: colorScheme.primary.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Icon(
-                Icons.check_circle,
-                color: colorScheme.primary,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.locationCurrentTitle,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: colorScheme.onPrimaryContainer.withValues(
-                        alpha: 0.8,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    location!.label ?? l10n.locationUnknown,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    '${location!.latitude.toStringAsFixed(4)}, '
-                    '${location!.longitude.toStringAsFixed(4)} · '
-                    '${location!.timeZoneId}',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onPrimaryContainer.withValues(
-                        alpha: 0.75,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            BlocBuilder<LocationCubit, LocationState>(
-              builder: (context, locationState) {
-                final isBusy = locationState.isAcquiringGps ||
-                    locationState.isSearching;
-                return IconButton(
-                  tooltip: l10n.locationClear,
-                  onPressed: isBusy
-                      ? null
-                      : () => context.read<LocationCubit>().clearLocation(),
-                  icon: Icon(
-                    Icons.close,
-                    color: colorScheme.onPrimaryContainer,
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _GpsActionCard extends StatelessWidget {
-  const _GpsActionCard({
-    required this.isAcquiring,
+class _SearchResultRow extends StatelessWidget {
+  const _SearchResultRow({
+    required this.result,
+    required this.isFirst,
     required this.enabled,
+    required this.ink,
+    required this.inkMute,
+    required this.inkDim,
+    required this.rule,
     required this.onTap,
   });
 
-  final bool isAcquiring;
+  final CitySearchResult result;
+  final bool isFirst;
   final bool enabled;
+  final Color ink;
+  final Color inkMute;
+  final Color inkDim;
+  final Color rule;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerLow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: isAcquiring
-                    ? Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: colorScheme.onPrimaryContainer,
-                        ),
-                      )
-                    : Icon(
-                        Icons.my_location,
-                        color: colorScheme.onPrimaryContainer,
-                      ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      isAcquiring ? l10n.locationAcquiring : l10n.useMyLocation,
-                      style: theme.textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      l10n.locationUseGpsSubtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (!isAcquiring)
-                Icon(
-                  Directionality.of(context) == TextDirection.rtl
-                      ? Icons.chevron_left
-                      : Icons.chevron_right,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SearchLoadingCard extends StatelessWidget {
-  const _SearchLoadingCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerLow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
+    return InkWell(
+      onTap: enabled ? onTap : null,
+      child: Container(
+        decoration: isFirst
+            ? null
+            : BoxDecoration(
+                border: Border(top: BorderSide(color: rule, width: 1))),
+        padding: const EdgeInsets.symmetric(vertical: 14),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 22,
-              height: 22,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: colorScheme.primary,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              l10n.locationSearching,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SearchNotFoundCard extends StatelessWidget {
-  const _SearchNotFoundCard({required this.query});
-
-  final String query;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerHighest,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: colorScheme.outlineVariant),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.search_off_outlined,
-              color: colorScheme.onSurfaceVariant,
-              size: 28,
-            ),
-            const SizedBox(width: 16),
+            Icon(Icons.location_on_outlined, color: inkMute, size: 18),
+            const SizedBox(width: 12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.locationSearchNotFoundTitle,
-                    style: theme.textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l10n.locationSearchNotFoundMessage(query),
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
+              child: Text(result.label,
+                  style: TextStyle(fontSize: 15, color: ink)),
             ),
+            Icon(Icons.add, color: inkMute, size: 16),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _SearchResultsCard extends StatelessWidget {
-  const _SearchResultsCard({
-    required this.results,
-    required this.enabled,
-    required this.onSelect,
-  });
-
-  final List<CitySearchResult> results;
-  final bool enabled;
-  final void Function(CitySearchResult result) onSelect;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Card(
-      elevation: 0,
-      color: colorScheme.surfaceContainerLow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          for (var i = 0; i < results.length; i++) ...[
-            if (i > 0) Divider(height: 1, color: colorScheme.outlineVariant),
-            ListTile(
-              leading: Icon(Icons.location_city, color: colorScheme.primary),
-              title: Text(results[i].label),
-              trailing: const Icon(Icons.add_location_alt_outlined),
-              enabled: enabled,
-              onTap: enabled ? () => onSelect(results[i]) : null,
-            ),
-          ],
-        ],
       ),
     );
   }

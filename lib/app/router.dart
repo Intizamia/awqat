@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:times/app/main_shell.dart';
-import 'package:times/features/coming_soon/presentation/coming_soon_screen.dart';
+import 'package:times/features/discover/presentation/discover_screen.dart';
 import 'package:times/features/prayer/presentation/prayer_times_screen.dart';
 import 'package:times/features/qibla/presentation/qibla_screen.dart';
 import 'package:times/features/notifications/data/prayer_notification_service.dart';
 import 'package:times/features/settings/presentation/screens/advanced_calculation_screen.dart';
 import 'package:times/features/settings/presentation/screens/calculation_method_screen.dart';
-import 'package:times/features/settings/presentation/screens/display_settings_screen.dart';
 import 'package:times/features/settings/presentation/screens/high_latitude_screen.dart';
 import 'package:times/features/settings/presentation/screens/language_screen.dart';
 import 'package:times/features/location/presentation/location_screen.dart';
@@ -15,7 +14,6 @@ import 'package:times/features/settings/presentation/screens/location_settings_s
 import 'package:times/features/settings/presentation/screens/madhab_screen.dart';
 import 'package:times/features/settings/presentation/screens/notifications_settings_screen.dart';
 import 'package:times/features/settings/presentation/screens/reset_settings_screen.dart';
-import 'package:times/features/settings/presentation/screens/theme_screen.dart';
 import 'package:times/features/settings/presentation/settings_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -58,8 +56,8 @@ GoRouter createRouter({
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/coming-soon',
-                builder: (context, state) => const ComingSoonScreen(),
+                path: '/discover',
+                builder: (context, state) => const DiscoverScreen(),
               ),
             ],
           ),
@@ -100,16 +98,8 @@ GoRouter createRouter({
                     ),
                   ),
                   GoRoute(
-                    path: 'display',
-                    builder: (context, state) => const DisplaySettingsScreen(),
-                  ),
-                  GoRoute(
                     path: 'language',
                     builder: (context, state) => const LanguageScreen(),
-                  ),
-                  GoRoute(
-                    path: 'theme',
-                    builder: (context, state) => const ThemeScreen(),
                   ),
                   GoRoute(
                     path: 'reset',

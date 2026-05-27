@@ -118,6 +118,12 @@ abstract class AppLocalizations {
   /// **'Coming Soon'**
   String get navComingSoon;
 
+  /// No description provided for @navDiscover.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover'**
+  String get navDiscover;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:

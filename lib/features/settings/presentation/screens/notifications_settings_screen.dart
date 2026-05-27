@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/settings_grouped_card.dart';
+import 'package:times/core/widgets/cohere_settings_widgets.dart';
 import 'package:times/features/notifications/data/prayer_notification_service.dart';
-import 'package:times/features/settings/presentation/sections/notification_settings_section.dart';
+import 'package:times/features/prayer/domain/prayer_name.dart';
+import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/features/settings/presentation/widgets/settings_detail_scaffold.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class NotificationsSettingsScreen extends StatelessWidget {
@@ -22,31 +22,73 @@ class NotificationsSettingsScreen extends StatelessWidget {
 
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        return SettingsDetailScaffold(
+        final settings = state.settings;
+        final notifs = settings.notifications;
+        final cubit = context.read<SettingsCubit>();
+
+        return CohereDetailScaffold(
           title: l10n.notificationsSectionTitle,
-          subtitle: l10n.notificationsSectionSubtitle,
-          isLoading: state.isLoading,
-          slivers: [
-            SettingsGroupedCardSliver(
-              padding: const EdgeInsets.fromLTRB(0, 12, 0, 4),
-              child: SettingsGroupedCard(
-                children: [
-                  NotificationMasterSwitch(
-                    settings: state.settings,
-                    notificationService: notificationService,
-                  ),
-                ],
-              ),
+          children: [
+            CohereSectionLabel(label: 'Master'),
+            CohereToggleRow(
+              label: l10n.notificationsMaster,
+              sub: l10n.notificationsMasterSubtitle,
+              isFirst: true,
+              value: notifs.enabled,
+              onChanged: (value) async {
+                if (value) {
+                  await notificationService.initialize();
+                  final granted =
+                      await notificationService.requestPermissions();
+                  if (!context.mounted) return;
+                  if (!granted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text(l10n.notificationsPermissionDenied)),
+                    );
+                    return;
+                  }
+                }
+                await cubit.setNotificationsEnabled(value);
+              },
             ),
-            if (state.settings.notifications.enabled)
-              SettingsGroupedCardSliver(
-                padding: const EdgeInsets.fromLTRB(0, 4, 0, 12),
-                child: SettingsGroupedCard(
-                  children: [
-                    NotificationPrayerToggles(settings: state.settings),
-                  ],
+            CohereSectionLabel(label: 'Default sound'),
+            CohereMethodRow(
+              title: 'Silent',
+              sub: 'No audible alert',
+              isSelected: false,
+              isFirst: true,
+              onTap: null,
+            ),
+            CohereMethodRow(
+              title: 'Reminder',
+              sub: 'Standard notification tone',
+              isSelected: notifs.enabled,
+              onTap: null,
+            ),
+            CohereMethodRow(
+              title: 'First sentence',
+              sub: 'Plays "Allāhu akbar"',
+              isSelected: false,
+              onTap: null,
+            ),
+            CohereMethodRow(
+              title: 'Full Adhan',
+              sub: 'Plays complete adhan (~2 min)',
+              isSelected: false,
+              onTap: null,
+            ),
+            if (notifs.enabled) ...[
+              CohereSectionLabel(label: 'Per prayer'),
+              for (var i = 0; i < PrayerName.values.length; i++)
+                CohereToggleRow(
+                  label: PrayerName.values[i].label(l10n),
+                  isFirst: i == 0,
+                  value: notifs.isPrayerEnabled(PrayerName.values[i]),
+                  onChanged: (v) => cubit.setPrayerNotificationEnabled(
+                      PrayerName.values[i], v),
                 ),
-              ),
+            ],
           ],
         );
       },

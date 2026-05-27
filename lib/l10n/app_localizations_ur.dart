@@ -18,6 +18,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get navComingSoon => 'جلد آ رہا ہے';
 
   @override
+  String get navDiscover => 'دریافت کریں';
+
+  @override
   String get navSettings => 'ترتیبات';
 
   @override

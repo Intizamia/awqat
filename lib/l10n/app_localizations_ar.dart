@@ -18,6 +18,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navComingSoon => 'قريباً';
 
   @override
+  String get navDiscover => 'اكتشف';
+
+  @override
   String get navSettings => 'الإعدادات';
 
   @override

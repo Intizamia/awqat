@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/settings_grouped_card.dart';
+import 'package:times/core/widgets/cohere_settings_widgets.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/features/settings/presentation/utils/settings_value_labels.dart';
-import 'package:times/features/settings/presentation/widgets/settings_check_row.dart';
-import 'package:times/features/settings/presentation/widgets/settings_detail_scaffold.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});
 
-  static const _locales = ['en', 'ur', 'ar'];
+  static const _locales = [
+    ('en', 'English', 'English'),
+    ('ar', 'Arabic', 'العربية'),
+    ('ur', 'Urdu', 'اردو'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +21,21 @@ class LanguageScreen extends StatelessWidget {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         final cubit = context.read<SettingsCubit>();
+        final current = state.settings.localeCode;
 
-        return SettingsDetailScaffold(
+        return CohereDetailScaffold(
           title: l10n.language,
-          subtitle: l10n.languageSubtitle,
-          isLoading: state.isLoading,
-          slivers: [
-            SettingsGroupedCardSliver(
-              child: SettingsGroupedCard(
-                children: [
-                  for (final code in _locales)
-                    SettingsCheckRow(
-                      title: languageLabel(code),
-                      selected: state.settings.localeCode == code,
-                      onTap: () => cubit.setLocale(code),
-                    ),
-                ],
+          intro: l10n.languageSubtitle,
+          children: [
+            CohereSectionLabel(label: 'Choose language'),
+            for (var i = 0; i < _locales.length; i++)
+              CohereMethodRow(
+                title: _locales[i].$2,
+                sub: _locales[i].$3,
+                isSelected: current == _locales[i].$1,
+                isFirst: i == 0,
+                onTap: () => cubit.setLocale(_locales[i].$1),
               ),
-            ),
           ],
         );
       },

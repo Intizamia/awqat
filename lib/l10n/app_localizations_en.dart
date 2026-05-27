@@ -18,6 +18,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navComingSoon => 'Coming Soon';
 
   @override
+  String get navDiscover => 'Discover';
+
+  @override
   String get navSettings => 'Settings';
 
   @override

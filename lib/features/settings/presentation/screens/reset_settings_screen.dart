@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/settings_grouped_card.dart';
+import 'package:times/core/theme/cohere_colors.dart';
+import 'package:times/core/widgets/cohere_settings_widgets.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/widgets/settings_detail_scaffold.dart';
-import 'package:times/features/settings/presentation/widgets/settings_row_metrics.dart';
 import 'package:times/l10n/app_localizations.dart';
 
 class ResetSettingsScreen extends StatelessWidget {
@@ -14,45 +13,35 @@ class ResetSettingsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final cubit = context.read<SettingsCubit>();
 
-    return SettingsDetailScaffold(
+    return CohereDetailScaffold(
       title: l10n.resetSectionTitle,
-      subtitle: l10n.resetSectionSubtitle,
-      slivers: [
-        SettingsGroupedCardSliver(
-          child: SettingsGroupedCard(
-            children: [
-              _ResetRow(
-                title: l10n.resetCalculationTitle,
-                subtitle: l10n.resetCalculationMessage,
-                onTap: () async {
-                  final confirmed = await _confirm(
-                    context,
-                    l10n.resetCalculationTitle,
-                    l10n.resetCalculationMessage,
-                    l10n,
-                  );
-                  if (confirmed == true && context.mounted) {
-                    await cubit.resetCalculationToDefaults();
-                  }
-                },
-              ),
-              _ResetRow(
-                title: l10n.resetDisplayTitle,
-                subtitle: l10n.resetDisplayMessage,
-                onTap: () async {
-                  final confirmed = await _confirm(
-                    context,
-                    l10n.resetDisplayTitle,
-                    l10n.resetDisplayMessage,
-                    l10n,
-                  );
-                  if (confirmed == true && context.mounted) {
-                    await cubit.resetToDefaults();
-                  }
-                },
-              ),
-            ],
-          ),
+      intro: l10n.resetSectionSubtitle,
+      children: [
+        CohereSectionLabel(label: 'Options'),
+        _ResetRow(
+          label: l10n.resetCalculationTitle,
+          sub: l10n.resetCalculationMessage,
+          isFirst: true,
+          onTap: () async {
+            final confirmed = await _confirm(
+                context, l10n.resetCalculationTitle,
+                l10n.resetCalculationMessage, l10n);
+            if (confirmed == true && context.mounted) {
+              await cubit.resetCalculationToDefaults();
+            }
+          },
+        ),
+        _ResetRow(
+          label: l10n.resetDisplayTitle,
+          sub: l10n.resetDisplayMessage,
+          onTap: () async {
+            final confirmed = await _confirm(
+                context, l10n.resetDisplayTitle,
+                l10n.resetDisplayMessage, l10n);
+            if (confirmed == true && context.mounted) {
+              await cubit.resetToDefaults();
+            }
+          },
         ),
       ],
     );
@@ -86,41 +75,44 @@ class ResetSettingsScreen extends StatelessWidget {
 
 class _ResetRow extends StatelessWidget {
   const _ResetRow({
-    required this.title,
-    required this.subtitle,
+    required this.label,
+    required this.sub,
     required this.onTap,
+    this.isFirst = false,
   });
 
-  final String title;
-  final String subtitle;
+  final String label;
+  final String sub;
   final VoidCallback onTap;
+  final bool isFirst;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final brightness = Theme.of(context).brightness;
+    final ink = CohereColors.inkColor(brightness);
+    final inkMute = CohereColors.inkMute(brightness);
+    final rule = CohereColors.surfRule(brightness);
 
     return InkWell(
       onTap: onTap,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: SettingsRowMetrics.minHeight,
-        ),
-        child: Padding(
-          padding: SettingsRowMetrics.contentPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(title, style: theme.textTheme.titleMedium),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
+      child: Container(
+        decoration: isFirst
+            ? null
+            : BoxDecoration(
+                border: Border(top: BorderSide(color: rule, width: 1))),
+        constraints: const BoxConstraints(minHeight: 64),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label,
+                style: TextStyle(
+                    fontSize: 15,
+                    color: ink,
+                    fontFamily: 'Inter')),
+            const SizedBox(height: 4),
+            Text(sub, style: TextStyle(fontSize: 13, color: inkMute)),
+          ],
         ),
       ),
     );

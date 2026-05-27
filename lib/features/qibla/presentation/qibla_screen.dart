@@ -1,13 +1,31 @@
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
+import 'package:times/app/theme.dart';
+import 'package:times/core/theme/cohere_colors.dart';
 import 'package:times/core/utils/qibla_bearing.dart';
+import 'package:times/core/widgets/cohere_settings_widgets.dart';
 import 'package:times/features/qibla/presentation/widgets/qibla_compass_dial.dart';
 import 'package:times/features/settings/presentation/settings_cubit.dart';
 import 'package:times/features/settings/presentation/settings_state.dart';
 import 'package:times/l10n/app_localizations.dart';
+
+const _kaabaLat = 21.4225;
+const _kaabaLon = 39.8262;
+
+double _distanceKm(double lat1, double lon1, double lat2, double lon2) {
+  const r = 6371.0;
+  final dLat = (lat2 - lat1) * math.pi / 180;
+  final dLon = (lon2 - lon1) * math.pi / 180;
+  final a = math.pow(math.sin(dLat / 2), 2) +
+      math.cos(lat1 * math.pi / 180) *
+          math.cos(lat2 * math.pi / 180) *
+          math.pow(math.sin(dLon / 2), 2);
+  return 2 * r * math.asin(math.sqrt(a));
+}
 
 class QiblaScreen extends StatefulWidget {
   const QiblaScreen({super.key});
@@ -38,9 +56,11 @@ class _QiblaScreenState extends State<QiblaScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final brightness = Theme.of(context).brightness;
+    final surfPage = CohereColors.surfPage(brightness);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.qiblaTitle)),
+      backgroundColor: surfPage,
       body: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, settingsState) {
           if (settingsState.isLoading || _checkingSensor) {
@@ -49,9 +69,21 @@ class _QiblaScreenState extends State<QiblaScreen> {
 
           final location = settingsState.settings.location;
           if (location == null) {
-            return _MessageBody(
-              icon: Icons.location_off_outlined,
-              message: l10n.qiblaLocationRequired,
+            return CohereDetailScaffold(
+              title: l10n.qiblaTitle,
+              backLabel: l10n.navDiscover,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    l10n.qiblaLocationRequired,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: CohereColors.inkDim(brightness),
+                        height: 1.5),
+                  ),
+                ),
+              ],
             );
           }
 
@@ -59,29 +91,50 @@ class _QiblaScreenState extends State<QiblaScreen> {
             latitude: location.latitude,
             longitude: location.longitude,
           );
+          final distKm = _distanceKm(
+              location.latitude, location.longitude, _kaabaLat, _kaabaLon);
+          final distMi = distKm * 0.621371;
 
-          return ListView(
-            padding: const EdgeInsets.all(24),
+          return CohereDetailScaffold(
+            title: l10n.qiblaTitle,
+            backLabel: l10n.navDiscover,
             children: [
-              if (location.label != null && location.label!.isNotEmpty)
-                Text(
-                  location.label!,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-              if (location.label != null && location.label!.isNotEmpty)
-                const SizedBox(height: 8),
-              Text(
-                l10n.qiblaDirectionToKaaba,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                textAlign: TextAlign.center,
+              _QiblaMeta(
+                locationLabel: location.label ?? l10n.locationUnknown,
+                bearing: bearing,
               ),
-              const SizedBox(height: 32),
-              QiblaCompassDial(
-                bearingFromNorth: bearing,
-                enableCompass: _sensorSupported ?? false,
+              const SizedBox(height: 12),
+              Center(
+                child: QiblaCompassDial(
+                  bearingFromNorth: bearing,
+                  enableCompass: _sensorSupported ?? false,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _QiblaInfoRow(distKm: distKm, distMi: distMi),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      size: 18,
+                      color: CohereColors.inkMute(brightness),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        l10n.qiblaCalibratedHint,
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: CohereColors.inkDim(brightness),
+                            height: 1.5),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           );
@@ -91,28 +144,143 @@ class _QiblaScreenState extends State<QiblaScreen> {
   }
 }
 
-class _MessageBody extends StatelessWidget {
-  const _MessageBody({required this.icon, required this.message});
+class _QiblaMeta extends StatelessWidget {
+  const _QiblaMeta({
+    required this.locationLabel,
+    required this.bearing,
+  });
 
-  final IconData icon;
-  final String message;
+  final String locationLabel;
+  final double bearing;
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final ink = CohereColors.inkColor(brightness);
+    final inkMute = CohereColors.inkMute(brightness);
+
     return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon, size: 64, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(height: 24),
-          Text(
-            message,
-            style: Theme.of(context).textTheme.bodyLarge,
-            textAlign: TextAlign.center,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'BEARING FROM',
+                  style: cohereMonoLabel(context,
+                      fontSize: 10, letterSpacing: 0.14, color: inkMute),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  locationLabel,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontSize: 22,
+                        letterSpacing: -0.2,
+                        fontWeight: FontWeight.w400,
+                        height: 1.1,
+                        color: ink,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${bearing.toStringAsFixed(1)}°',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: 28,
+                      letterSpacing: -0.6,
+                      fontWeight: FontWeight.w400,
+                      color: ink,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+              ),
+              Text(
+                'QIBLA · TRUE N',
+                style: cohereMonoLabel(context,
+                    fontSize: 10, letterSpacing: 0.16, color: inkMute),
+              ),
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class _QiblaInfoRow extends StatelessWidget {
+  const _QiblaInfoRow({required this.distKm, required this.distMi});
+  final double distKm;
+  final double distMi;
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final ink = CohereColors.inkColor(brightness);
+    final inkMute = CohereColors.inkMute(brightness);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _InfoCell(
+              value: distKm.round().toString(),
+              label: 'KM TO MAKKAH',
+              ink: ink,
+              inkMute: inkMute),
+          _InfoCell(
+              value: distMi.round().toString(),
+              label: 'MILES',
+              ink: ink,
+              inkMute: inkMute),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoCell extends StatelessWidget {
+  const _InfoCell({
+    required this.value,
+    required this.label,
+    required this.ink,
+    required this.inkMute,
+  });
+
+  final String value;
+  final String label;
+  final Color ink;
+  final Color inkMute;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            fontFamily: 'SpaceGrotesk',
+            fontSize: 22,
+            letterSpacing: -0.2,
+            color: ink,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: cohereMonoLabel(context,
+              fontSize: 9, letterSpacing: 0.1, color: inkMute),
+        ),
+      ],
     );
   }
 }
