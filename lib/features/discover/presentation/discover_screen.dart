@@ -152,7 +152,7 @@ class DiscoverScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 24),
           ),
 
-          const SizedBox(height: 100),
+          const SizedBox(height: 10),
         ],
       ),
     );

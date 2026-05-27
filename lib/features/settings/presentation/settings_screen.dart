@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../app/theme.dart';
 import '../../../core/navigation/primary_scroll_registry.dart';
@@ -70,169 +71,184 @@ class _SettingsScreenState extends State<SettingsScreen> {
           final calc = settings.calculation;
           final cubit = context.read<SettingsCubit>();
 
-          return ListView(
-            controller: _scrollController,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: statusBarHeight),
-              // Header
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 22),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              // Sticky header
+              ColoredBox(
+                color: surfPage,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    24,
+                    statusBarHeight * 2 + 18,
+                    24,
+                    22,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        DateFormat('EEEE · d MMMM yyyy').format(DateTime.now()).toUpperCase(),
+                        style: cohereMonoLabel(
+                          context,
+                          fontSize: 11,
+                          letterSpacing: 0.12,
+                          color: inkDim,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        l10n.settingsTitle,
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  controller: _scrollController,
                   children: [
-                    Text(
-                      l10n.navSettings.toUpperCase(),
-                      style: cohereMonoLabel(
-                        context,
-                        fontSize: 11,
-                        letterSpacing: 0.12,
-                        color: inkDim,
+                    // Location section
+                    CohereSectionLabel(label: l10n.settingsGroupLocation),
+                    CohereNavRow(
+                      label: locationSummary(l10n, settings.location),
+                      sub: settings.location != null
+                          ? 'Auto · ${settings.location!.timeZoneId}'
+                          : l10n.locationSubtitle,
+                      onTap: () => context.push('/settings/location'),
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Calculation section
+                    CohereSectionLabel(label: l10n.settingsGroupCalculation),
+                    CohereNavRow(
+                      label: l10n.calculationMethodTitle,
+                      value: calculationMethodLabel(calc.method),
+                      onTap: () => context.push('/settings/calculation-method'),
+                    ),
+                    CohereNavRow(
+                      label: l10n.madhabTitle,
+                      sub: 'Used for Asr time',
+                      value: madhabLabel(l10n, calc.madhab),
+                      onTap: () => context.push('/settings/madhab'),
+                    ),
+                    CohereNavRow(
+                      label: l10n.highLatitudeTitle,
+                      value: highLatitudeLabel(l10n, calc.highLatitudeRule),
+                      onTap: () => context.push('/settings/high-latitude'),
+                    ),
+                    CohereNavRow(
+                      label: 'Prayer offsets',
+                      sub: 'Adjust per prayer or all at once',
+                      value: advancedCalculationSummary(l10n, settings),
+                      onTap: () => context.push('/settings/advanced'),
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Display section
+                    CohereSectionLabel(label: l10n.settingsGroupDisplay),
+                    _InlineRadioSection(
+                      label: 'Appearance',
+                      rule: rule,
+                      ink: ink,
+                      inkMute: inkMute,
+                      child: CohereRadioGroup<ThemeModeId>(
+                        value: settings.themeMode,
+                        options: [
+                          CohereRadioOption(
+                            value: ThemeModeId.system,
+                            label: l10n.themeSystem,
+                          ),
+                          CohereRadioOption(
+                            value: ThemeModeId.light,
+                            label: l10n.themeLight,
+                          ),
+                          CohereRadioOption(
+                            value: ThemeModeId.dark,
+                            label: l10n.themeDark,
+                          ),
+                        ],
+                        onChanged: cubit.setThemeMode,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      l10n.settingsTitle,
-                      style: Theme.of(context).textTheme.displaySmall,
+                    _InlineRadioSection(
+                      label: 'Hour format',
+                      rule: rule,
+                      ink: ink,
+                      inkMute: inkMute,
+                      child: CohereRadioGroup<TimeFormatId>(
+                        value: settings.timeFormat,
+                        options: [
+                          CohereRadioOption(
+                            value: TimeFormatId.hour12,
+                            label: l10n.timeFormat12,
+                          ),
+                          CohereRadioOption(
+                            value: TimeFormatId.hour24,
+                            label: l10n.timeFormat24,
+                          ),
+                        ],
+                        onChanged: cubit.setTimeFormat,
+                      ),
                     ),
+                    CohereToggleRow(
+                      label: 'Show Sunrise time',
+                      sub: 'Display Shuruq between Fajr and Dhuhr',
+                      value: settings.showSunrise,
+                      onChanged: cubit.setShowSunrise,
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Calendar section
+                    CohereSectionLabel(label: 'Calendar'),
+                    CohereStepperRow(
+                      label: l10n.hijriAdjustmentTitle,
+                      sub: 'Shift Hijri date for local moon sighting',
+                      value: settings.hijriAdjustmentDays,
+                      min: -2,
+                      max: 2,
+                      unit: 'day',
+                      onChanged: cubit.setHijriAdjustmentDays,
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Notifications section
+                    CohereSectionLabel(label: l10n.settingsGroupNotifications),
+                    CohereNavRow(
+                      label: 'Default notification',
+                      value: notificationsSummary(l10n, settings),
+                      onTap: () => context.push('/settings/notifications'),
+                    ),
+                    CohereToggleRow(
+                      label: 'Pre-prayer reminder',
+                      sub: 'Notify 10 minutes before each prayer',
+                      value: false,
+                      onChanged: (_) {},
+                    ),
+                    CohereToggleRow(
+                      label: 'Silent during Friday Khutbah',
+                      value: false,
+                      onChanged: (_) {},
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Language section
+                    CohereSectionLabel(label: l10n.language),
+                    CohereNavRow(
+                      label: l10n.language,
+                      value: languageLabel(settings.localeCode),
+                      onTap: () => context.push('/settings/language'),
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Version footer
+                    _VersionFooter(ink: inkMute),
+                    const SizedBox(height: 100),
                   ],
                 ),
               ),
-
-              // Location section
-              CohereSectionLabel(label: l10n.settingsGroupLocation),
-              CohereNavRow(
-                label: locationSummary(l10n, settings.location),
-                sub: settings.location != null
-                    ? 'Auto · ${settings.location!.timeZoneId}'
-                    : l10n.locationSubtitle,
-                onTap: () => context.push('/settings/location'),
-              ),
-              Container(height: 1, color: rule),
-
-              // Calculation section
-              CohereSectionLabel(label: l10n.settingsGroupCalculation),
-              CohereNavRow(
-                label: l10n.calculationMethodTitle,
-                value: calculationMethodLabel(calc.method),
-                onTap: () => context.push('/settings/calculation-method'),
-              ),
-              CohereNavRow(
-                label: l10n.madhabTitle,
-                sub: 'Used for Asr time',
-                value: madhabLabel(l10n, calc.madhab),
-                onTap: () => context.push('/settings/madhab'),
-              ),
-              CohereNavRow(
-                label: l10n.highLatitudeTitle,
-                value: highLatitudeLabel(l10n, calc.highLatitudeRule),
-                onTap: () => context.push('/settings/high-latitude'),
-              ),
-              CohereNavRow(
-                label: 'Prayer offsets',
-                sub: 'Adjust per prayer or all at once',
-                value: advancedCalculationSummary(l10n, settings),
-                onTap: () => context.push('/settings/advanced'),
-              ),
-              Container(height: 1, color: rule),
-
-              // Display section
-              CohereSectionLabel(label: l10n.settingsGroupDisplay),
-              _InlineRadioSection(
-                label: 'Appearance',
-                rule: rule,
-                ink: ink,
-                inkMute: inkMute,
-                child: CohereRadioGroup<ThemeModeId>(
-                  value: settings.themeMode,
-                  options: [
-                    CohereRadioOption(
-                      value: ThemeModeId.system,
-                      label: l10n.themeSystem,
-                    ),
-                    CohereRadioOption(
-                      value: ThemeModeId.light,
-                      label: l10n.themeLight,
-                    ),
-                    CohereRadioOption(
-                      value: ThemeModeId.dark,
-                      label: l10n.themeDark,
-                    ),
-                  ],
-                  onChanged: cubit.setThemeMode,
-                ),
-              ),
-              _InlineRadioSection(
-                label: 'Hour format',
-                rule: rule,
-                ink: ink,
-                inkMute: inkMute,
-                child: CohereRadioGroup<TimeFormatId>(
-                  value: settings.timeFormat,
-                  options: [
-                    CohereRadioOption(
-                      value: TimeFormatId.hour12,
-                      label: l10n.timeFormat12,
-                    ),
-                    CohereRadioOption(
-                      value: TimeFormatId.hour24,
-                      label: l10n.timeFormat24,
-                    ),
-                  ],
-                  onChanged: cubit.setTimeFormat,
-                ),
-              ),
-              CohereToggleRow(
-                label: 'Show Sunrise time',
-                sub: 'Display Shuruq between Fajr and Dhuhr',
-                value: settings.showSunrise,
-                onChanged: cubit.setShowSunrise,
-              ),
-              Container(height: 1, color: rule),
-
-              // Calendar section
-              CohereSectionLabel(label: 'Calendar'),
-              CohereStepperRow(
-                label: l10n.hijriAdjustmentTitle,
-                sub: 'Shift Hijri date for local moon sighting',
-                value: settings.hijriAdjustmentDays,
-                min: -2,
-                max: 2,
-                unit: 'day',
-                onChanged: cubit.setHijriAdjustmentDays,
-              ),
-              Container(height: 1, color: rule),
-
-              // Notifications section
-              CohereSectionLabel(label: l10n.settingsGroupNotifications),
-              CohereNavRow(
-                label: 'Default notification',
-                value: notificationsSummary(l10n, settings),
-                onTap: () => context.push('/settings/notifications'),
-              ),
-              CohereToggleRow(
-                label: 'Pre-prayer reminder',
-                sub: 'Notify 10 minutes before each prayer',
-                value: false,
-                onChanged: (_) {},
-              ),
-              CohereToggleRow(
-                label: 'Silent during Friday Khutbah',
-                value: false,
-                onChanged: (_) {},
-              ),
-              Container(height: 1, color: rule),
-
-              // Language section
-              CohereSectionLabel(label: l10n.language),
-              CohereNavRow(
-                label: l10n.language,
-                value: languageLabel(settings.localeCode),
-                onTap: () => context.push('/settings/language'),
-              ),
-              Container(height: 1, color: rule),
-
-              // Version footer
-              _VersionFooter(ink: inkMute),
             ],
           );
         },

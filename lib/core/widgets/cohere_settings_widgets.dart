@@ -536,61 +536,88 @@ class CohereDetailScaffold extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: surfPage,
-      body: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: statusBarHeight + 8),
-          // Back button
-          Row(
-            children: [
-              const SizedBox(width: 4),
-              TextButton.icon(
-                onPressed: () => context.pop(),
-                style: TextButton.styleFrom(
-                  foregroundColor: accent,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                icon: Icon(
-                  Directionality.of(context) == TextDirection.rtl
-                      ? Icons.chevron_right
-                      : Icons.chevron_left,
-                  size: 18,
-                ),
-                label: Text(
-                  backLabel,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ],
-          ),
-          // Title block
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 4, 24, 22),
+          // Sticky header
+          ColoredBox(
+            color: surfPage,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  backLabel,
-                  style: cohereMonoLabel(context, fontSize: 11, color: inkMute),
+                SizedBox(height: statusBarHeight * 2 + 8),
+                Row(
+                  children: [
+                    const SizedBox(width: 4),
+                    TextButton.icon(
+                      onPressed: () => context.pop(),
+                      style: TextButton.styleFrom(
+                        foregroundColor: accent,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      icon: Icon(
+                        Directionality.of(context) == TextDirection.rtl
+                            ? Icons.chevron_right
+                            : Icons.chevron_left,
+                        size: 18,
+                      ),
+                      label: Text(
+                        backLabel,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Text(title, style: Theme.of(context).textTheme.displaySmall),
-                if (intro != null) ...[
-                  const SizedBox(height: 14),
-                  Text(
-                    intro!,
-                    style: TextStyle(fontSize: 13, color: inkDim, height: 1.5),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 4, 24, 22),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        backLabel,
+                        style: cohereMonoLabel(
+                          context,
+                          fontSize: 11,
+                          color: inkMute,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                      if (intro != null) ...[
+                        const SizedBox(height: 14),
+                        Text(
+                          intro!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: inkDim,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                ],
+                ),
               ],
             ),
           ),
-          ...children,
-          const SizedBox(height: 100),
+          // Scrollable content
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [...children, const SizedBox(height: 100)],
+            ),
+          ),
         ],
       ),
     );

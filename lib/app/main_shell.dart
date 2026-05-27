@@ -75,8 +75,8 @@ class _CohereTabBar extends StatelessWidget {
           padding: EdgeInsets.only(
             left: 12,
             right: 12,
-            top: 8,
-            bottom: bottomPadding > 0 ? bottomPadding : 16,
+            top: 14,
+            bottom: bottomPadding > 0 ? bottomPadding + 6 : 16 + 6,
           ),
           child: Row(
             children: tabs.map((tab) {
@@ -141,12 +141,12 @@ class _TabItem extends StatelessWidget {
               data: IconThemeData(color: isActive ? accent : inkMute, size: 22),
               child: data.icon,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Text(
-              data.label,
+              data.label.toUpperCase(),
               style: cohereMonoLabel(
                 context,
-                fontSize: 10,
+                fontSize: 12,
                 letterSpacing: 0.06,
                 color: isActive ? ink : inkMute,
               ),

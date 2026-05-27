@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../app/theme.dart';
 import '../../../core/navigation/primary_scroll_registry.dart';
 import '../../../core/theme/cohere_colors.dart';
 import '../../../core/utils/prayer_time_format.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../settings/domain/app_settings.dart';
+import '../../settings/domain/time_format_id.dart';
+import '../../settings/presentation/settings_cubit.dart';
+import '../../settings/presentation/settings_state.dart';
 import '../domain/prayer_name.dart';
 import '../domain/prayer_time_entry.dart';
 import 'prayer_name_l10n.dart';
@@ -11,11 +17,6 @@ import 'prayer_times_cubit.dart';
 import 'prayer_times_state.dart';
 import 'widgets/prayer_date_header.dart';
 import 'widgets/setup_checklist_body.dart';
-import '../../settings/domain/app_settings.dart';
-import '../../settings/domain/time_format_id.dart';
-import '../../settings/presentation/settings_cubit.dart';
-import '../../settings/presentation/settings_state.dart';
-import '../../../l10n/app_localizations.dart';
 
 const _kArabicNames = {
   PrayerName.fajr: 'الفجر',
@@ -164,45 +165,63 @@ class _PrayerList extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: surfPage,
-          body: RefreshIndicator(
-            onRefresh: () async => onRefresh(),
-            child: ListView(
-              controller: scrollController,
-              children: [
-                SizedBox(height: statusBarHeight),
-                PrayerDateHeader(
-                  date: schedule.date,
-                  localeCode: settings.localeCode,
-                  hijriAdjustmentDays: settings.hijriAdjustmentDays,
-                  locationLabel: locationLabel,
-                  hijriAdjustmentShort: hijriShort,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Sticky header
+              ColoredBox(
+                color: surfPage,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: statusBarHeight * 2),
+                    PrayerDateHeader(
+                      date: schedule.date,
+                      localeCode: settings.localeCode,
+                      hijriAdjustmentDays: settings.hijriAdjustmentDays,
+                      locationLabel: locationLabel,
+                      hijriAdjustmentShort: hijriShort,
+                    ),
+                    Container(
+                      height: 1,
+                      color: rule,
+                      margin: const EdgeInsets.symmetric(horizontal: 24),
+                    ),
+                  ],
                 ),
-                Container(
-                  height: 1,
-                  color: rule,
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
+              ),
+              // Scrollable content
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async => onRefresh(),
+                  child: ListView(
+                    controller: scrollController,
+                    padding: EdgeInsets.zero,
+                    children: [
+                      _ClockBlock(next: next, remaining: remaining, fmt: fmt),
+                      ...visibleEntries.map((entry) {
+                        final isNext = entry.name == next.name;
+                        final isPassed =
+                            entry.time.isBefore(DateTime.now()) && !isNext;
+                        final notifOn =
+                            settings.notifications.enabled &&
+                            settings.notifications.isPrayerEnabled(entry.name);
+                        return _PrayerRow(
+                          name: entry.name,
+                          time: entry.time,
+                          fmt: fmt,
+                          isNext: isNext,
+                          isPassed: isPassed,
+                          notifOn: notifOn,
+                          notifMasterEnabled: settings.notifications.enabled,
+                        );
+                      }),
+                      const SizedBox(height: 100),
+                    ],
+                  ),
                 ),
-                _ClockBlock(next: next, remaining: remaining, fmt: fmt),
-                ...visibleEntries.map((entry) {
-                  final isNext = entry.name == next.name;
-                  final isPassed =
-                      entry.time.isBefore(DateTime.now()) && !isNext;
-                  final notifOn =
-                      settings.notifications.enabled &&
-                      settings.notifications.isPrayerEnabled(entry.name);
-                  return _PrayerRow(
-                    name: entry.name,
-                    time: entry.time,
-                    fmt: fmt,
-                    isNext: isNext,
-                    isPassed: isPassed,
-                    notifOn: notifOn,
-                    notifMasterEnabled: settings.notifications.enabled,
-                  );
-                }),
-                const SizedBox(height: 100),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -248,7 +267,7 @@ class _ClockBlock extends StatelessWidget {
               Text(
                 '$hour:$minute',
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  fontSize: 72,
+                  fontSize: 64,
                   letterSpacing: -2.4,
                   fontWeight: FontWeight.w400,
                   height: 0.95,
@@ -273,7 +292,7 @@ class _ClockBlock extends StatelessWidget {
           const SizedBox(height: 8),
           Text.rich(
             TextSpan(
-              style: TextStyle(fontSize: 14, color: inkDim),
+              style: TextStyle(fontSize: 18, color: inkDim),
               children: [
                 const TextSpan(text: 'Next: '),
                 TextSpan(
