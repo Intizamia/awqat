@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract final class CohereColors {
   // === Accent ===
-  static const Color accent = Color(0xFF003C33);
+  static const Color accent = Color(0xFF00897B);
   static const Color accentDark = Color(0xFF00897B);
   static const Color accentSoft = Color(0xFFEDFCE9);
   static const Color accentSoftDark = Color(0x2200897B);

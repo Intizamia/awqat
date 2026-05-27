@@ -12,13 +12,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Times';
 
   @override
-  String get navPrayerTimes => 'Prayer Times';
+  String get navPrayerTimes => 'Prayers';
 
   @override
   String get navComingSoon => 'Coming Soon';
 
   @override
-  String get navDiscover => 'Discover';
+  String get navDiscover => 'More';
 
   @override
   String get navSettings => 'Settings';

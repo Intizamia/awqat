@@ -1,9 +1,9 @@
 {
   "@@locale": "en",
   "appTitle": "Times",
-  "navPrayerTimes": "Prayer Times",
+  "navPrayerTimes": "Prayers",
   "navComingSoon": "Coming Soon",
-  "navDiscover": "Discover",
+  "navDiscover": "More",
   "navSettings": "Settings",
   "comingSoonTitle": "Coming Soon",
   "comingSoonMessage": "This feature is on the way. Check back in a future update.",

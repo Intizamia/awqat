@@ -48,7 +48,20 @@ class AdhanCalculationEngine {
         break;
       }
     }
-    next ??= entries.firstWhere((e) => e.name == PrayerName.fajr);
+
+    if (next == null) {
+      // All prayers passed — find tomorrow's Fajr
+      final tomorrow = localDate.add(const Duration(days: 1));
+      final tomorrowTimes = adhan.PrayerTimes(
+        date: tomorrow,
+        coordinates: coordinates,
+        calculationParameters: params,
+      );
+      next = PrayerTimeEntry(
+        name: PrayerName.fajr,
+        time: tomorrowTimes.fajr.toLocal(),
+      );
+    }
 
     return PrayerSchedule(date: localDate, entries: entries, nextPrayer: next);
   }

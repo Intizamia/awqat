@@ -23,12 +23,18 @@ class MainShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: navigationShell,
-      bottomNavigationBar: _CohereTabBar(
-        currentIndex: navigationShell.currentIndex,
-        onTap: _onTap,
+    return PopScope(
+      canPop: navigationShell.currentIndex == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _onTap(0);
+      },
+      child: Scaffold(
+        extendBody: true,
+        body: navigationShell,
+        bottomNavigationBar: _CohereTabBar(
+          currentIndex: navigationShell.currentIndex,
+          onTap: _onTap,
+        ),
       ),
     );
   }
@@ -50,9 +56,30 @@ class _CohereTabBar extends StatelessWidget {
     final ink = CohereColors.inkColor(brightness);
 
     final tabs = [
-      _TabData(label: l10n.navPrayerTimes, icon: const _ClockIcon(), index: 0),
-      _TabData(label: l10n.navDiscover, icon: const _SparkleIcon(), index: 1),
-      _TabData(label: l10n.navSettings, icon: const _SettingsIcon(), index: 2),
+      _TabData(
+        label: l10n.navPrayerTimes,
+        iconBuilder: (active) => Icon(
+          active ? Icons.access_time : Icons.access_time_outlined,
+          size: 22,
+        ),
+        index: 0,
+      ),
+      _TabData(
+        label: l10n.navDiscover,
+        iconBuilder: (active) => Icon(
+          active ? Icons.grid_view_rounded : Icons.grid_view_outlined,
+          size: 22,
+        ),
+        index: 1,
+      ),
+      _TabData(
+        label: l10n.navSettings,
+        iconBuilder: (active) => Icon(
+          active ? Icons.settings : Icons.settings_outlined,
+          size: 22,
+        ),
+        index: 2,
+      ),
     ];
 
     final bottomPadding = MediaQuery.of(context).padding.bottom;
@@ -102,11 +129,11 @@ class _CohereTabBar extends StatelessWidget {
 class _TabData {
   const _TabData({
     required this.label,
-    required this.icon,
+    required this.iconBuilder,
     required this.index,
   });
   final String label;
-  final Widget icon;
+  final Widget Function(bool isActive) iconBuilder;
   final int index;
 }
 
@@ -139,7 +166,7 @@ class _TabItem extends StatelessWidget {
           children: [
             IconTheme(
               data: IconThemeData(color: isActive ? accent : inkMute, size: 22),
-              child: data.icon,
+              child: data.iconBuilder(isActive),
             ),
             const SizedBox(height: 6),
             Text(
@@ -159,31 +186,3 @@ class _TabItem extends StatelessWidget {
   }
 }
 
-// ─── Tab icons ─────────────────────────────────────────────────────────────
-
-class _ClockIcon extends StatelessWidget {
-  const _ClockIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Icon(Icons.access_time_outlined, size: 22);
-  }
-}
-
-class _SparkleIcon extends StatelessWidget {
-  const _SparkleIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Icon(Icons.auto_awesome_outlined, size: 22);
-  }
-}
-
-class _SettingsIcon extends StatelessWidget {
-  const _SettingsIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Icon(Icons.settings_outlined, size: 22);
-  }
-}

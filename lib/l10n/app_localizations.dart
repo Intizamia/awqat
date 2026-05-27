@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @navPrayerTimes.
   ///
   /// In en, this message translates to:
-  /// **'Prayer Times'**
+  /// **'Prayers'**
   String get navPrayerTimes;
 
   /// No description provided for @navComingSoon.
@@ -121,7 +121,7 @@ abstract class AppLocalizations {
   /// No description provided for @navDiscover.
   ///
   /// In en, this message translates to:
-  /// **'Discover'**
+  /// **'More'**
   String get navDiscover;
 
   /// No description provided for @navSettings.
