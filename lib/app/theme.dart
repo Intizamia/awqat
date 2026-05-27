@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../core/theme/cohere_colors.dart';
 
 ThemeData buildLightTheme() => _buildTheme(Brightness.light);
@@ -90,21 +89,24 @@ TextTheme _buildTextTheme(ColorScheme colorScheme) {
 
   return TextTheme(
     // Display — Space Grotesk
-    displayLarge: GoogleFonts.spaceGrotesk(
+    displayLarge: TextStyle(
+      fontFamily: 'SpaceGrotesk',
       fontSize: 72,
       fontWeight: FontWeight.w400,
       letterSpacing: -2.4,
       height: 0.95,
       color: onSurface,
     ),
-    displayMedium: GoogleFonts.spaceGrotesk(
+    displayMedium: TextStyle(
+      fontFamily: 'SpaceGrotesk',
       fontSize: 52,
       fontWeight: FontWeight.w400,
       letterSpacing: -1.4,
       height: 1.0,
       color: onSurface,
     ),
-    displaySmall: GoogleFonts.spaceGrotesk(
+    displaySmall: TextStyle(
+      fontFamily: 'SpaceGrotesk',
       fontSize: 40,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.8,
@@ -112,69 +114,81 @@ TextTheme _buildTextTheme(ColorScheme colorScheme) {
       color: onSurface,
     ),
     // Headlines — Space Grotesk
-    headlineLarge: GoogleFonts.spaceGrotesk(
+    headlineLarge: TextStyle(
+      fontFamily: 'SpaceGrotesk',
       fontSize: 32,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.6,
       height: 1.05,
       color: onSurface,
     ),
-    headlineMedium: GoogleFonts.spaceGrotesk(
+    headlineMedium: TextStyle(
+      fontFamily: 'SpaceGrotesk',
       fontSize: 22,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.2,
       color: onSurface,
     ),
-    headlineSmall: GoogleFonts.spaceGrotesk(
+    headlineSmall: TextStyle(
+      fontFamily: 'SpaceGrotesk',
       fontSize: 19,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.2,
       color: onSurface,
     ),
     // Titles — Inter
-    titleLarge: GoogleFonts.inter(
+    titleLarge: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 18,
       fontWeight: FontWeight.w500,
       color: onSurface,
     ),
-    titleMedium: GoogleFonts.inter(
+    titleMedium: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 15,
       fontWeight: FontWeight.w500,
       color: onSurface,
     ),
-    titleSmall: GoogleFonts.inter(
+    titleSmall: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 14,
       fontWeight: FontWeight.w500,
       color: onSurface,
     ),
     // Body — Inter
-    bodyLarge: GoogleFonts.inter(
+    bodyLarge: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 15,
       fontWeight: FontWeight.w400,
       color: onSurface,
     ),
-    bodyMedium: GoogleFonts.inter(
+    bodyMedium: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 14,
       fontWeight: FontWeight.w400,
       color: onSurface,
     ),
-    bodySmall: GoogleFonts.inter(
+    bodySmall: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 13,
       fontWeight: FontWeight.w400,
       color: onSurfaceVariant,
     ),
     // Labels — Inter
-    labelLarge: GoogleFonts.inter(
+    labelLarge: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 14,
       fontWeight: FontWeight.w500,
       color: onSurface,
     ),
-    labelMedium: GoogleFonts.inter(
+    labelMedium: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 12,
       fontWeight: FontWeight.w400,
       color: onSurfaceVariant,
     ),
-    labelSmall: GoogleFonts.inter(
+    labelSmall: TextStyle(
+      fontFamily: 'Inter',
       fontSize: 11,
       fontWeight: FontWeight.w400,
       color: onSurfaceVariant,
@@ -190,7 +204,8 @@ TextStyle cohereMonoLabel(
   double? letterSpacing,
 }) {
   final c = color ?? Theme.of(context).colorScheme.onSurfaceVariant;
-  return GoogleFonts.jetBrainsMono(
+  return TextStyle(
+    fontFamily: 'JetBrainsMono',
     fontSize: fontSize,
     fontWeight: FontWeight.w400,
     letterSpacing: letterSpacing ?? (fontSize * 0.14),
@@ -205,7 +220,8 @@ TextStyle cohereTabularTime(
   FontWeight fontWeight = FontWeight.w500,
   Color? color,
 }) {
-  return GoogleFonts.inter(
+  return TextStyle(
+    fontFamily: 'Inter',
     fontSize: fontSize,
     fontWeight: fontWeight,
     color: color ?? Theme.of(context).colorScheme.onSurface,
