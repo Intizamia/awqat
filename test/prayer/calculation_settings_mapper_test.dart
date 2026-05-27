@@ -1,13 +1,13 @@
 import 'package:adhan_dart/adhan_dart.dart' as adhan;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:times/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:times/features/prayer/data/calculation_settings_mapper.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:times/features/settings/domain/madhab_id.dart';
-import 'package:times/features/settings/domain/prayer_offsets.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
+import 'package:awqat/features/prayer/data/calculation_settings_mapper.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
+import 'package:awqat/features/settings/domain/madhab_id.dart';
+import 'package:awqat/features/settings/domain/prayer_offsets.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 void main() {
   const mapper = CalculationSettingsMapper();

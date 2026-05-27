@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/navigation/primary_scroll_registry.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/navigation/primary_scroll_registry.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class MainShell extends StatelessWidget {
   const MainShell({required this.navigationShell, super.key});
@@ -50,21 +50,9 @@ class _CohereTabBar extends StatelessWidget {
     final ink = CohereColors.inkColor(brightness);
 
     final tabs = [
-      _TabData(
-        label: l10n.navPrayerTimes,
-        icon: const _ClockIcon(),
-        index: 0,
-      ),
-      _TabData(
-        label: l10n.navDiscover,
-        icon: const _SparkleIcon(),
-        index: 1,
-      ),
-      _TabData(
-        label: l10n.navSettings,
-        icon: const _SettingsIcon(),
-        index: 2,
-      ),
+      _TabData(label: l10n.navPrayerTimes, icon: const _ClockIcon(), index: 0),
+      _TabData(label: l10n.navDiscover, icon: const _SparkleIcon(), index: 1),
+      _TabData(label: l10n.navSettings, icon: const _SettingsIcon(), index: 2),
     ];
 
     final bottomPadding = MediaQuery.of(context).padding.bottom;
@@ -112,7 +100,11 @@ class _CohereTabBar extends StatelessWidget {
 }
 
 class _TabData {
-  const _TabData({required this.label, required this.icon, required this.index});
+  const _TabData({
+    required this.label,
+    required this.icon,
+    required this.index,
+  });
   final String label;
   final Widget icon;
   final int index;
@@ -146,10 +138,7 @@ class _TabItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconTheme(
-              data: IconThemeData(
-                color: isActive ? accent : inkMute,
-                size: 22,
-              ),
+              data: IconThemeData(color: isActive ? accent : inkMute, size: 22),
               child: data.icon,
             ),
             const SizedBox(height: 4),

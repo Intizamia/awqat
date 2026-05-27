@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:times/core/theme/app_surface_tokens.dart';
-import 'package:times/core/widgets/schedule_groove_divider.dart';
+import 'package:awqat/core/theme/app_surface_tokens.dart';
+import 'package:awqat/core/widgets/schedule_groove_divider.dart';
 
 /// Material card that groups related settings rows with groove dividers.
 class SettingsGroupedCard extends StatelessWidget {

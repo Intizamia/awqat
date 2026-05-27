@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:times/core/utils/qibla_bearing.dart';
+import 'package:awqat/core/utils/qibla_bearing.dart';
 
 void main() {
   group('qiblaBearingFromNorth', () {
@@ -24,10 +24,7 @@ void main() {
 
   group('qiblaPointerDegrees', () {
     test('wraps heading with bearing offset', () {
-      expect(
-        qiblaPointerDegrees(deviceHeading: 0, bearingFromNorth: 90),
-        270,
-      );
+      expect(qiblaPointerDegrees(deviceHeading: 0, bearingFromNorth: 90), 270);
     });
   });
 }

@@ -2,8 +2,8 @@ import 'dart:math' show pi, cos, sin;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_compass_v2/flutter_compass_v2.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class QiblaCompassDial extends StatelessWidget {
   const QiblaCompassDial({
@@ -21,7 +21,9 @@ class QiblaCompassDial extends StatelessWidget {
 
     if (!enableCompass) {
       return _StaticView(
-          bearing: bearingFromNorth, message: l10n.qiblaSensorUnavailable);
+        bearing: bearingFromNorth,
+        message: l10n.qiblaSensorUnavailable,
+      );
     }
 
     return StreamBuilder<CompassEvent>(
@@ -38,8 +40,9 @@ class QiblaCompassDial extends StatelessWidget {
         final heading = snapshot.data!.heading;
         if (heading == null) {
           return _StaticView(
-              bearing: bearingFromNorth,
-              message: l10n.qiblaSensorUnavailable);
+            bearing: bearingFromNorth,
+            message: l10n.qiblaSensorUnavailable,
+          );
         }
 
         final qiblaScreen = (bearingFromNorth - heading + 360) % 360;
@@ -94,11 +97,7 @@ class _CompassView extends StatelessWidget {
             angle: -heading * pi / 180,
             child: CustomPaint(
               size: const Size(320, 320),
-              painter: _DialPainter(
-                ink: ink,
-                inkMute: inkMute,
-                accent: accent,
-              ),
+              painter: _DialPainter(ink: ink, inkMute: inkMute, accent: accent),
             ),
           ),
           // Kaaba marker arm — rotates to qibla bearing on screen
@@ -120,8 +119,10 @@ class _CompassView extends StatelessWidget {
             children: [
               if (aligned)
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: accent,
                     borderRadius: BorderRadius.circular(100),
@@ -129,9 +130,10 @@ class _CompassView extends StatelessWidget {
                   child: const Text(
                     'Facing Qibla',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500),
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 )
               else
@@ -198,7 +200,9 @@ class _DialPainter extends CustomPainter {
       final isCardinal = a % 90 == 0;
       final isMajor = a % 30 == 0;
       final r1 = outerR;
-      final r2 = isCardinal ? outerR - 14 : (isMajor ? outerR - 10 : outerR - 6);
+      final r2 = isCardinal
+          ? outerR - 14
+          : (isMajor ? outerR - 10 : outerR - 6);
       final rad = (a - 90) * pi / 180;
       final start = Offset(cx + r1 * cos(rad), cy + r1 * sin(rad));
       final end = Offset(cx + r2 * cos(rad), cy + r2 * sin(rad));
@@ -275,8 +279,7 @@ class _KaabaArmPainter extends CustomPainter {
       linePaint.strokeCap = StrokeCap.round;
     }
 
-    canvas.drawLine(
-        Offset(cx, cy), Offset(cx, cy - 122), linePaint);
+    canvas.drawLine(Offset(cx, cy), Offset(cx, cy - 122), linePaint);
 
     // Kaaba circle
     final circleFill = Paint()
@@ -296,8 +299,7 @@ class _KaabaArmPainter extends CustomPainter {
       ..color = glyphColor
       ..style = PaintingStyle.fill;
     final rect = RRect.fromRectAndRadius(
-      Rect.fromCenter(
-          center: Offset(cx, cy - 128), width: 14, height: 10),
+      Rect.fromCenter(center: Offset(cx, cy - 128), width: 14, height: 10),
       const Radius.circular(1.5),
     );
     canvas.drawRRect(rect, glyphPaint);
@@ -305,9 +307,10 @@ class _KaabaArmPainter extends CustomPainter {
       ..color = aligned ? accent : Colors.white
       ..strokeWidth = 1.5;
     canvas.drawLine(
-        Offset(cx - 7, cy - 128),
-        Offset(cx + 7, cy - 128),
-        linePaint2);
+      Offset(cx - 7, cy - 128),
+      Offset(cx + 7, cy - 128),
+      linePaint2,
+    );
   }
 
   @override
@@ -335,8 +338,7 @@ class _NorthArrowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _NorthArrowPainter old) =>
-      old.accent != accent;
+  bool shouldRepaint(covariant _NorthArrowPainter old) => old.accent != accent;
 }
 
 class _StaticView extends StatelessWidget {

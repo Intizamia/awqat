@@ -3,21 +3,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:times/app/app.dart';
-import 'package:times/features/notifications/data/prayer_notification_service.dart';
-import 'package:times/features/settings/data/settings_repository.dart';
+import 'package:awqat/app/app.dart';
+import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
+import 'package:awqat/features/settings/data/settings_repository.dart';
 
 void main() {
-  testWidgets('TimesApp shows setup checklist when not configured', (tester) async {
+  testWidgets('TimesApp shows setup checklist when not configured', (
+    tester,
+  ) async {
     SharedPreferences.setMockInitialValues({
-      'app_settings_v1': jsonEncode({
-        'localeCode': 'en',
-      }),
+      'app_settings_v1': jsonEncode({'localeCode': 'en'}),
     });
     final repo = await SettingsRepository.create();
-    final notificationService = PrayerNotificationService(skipPlatformCalls: true);
+    final notificationService = PrayerNotificationService(
+      skipPlatformCalls: true,
+    );
     await tester.pumpWidget(
-      TimesApp(
+      AwqatApp(
         settingsRepository: repo,
         notificationService: notificationService,
       ),

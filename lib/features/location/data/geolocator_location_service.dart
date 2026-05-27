@@ -1,10 +1,10 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:times/core/utils/timezone_resolver.dart';
-import 'package:times/features/location/data/location_service.dart';
-import 'package:times/features/location/domain/city_search_result.dart';
-import 'package:times/features/location/domain/location_exception.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/core/utils/timezone_resolver.dart';
+import 'package:awqat/features/location/data/location_service.dart';
+import 'package:awqat/features/location/domain/city_search_result.dart';
+import 'package:awqat/features/location/domain/location_exception.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 class GeolocatorLocationService implements LocationService {
   @override
@@ -46,7 +46,8 @@ class GeolocatorLocationService implements LocationService {
           loc.longitude,
           fallback: trimmed,
         );
-        final key = '${loc.latitude.toStringAsFixed(3)},${loc.longitude.toStringAsFixed(3)}';
+        final key =
+            '${loc.latitude.toStringAsFixed(3)},${loc.longitude.toStringAsFixed(3)}';
         if (seen.add(key)) {
           results.add(
             CitySearchResult(
@@ -71,7 +72,8 @@ class GeolocatorLocationService implements LocationService {
     String? label,
   }) async {
     final timeZoneId = resolveTimeZoneId(latitude, longitude);
-    final resolvedLabel = label ?? await _labelForCoordinates(latitude, longitude);
+    final resolvedLabel =
+        label ?? await _labelForCoordinates(latitude, longitude);
 
     return UserLocation(
       latitude: latitude,

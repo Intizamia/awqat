@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
 
 void main() {
   test('CalculationSettings round-trip JSON', () {

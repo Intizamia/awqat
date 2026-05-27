@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
 
 class SettingsState extends Equatable {
   const SettingsState({
@@ -10,10 +10,7 @@ class SettingsState extends Equatable {
   final AppSettings settings;
   final bool isLoading;
 
-  SettingsState copyWith({
-    AppSettings? settings,
-    bool? isLoading,
-  }) {
+  SettingsState copyWith({AppSettings? settings, bool? isLoading}) {
     return SettingsState(
       settings: settings ?? this.settings,
       isLoading: isLoading ?? this.isLoading,

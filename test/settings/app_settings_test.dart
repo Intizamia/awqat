@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/notification_settings.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/prayer_offsets.dart';
-import 'package:times/features/settings/domain/theme_mode_id.dart';
-import 'package:times/features/settings/domain/time_format_id.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/notification_settings.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/prayer_offsets.dart';
+import 'package:awqat/features/settings/domain/theme_mode_id.dart';
+import 'package:awqat/features/settings/domain/time_format_id.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 void main() {
   test('AppSettings round-trip includes theme and location', () {

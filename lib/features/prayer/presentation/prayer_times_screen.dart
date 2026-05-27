@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/navigation/primary_scroll_registry.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/core/utils/prayer_time_format.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
-import 'package:times/features/prayer/domain/prayer_time_entry.dart';
-import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
-import 'package:times/features/prayer/presentation/prayer_times_cubit.dart';
-import 'package:times/features/prayer/presentation/prayer_times_state.dart';
-import 'package:times/features/prayer/presentation/widgets/prayer_date_header.dart';
-import 'package:times/features/prayer/presentation/widgets/setup_checklist_body.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/features/settings/domain/time_format_id.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/navigation/primary_scroll_registry.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/core/utils/prayer_time_format.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/prayer/domain/prayer_time_entry.dart';
+import 'package:awqat/features/prayer/presentation/prayer_name_l10n.dart';
+import 'package:awqat/features/prayer/presentation/prayer_times_cubit.dart';
+import 'package:awqat/features/prayer/presentation/prayer_times_state.dart';
+import 'package:awqat/features/prayer/presentation/widgets/prayer_date_header.dart';
+import 'package:awqat/features/prayer/presentation/widgets/setup_checklist_body.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/settings/domain/time_format_id.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 const _kArabicNames = {
   PrayerName.fajr: 'الفجر',
@@ -148,8 +148,7 @@ class _PrayerList extends StatelessWidget {
 
         final fmt = settings.timeFormat;
         final visibleEntries = schedule.entries
-            .where((e) =>
-                settings.showSunrise || e.name != PrayerName.sunrise)
+            .where((e) => settings.showSunrise || e.name != PrayerName.sunrise)
             .toList();
         final next = schedule.nextPrayer!;
         final remaining = next.time.difference(DateTime.now());
@@ -157,8 +156,8 @@ class _PrayerList extends StatelessWidget {
 
         final hijriShort = settings.hijriAdjustmentDays != 0
             ? (settings.hijriAdjustmentDays > 0
-                ? 'Q+${settings.hijriAdjustmentDays}'
-                : 'Q${settings.hijriAdjustmentDays}')
+                  ? 'Q+${settings.hijriAdjustmentDays}'
+                  : 'Q${settings.hijriAdjustmentDays}')
             : null;
 
         final statusBarHeight = MediaQuery.of(context).viewPadding.top;
@@ -178,14 +177,18 @@ class _PrayerList extends StatelessWidget {
                   locationLabel: locationLabel,
                   hijriAdjustmentShort: hijriShort,
                 ),
-                Container(height: 1, color: rule,
-                    margin: const EdgeInsets.symmetric(horizontal: 24)),
+                Container(
+                  height: 1,
+                  color: rule,
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                ),
                 _ClockBlock(next: next, remaining: remaining, fmt: fmt),
                 ...visibleEntries.map((entry) {
                   final isNext = entry.name == next.name;
-                  final isPassed = entry.time.isBefore(DateTime.now()) &&
-                      !isNext;
-                  final notifOn = settings.notifications.enabled &&
+                  final isPassed =
+                      entry.time.isBefore(DateTime.now()) && !isNext;
+                  final notifOn =
+                      settings.notifications.enabled &&
                       settings.notifications.isPrayerEnabled(entry.name);
                   return _PrayerRow(
                     name: entry.name,
@@ -228,9 +231,7 @@ class _ClockBlock extends StatelessWidget {
 
     final now = DateTime.now();
     final use12 = fmt == TimeFormatId.hour12;
-    final hour = use12
-        ? (now.hour % 12 == 0 ? 12 : now.hour % 12)
-        : now.hour;
+    final hour = use12 ? (now.hour % 12 == 0 ? 12 : now.hour % 12) : now.hour;
     final minute = now.minute.toString().padLeft(2, '0');
     final ampm = now.hour < 12 ? 'AM' : 'PM';
     final cd = remaining.isNegative ? Duration.zero : remaining;
@@ -247,20 +248,24 @@ class _ClockBlock extends StatelessWidget {
               Text(
                 '$hour:$minute',
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontSize: 72,
-                      letterSpacing: -2.4,
-                      fontWeight: FontWeight.w400,
-                      height: 0.95,
-                      color: ink,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                  fontSize: 72,
+                  letterSpacing: -2.4,
+                  fontWeight: FontWeight.w400,
+                  height: 0.95,
+                  color: ink,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
               if (use12) ...[
                 const SizedBox(width: 14),
                 Text(
                   ampm,
-                  style: cohereMonoLabel(context,
-                      fontSize: 14, letterSpacing: 0.16, color: inkDim),
+                  style: cohereMonoLabel(
+                    context,
+                    fontSize: 14,
+                    letterSpacing: 0.16,
+                    color: inkDim,
+                  ),
                 ),
               ],
             ],
@@ -273,8 +278,7 @@ class _ClockBlock extends StatelessWidget {
                 const TextSpan(text: 'Next: '),
                 TextSpan(
                   text: next.name.label(l10n),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500, color: accent),
+                  style: TextStyle(fontWeight: FontWeight.w500, color: accent),
                 ),
                 TextSpan(text: ' in ${formatCountdown(cd)}'),
               ],
@@ -344,11 +348,11 @@ class _PrayerRow extends StatelessWidget {
                 Text(
                   name.label(l10n),
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontSize: 22,
-                        letterSpacing: -0.2,
-                        fontWeight: FontWeight.w400,
-                        color: nameColor,
-                      ),
+                    fontSize: 22,
+                    letterSpacing: -0.2,
+                    fontWeight: FontWeight.w400,
+                    color: nameColor,
+                  ),
                 ),
                 if (arabic.isNotEmpty)
                   Text(

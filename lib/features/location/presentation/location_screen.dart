@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/location/domain/city_search_result.dart';
-import 'package:times/features/location/presentation/location_cubit.dart';
-import 'package:times/features/location/presentation/location_state.dart';
-import 'package:times/features/settings/domain/user_location.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/location/domain/city_search_result.dart';
+import 'package:awqat/features/location/presentation/location_cubit.dart';
+import 'package:awqat/features/location/presentation/location_state.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({this.popOnSelect = false, super.key});
@@ -112,9 +112,9 @@ class _LocationBodyState extends State<_LocationBody> {
               prev.errorMessage != curr.errorMessage &&
               curr.errorMessage != null,
           listener: (context, state) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
           },
         ),
         BlocListener<SettingsCubit, SettingsState>(
@@ -128,9 +128,9 @@ class _LocationBodyState extends State<_LocationBody> {
           listener: (context, state) {
             final loc = state.settings.location!;
             if (shouldSuggestHighLatitudeRule(loc)) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.highLatitudeHint)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(l10n.highLatitudeHint)));
             }
             _maybePopAfterSelect();
           },
@@ -155,8 +155,10 @@ class _LocationBodyState extends State<_LocationBody> {
                     onPressed: () => Navigator.of(context).maybePop(),
                     style: TextButton.styleFrom(
                       foregroundColor: accent,
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
@@ -166,9 +168,13 @@ class _LocationBodyState extends State<_LocationBody> {
                           : Icons.chevron_left,
                       size: 18,
                     ),
-                    label: const Text('Settings',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
+                    label: const Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -180,8 +186,11 @@ class _LocationBodyState extends State<_LocationBody> {
                   children: [
                     Text(
                       'SETTINGS',
-                      style: cohereMonoLabel(context,
-                          fontSize: 11, color: inkMute),
+                      style: cohereMonoLabel(
+                        context,
+                        fontSize: 11,
+                        color: inkMute,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -242,7 +251,9 @@ class _LocationBodyState extends State<_LocationBody> {
                     filled: true,
                     fillColor: surfElev,
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(color: rule),
@@ -268,7 +279,9 @@ class _LocationBodyState extends State<_LocationBody> {
                 if (locationState.isSearching)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 16),
+                      horizontal: 24,
+                      vertical: 16,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -276,11 +289,15 @@ class _LocationBodyState extends State<_LocationBody> {
                           width: 18,
                           height: 18,
                           child: CircularProgressIndicator(
-                              strokeWidth: 2, color: accent),
+                            strokeWidth: 2,
+                            color: accent,
+                          ),
                         ),
                         const SizedBox(width: 12),
-                        Text(l10n.locationSearching,
-                            style: TextStyle(fontSize: 14, color: inkMute)),
+                        Text(
+                          l10n.locationSearching,
+                          style: TextStyle(fontSize: 14, color: inkMute),
+                        ),
                       ],
                     ),
                   )
@@ -289,9 +306,13 @@ class _LocationBodyState extends State<_LocationBody> {
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
                     child: Text(
                       l10n.locationSearchNotFoundMessage(
-                          _searchController.text.trim()),
+                        _searchController.text.trim(),
+                      ),
                       style: TextStyle(
-                          fontSize: 14, color: inkMute, height: 1.5),
+                        fontSize: 14,
+                        color: inkMute,
+                        height: 1.5,
+                      ),
                     ),
                   )
                 else if (locationState.searchResults.isNotEmpty)
@@ -299,9 +320,11 @@ class _LocationBodyState extends State<_LocationBody> {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       children: [
-                        for (var i = 0;
-                            i < locationState.searchResults.length;
-                            i++)
+                        for (
+                          var i = 0;
+                          i < locationState.searchResults.length;
+                          i++
+                        )
                           _SearchResultRow(
                             result: locationState.searchResults[i],
                             isFirst: i == 0,
@@ -314,7 +337,8 @@ class _LocationBodyState extends State<_LocationBody> {
                               _searchController.clear();
                               cubit.clearSearch();
                               cubit.selectSearchResult(
-                                  locationState.searchResults[i]);
+                                locationState.searchResults[i],
+                              );
                               setState(() {});
                             },
                           ),
@@ -361,15 +385,18 @@ class _SearchResultRow extends StatelessWidget {
         decoration: isFirst
             ? null
             : BoxDecoration(
-                border: Border(top: BorderSide(color: rule, width: 1))),
+                border: Border(top: BorderSide(color: rule, width: 1)),
+              ),
         padding: const EdgeInsets.symmetric(vertical: 14),
         child: Row(
           children: [
             Icon(Icons.location_on_outlined, color: inkMute, size: 18),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(result.label,
-                  style: TextStyle(fontSize: 15, color: ink)),
+              child: Text(
+                result.label,
+                style: TextStyle(fontSize: 15, color: ink),
+              ),
             ),
             Icon(Icons.add, color: inkMute, size: 16),
           ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/notifications/data/prayer_notification_service.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
-import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/prayer/presentation/prayer_name_l10n.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class NotificationsSettingsScreen extends StatelessWidget {
   const NotificationsSettingsScreen({
@@ -38,13 +38,14 @@ class NotificationsSettingsScreen extends StatelessWidget {
               onChanged: (value) async {
                 if (value) {
                   await notificationService.initialize();
-                  final granted =
-                      await notificationService.requestPermissions();
+                  final granted = await notificationService
+                      .requestPermissions();
                   if (!context.mounted) return;
                   if (!granted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          content: Text(l10n.notificationsPermissionDenied)),
+                        content: Text(l10n.notificationsPermissionDenied),
+                      ),
                     );
                     return;
                   }
@@ -86,7 +87,9 @@ class NotificationsSettingsScreen extends StatelessWidget {
                   isFirst: i == 0,
                   value: notifs.isPrayerEnabled(PrayerName.values[i]),
                   onChanged: (v) => cubit.setPrayerNotificationEnabled(
-                      PrayerName.values[i], v),
+                    PrayerName.values[i],
+                    v,
+                  ),
                 ),
             ],
           ],

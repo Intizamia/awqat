@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
-import 'package:times/features/settings/domain/notification_settings.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/settings/domain/notification_settings.dart';
 
 void main() {
   test('NotificationSettings round-trip JSON', () {

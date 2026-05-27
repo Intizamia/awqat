@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/features/settings/presentation/utils/calculation_method_labels.dart';
-import 'package:times/features/settings/presentation/utils/settings_value_labels.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/settings/presentation/utils/calculation_method_labels.dart';
+import 'package:awqat/features/settings/presentation/utils/settings_value_labels.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class SetupChecklistBody extends StatelessWidget {
   const SetupChecklistBody({required this.settings, super.key});
@@ -39,8 +39,12 @@ class SetupChecklistBody extends StatelessWidget {
               children: [
                 Text(
                   l10n.setup.toUpperCase(),
-                  style: cohereMonoLabel(context,
-                      fontSize: 11, letterSpacing: 0.12, color: inkDim),
+                  style: cohereMonoLabel(
+                    context,
+                    fontSize: 11,
+                    letterSpacing: 0.12,
+                    color: inkDim,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -50,8 +54,7 @@ class SetupChecklistBody extends StatelessWidget {
                 const SizedBox(height: 14),
                 Text(
                   l10n.setupRequiredMessage,
-                  style: TextStyle(
-                      fontSize: 14, color: inkDim, height: 1.5),
+                  style: TextStyle(fontSize: 14, color: inkDim, height: 1.5),
                 ),
               ],
             ),
@@ -119,7 +122,8 @@ class _SetupRow extends StatelessWidget {
         decoration: isFirst
             ? null
             : BoxDecoration(
-                border: Border(top: BorderSide(color: rule, width: 1))),
+                border: Border(top: BorderSide(color: rule, width: 1)),
+              ),
         constraints: const BoxConstraints(minHeight: 64),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(
@@ -130,10 +134,7 @@ class _SetupRow extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isDone ? accent : Colors.transparent,
-                border: Border.all(
-                  color: isDone ? accent : rule,
-                  width: 1.5,
-                ),
+                border: Border.all(color: isDone ? accent : rule, width: 1.5),
               ),
               child: isDone
                   ? const Icon(Icons.check, size: 16, color: Colors.white)
@@ -144,15 +145,16 @@ class _SetupRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: ink,
-                          fontFamily: 'Inter')),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: ink,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(value,
-                      style: TextStyle(
-                          fontSize: 13, color: inkMute)),
+                  Text(value, style: TextStyle(fontSize: 13, color: inkMute)),
                 ],
               ),
             ),

@@ -1,14 +1,14 @@
 import 'package:adhan_dart/adhan_dart.dart' as adhan;
-import 'package:times/features/prayer/data/calculation_settings_mapper.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
-import 'package:times/features/prayer/domain/prayer_schedule.dart';
-import 'package:times/features/prayer/domain/prayer_time_entry.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/features/prayer/data/calculation_settings_mapper.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/prayer/domain/prayer_schedule.dart';
+import 'package:awqat/features/prayer/domain/prayer_time_entry.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 class AdhanCalculationEngine {
   AdhanCalculationEngine({CalculationSettingsMapper? mapper})
-      : _mapper = mapper ?? const CalculationSettingsMapper();
+    : _mapper = mapper ?? const CalculationSettingsMapper();
 
   final CalculationSettingsMapper _mapper;
 
@@ -18,7 +18,10 @@ class AdhanCalculationEngine {
     required CalculationSettings calculation,
   }) {
     final params = _mapper.toParameters(calculation);
-    final coordinates = adhan.Coordinates(location.latitude, location.longitude);
+    final coordinates = adhan.Coordinates(
+      location.latitude,
+      location.longitude,
+    );
 
     final localDate = DateTime(date.year, date.month, date.day);
     final times = adhan.PrayerTimes(
@@ -47,10 +50,6 @@ class AdhanCalculationEngine {
     }
     next ??= entries.firstWhere((e) => e.name == PrayerName.fajr);
 
-    return PrayerSchedule(
-      date: localDate,
-      entries: entries,
-      nextPrayer: next,
-    );
+    return PrayerSchedule(date: localDate, entries: entries, nextPrayer: next);
   }
 }

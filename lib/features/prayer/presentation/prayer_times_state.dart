@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/prayer/domain/prayer_schedule.dart';
+import 'package:awqat/features/prayer/domain/prayer_schedule.dart';
 
 class PrayerTimesState extends Equatable {
   const PrayerTimesState({

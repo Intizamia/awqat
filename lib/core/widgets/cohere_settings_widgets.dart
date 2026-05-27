@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/theme/cohere_colors.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
 
 // ─── Section label ──────────────────────────────────────────────────────────
 
@@ -66,15 +66,17 @@ class CohereNavRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(label,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: ink,
-                          fontFamily: 'Inter')),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: ink,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
                   if (sub != null) ...[
                     const SizedBox(height: 2),
-                    Text(sub!,
-                        style: TextStyle(fontSize: 12, color: inkMute)),
+                    Text(sub!, style: TextStyle(fontSize: 12, color: inkMute)),
                   ],
                 ],
               ),
@@ -134,7 +136,9 @@ class CohereToggleRow extends StatelessWidget {
     return Container(
       decoration: isFirst
           ? null
-          : BoxDecoration(border: Border(top: BorderSide(color: rule, width: 1))),
+          : BoxDecoration(
+              border: Border(top: BorderSide(color: rule, width: 1)),
+            ),
       constraints: const BoxConstraints(minHeight: 56),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       child: Row(
@@ -144,8 +148,7 @@ class CohereToggleRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(label,
-                    style: TextStyle(fontSize: 15, color: ink)),
+                Text(label, style: TextStyle(fontSize: 15, color: ink)),
                 if (sub != null) ...[
                   const SizedBox(height: 2),
                   Text(sub!, style: TextStyle(fontSize: 12, color: inkMute)),
@@ -232,9 +235,7 @@ class CohereRadioGroup<T> extends StatelessWidget {
           final isSelected = opt.value == value;
           return Expanded(
             child: Padding(
-              padding: EdgeInsets.only(
-                right: opt == options.last ? 0 : 6,
-              ),
+              padding: EdgeInsets.only(right: opt == options.last ? 0 : 6),
               child: _RadioPill(
                 label: opt.label,
                 isSelected: isSelected,
@@ -332,7 +333,9 @@ class CohereStepperRow extends StatelessWidget {
     return Container(
       decoration: isFirst
           ? null
-          : BoxDecoration(border: Border(top: BorderSide(color: rule, width: 1))),
+          : BoxDecoration(
+              border: Border(top: BorderSide(color: rule, width: 1)),
+            ),
       constraints: const BoxConstraints(minHeight: 56),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       child: Row(
@@ -459,7 +462,8 @@ class CohereMethodRow extends StatelessWidget {
         decoration: isFirst
             ? null
             : BoxDecoration(
-                border: Border(top: BorderSide(color: rule, width: 1))),
+                border: Border(top: BorderSide(color: rule, width: 1)),
+              ),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(
           children: [
@@ -467,15 +471,17 @@ class CohereMethodRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: ink)),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: ink,
+                    ),
+                  ),
                   if (sub != null) ...[
                     const SizedBox(height: 3),
-                    Text(sub!,
-                        style: TextStyle(fontSize: 12, color: inkMute)),
+                    Text(sub!, style: TextStyle(fontSize: 12, color: inkMute)),
                   ],
                 ],
               ),
@@ -541,8 +547,10 @@ class CohereDetailScaffold extends StatelessWidget {
                 onPressed: () => context.pop(),
                 style: TextButton.styleFrom(
                   foregroundColor: accent,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
@@ -552,9 +560,10 @@ class CohereDetailScaffold extends StatelessWidget {
                       : Icons.chevron_left,
                   size: 18,
                 ),
-                label: Text(backLabel,
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                label: Text(
+                  backLabel,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
               ),
             ],
           ),
@@ -566,14 +575,10 @@ class CohereDetailScaffold extends StatelessWidget {
               children: [
                 Text(
                   backLabel,
-                  style: cohereMonoLabel(context,
-                      fontSize: 11, color: inkMute),
+                  style: cohereMonoLabel(context, fontSize: 11, color: inkMute),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
+                Text(title, style: Theme.of(context).textTheme.displaySmall),
                 if (intro != null) ...[
                   const SizedBox(height: 14),
                   Text(

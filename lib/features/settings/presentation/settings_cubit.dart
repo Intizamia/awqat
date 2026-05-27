@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/features/settings/data/settings_repository.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/default_app_settings.dart';
-import 'package:times/features/settings/domain/theme_mode_id.dart';
-import 'package:times/features/settings/domain/time_format_id.dart';
-import 'package:times/features/settings/domain/user_location.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
+import 'package:awqat/features/settings/data/settings_repository.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/default_app_settings.dart';
+import 'package:awqat/features/settings/domain/theme_mode_id.dart';
+import 'package:awqat/features/settings/domain/time_format_id.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit(this._repository) : super(const SettingsState());
@@ -55,10 +55,16 @@ class SettingsCubit extends Cubit<SettingsState> {
     );
   }
 
-  Future<void> setPrayerNotificationEnabled(PrayerName prayer, bool value) async {
+  Future<void> setPrayerNotificationEnabled(
+    PrayerName prayer,
+    bool value,
+  ) async {
     await _save(
       state.settings.copyWith(
-        notifications: state.settings.notifications.copyWithPrayer(prayer, value),
+        notifications: state.settings.notifications.copyWithPrayer(
+          prayer,
+          value,
+        ),
       ),
     );
   }
@@ -86,7 +92,9 @@ class SettingsCubit extends Cubit<SettingsState> {
     await _save(
       kDefaultAppSettings.copyWith(
         location: location,
-        calculation: state.settings.calculation.copyWith(method: state.settings.calculation.method),
+        calculation: state.settings.calculation.copyWith(
+          method: state.settings.calculation.method,
+        ),
       ),
     );
   }

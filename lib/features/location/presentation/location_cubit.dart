@@ -1,35 +1,36 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/features/location/data/location_service.dart';
-import 'package:times/features/location/domain/city_search_result.dart';
-import 'package:times/features/location/domain/location_exception.dart';
-import 'package:times/features/location/presentation/location_state.dart';
-import 'package:times/features/settings/domain/user_location.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/location/data/location_service.dart';
+import 'package:awqat/features/location/domain/city_search_result.dart';
+import 'package:awqat/features/location/domain/location_exception.dart';
+import 'package:awqat/features/location/presentation/location_state.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
 
 class LocationCubit extends Cubit<LocationState> {
   LocationCubit({
     required LocationService locationService,
     required SettingsCubit settingsCubit,
-  })  : _locationService = locationService,
-        _settingsCubit = settingsCubit,
-        super(const LocationState());
+  }) : _locationService = locationService,
+       _settingsCubit = settingsCubit,
+       super(const LocationState());
 
   final LocationService _locationService;
   final SettingsCubit _settingsCubit;
 
   Future<void> useCurrentLocation() async {
-    emit(state.copyWith(isAcquiringGps: true, clearError: true, clearResults: true));
+    emit(
+      state.copyWith(
+        isAcquiringGps: true,
+        clearError: true,
+        clearResults: true,
+      ),
+    );
     try {
       final location = await _locationService.getCurrentLocation();
       await _settingsCubit.setLocation(location);
       emit(state.copyWith(isAcquiringGps: false));
     } on LocationException catch (e) {
-      emit(
-        state.copyWith(
-          isAcquiringGps: false,
-          errorMessage: e.message,
-        ),
-      );
+      emit(state.copyWith(isAcquiringGps: false, errorMessage: e.message));
     } catch (e) {
       emit(
         state.copyWith(

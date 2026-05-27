@@ -1,4 +1,4 @@
-package com.intizamia.times
+package com.intizamia.awqat
 
 import io.flutter.embedding.android.FlutterActivity
 

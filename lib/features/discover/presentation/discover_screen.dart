@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({super.key});
@@ -33,23 +33,26 @@ class DiscoverScreen extends StatelessWidget {
               children: [
                 Text(
                   l10n.navDiscover.toUpperCase(),
-                  style: cohereMonoLabel(context,
-                      fontSize: 11, letterSpacing: 0.12, color: inkDim),
+                  style: cohereMonoLabel(
+                    context,
+                    fontSize: 11,
+                    letterSpacing: 0.12,
+                    color: inkDim,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'More for your day',
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontSize: 40,
-                        letterSpacing: -0.8,
-                        height: 1,
-                      ),
+                    fontSize: 40,
+                    letterSpacing: -0.8,
+                    height: 1,
+                  ),
                 ),
                 const SizedBox(height: 14),
                 Text(
                   'Tools to support your worship beyond prayer times.',
-                  style: TextStyle(
-                      fontSize: 14, color: inkDim, height: 1.5),
+                  style: TextStyle(fontSize: 14, color: inkDim, height: 1.5),
                 ),
               ],
             ),
@@ -60,8 +63,12 @@ class DiscoverScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
             child: Text(
               'AVAILABLE',
-              style: cohereMonoLabel(context,
-                  fontSize: 11, letterSpacing: 0.14, color: inkMute),
+              style: cohereMonoLabel(
+                context,
+                fontSize: 11,
+                letterSpacing: 0.14,
+                color: inkMute,
+              ),
             ),
           ),
           _FeatureRow(
@@ -78,7 +85,11 @@ class DiscoverScreen extends StatelessWidget {
             inkMute: inkMute,
             onTap: () => context.push('/qibla'),
           ),
-          Container(height: 1, color: rule, margin: const EdgeInsets.symmetric(horizontal: 24)),
+          Container(
+            height: 1,
+            color: rule,
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+          ),
 
           const SizedBox(height: 28),
 
@@ -87,8 +98,12 @@ class DiscoverScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
             child: Text(
               'COMING SOON',
-              style: cohereMonoLabel(context,
-                  fontSize: 11, letterSpacing: 0.14, color: inkMute),
+              style: cohereMonoLabel(
+                context,
+                fontSize: 11,
+                letterSpacing: 0.14,
+                color: inkMute,
+              ),
             ),
           ),
           _FeatureRow(
@@ -131,7 +146,11 @@ class DiscoverScreen extends StatelessWidget {
             inkMute: inkMute,
             isLast: true,
           ),
-          Container(height: 1, color: rule, margin: const EdgeInsets.symmetric(horizontal: 24)),
+          Container(
+            height: 1,
+            color: rule,
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+          ),
 
           const SizedBox(height: 100),
         ],
@@ -186,10 +205,7 @@ class _FeatureRow extends StatelessWidget {
             Container(
               width: 44,
               height: 44,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: glyphBg,
-              ),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: glyphBg),
               child: Center(child: glyph),
             ),
             const SizedBox(width: 16),
@@ -200,17 +216,16 @@ class _FeatureRow extends StatelessWidget {
                   Text(
                     title,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontSize: 22,
-                          letterSpacing: -0.2,
-                          fontWeight: FontWeight.w400,
-                          color: ink,
-                        ),
+                      fontSize: 22,
+                      letterSpacing: -0.2,
+                      fontWeight: FontWeight.w400,
+                      color: ink,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(
-                        fontSize: 13, color: inkDim, height: 1.4),
+                    style: TextStyle(fontSize: 13, color: inkDim, height: 1.4),
                   ),
                 ],
               ),
@@ -298,8 +313,7 @@ class _DashedCircleGlyph extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     return CustomPaint(
       size: const Size(22, 22),
-      painter: _DashedCirclePainter(
-          color: CohereColors.inkMute(brightness)),
+      painter: _DashedCirclePainter(color: CohereColors.inkMute(brightness)),
     );
   }
 }

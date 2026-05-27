@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/location/domain/city_search_result.dart';
+import 'package:awqat/features/location/domain/city_search_result.dart';
 
 class LocationState extends Equatable {
   const LocationState({
@@ -28,8 +28,9 @@ class LocationState extends Equatable {
     return LocationState(
       isAcquiringGps: isAcquiringGps ?? this.isAcquiringGps,
       isSearching: isSearching ?? this.isSearching,
-      searchResults:
-          clearResults ? const [] : (searchResults ?? this.searchResults),
+      searchResults: clearResults
+          ? const []
+          : (searchResults ?? this.searchResults),
       searchReturnedEmpty: searchReturnedEmpty ?? this.searchReturnedEmpty,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
@@ -37,10 +38,10 @@ class LocationState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isAcquiringGps,
-        isSearching,
-        searchResults,
-        searchReturnedEmpty,
-        errorMessage,
-      ];
+    isAcquiringGps,
+    isSearching,
+    searchResults,
+    searchReturnedEmpty,
+    errorMessage,
+  ];
 }

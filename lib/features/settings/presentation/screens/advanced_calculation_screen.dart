@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class AdvancedCalculationScreen extends StatelessWidget {
   const AdvancedCalculationScreen({super.key});
@@ -35,8 +35,7 @@ class AdvancedCalculationScreen extends StatelessWidget {
               max: 30,
               unit: 'min',
               isFirst: true,
-              onChanged: (v) =>
-                  update(calc.copyWith(globalOffsetMinutes: v)),
+              onChanged: (v) => update(calc.copyWith(globalOffsetMinutes: v)),
             ),
 
             // Custom method angles
@@ -67,8 +66,7 @@ class AdvancedCalculationScreen extends StatelessWidget {
                 min: 0,
                 max: 120,
                 unit: 'min',
-                onChanged: (v) =>
-                    update(calc.copyWith(ishaIntervalMinutes: v)),
+                onChanged: (v) => update(calc.copyWith(ishaIntervalMinutes: v)),
               ),
             ],
 
@@ -80,8 +78,7 @@ class AdvancedCalculationScreen extends StatelessWidget {
                 sub: l10n.ramadanIshaBoostSubtitle,
                 value: calc.ramadanIshaBoost,
                 isFirst: true,
-                onChanged: (v) =>
-                    update(calc.copyWith(ramadanIshaBoost: v)),
+                onChanged: (v) => update(calc.copyWith(ramadanIshaBoost: v)),
               ),
             ],
 
@@ -91,38 +88,56 @@ class AdvancedCalculationScreen extends StatelessWidget {
               label: l10n.prayerFajr,
               value: calc.prayerOffsets.fajr,
               isFirst: true,
-              onChanged: (v) => update(calc.copyWith(
-                  prayerOffsets: calc.prayerOffsets.copyWith(fajr: v))),
+              onChanged: (v) => update(
+                calc.copyWith(
+                  prayerOffsets: calc.prayerOffsets.copyWith(fajr: v),
+                ),
+              ),
             ),
             CohereStepperRow(
               label: l10n.prayerSunrise,
               value: calc.prayerOffsets.sunrise,
-              onChanged: (v) => update(calc.copyWith(
-                  prayerOffsets: calc.prayerOffsets.copyWith(sunrise: v))),
+              onChanged: (v) => update(
+                calc.copyWith(
+                  prayerOffsets: calc.prayerOffsets.copyWith(sunrise: v),
+                ),
+              ),
             ),
             CohereStepperRow(
               label: l10n.prayerDhuhr,
               value: calc.prayerOffsets.dhuhr,
-              onChanged: (v) => update(calc.copyWith(
-                  prayerOffsets: calc.prayerOffsets.copyWith(dhuhr: v))),
+              onChanged: (v) => update(
+                calc.copyWith(
+                  prayerOffsets: calc.prayerOffsets.copyWith(dhuhr: v),
+                ),
+              ),
             ),
             CohereStepperRow(
               label: l10n.prayerAsr,
               value: calc.prayerOffsets.asr,
-              onChanged: (v) => update(calc.copyWith(
-                  prayerOffsets: calc.prayerOffsets.copyWith(asr: v))),
+              onChanged: (v) => update(
+                calc.copyWith(
+                  prayerOffsets: calc.prayerOffsets.copyWith(asr: v),
+                ),
+              ),
             ),
             CohereStepperRow(
               label: l10n.prayerMaghrib,
               value: calc.prayerOffsets.maghrib,
-              onChanged: (v) => update(calc.copyWith(
-                  prayerOffsets: calc.prayerOffsets.copyWith(maghrib: v))),
+              onChanged: (v) => update(
+                calc.copyWith(
+                  prayerOffsets: calc.prayerOffsets.copyWith(maghrib: v),
+                ),
+              ),
             ),
             CohereStepperRow(
               label: l10n.prayerIsha,
               value: calc.prayerOffsets.isha,
-              onChanged: (v) => update(calc.copyWith(
-                  prayerOffsets: calc.prayerOffsets.copyWith(isha: v))),
+              onChanged: (v) => update(
+                calc.copyWith(
+                  prayerOffsets: calc.prayerOffsets.copyWith(isha: v),
+                ),
+              ),
             ),
           ],
         );

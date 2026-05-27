@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class ResetSettingsScreen extends StatelessWidget {
   const ResetSettingsScreen({super.key});
@@ -24,8 +24,11 @@ class ResetSettingsScreen extends StatelessWidget {
           isFirst: true,
           onTap: () async {
             final confirmed = await _confirm(
-                context, l10n.resetCalculationTitle,
-                l10n.resetCalculationMessage, l10n);
+              context,
+              l10n.resetCalculationTitle,
+              l10n.resetCalculationMessage,
+              l10n,
+            );
             if (confirmed == true && context.mounted) {
               await cubit.resetCalculationToDefaults();
             }
@@ -36,8 +39,11 @@ class ResetSettingsScreen extends StatelessWidget {
           sub: l10n.resetDisplayMessage,
           onTap: () async {
             final confirmed = await _confirm(
-                context, l10n.resetDisplayTitle,
-                l10n.resetDisplayMessage, l10n);
+              context,
+              l10n.resetDisplayTitle,
+              l10n.resetDisplayMessage,
+              l10n,
+            );
             if (confirmed == true && context.mounted) {
               await cubit.resetToDefaults();
             }
@@ -99,17 +105,17 @@ class _ResetRow extends StatelessWidget {
         decoration: isFirst
             ? null
             : BoxDecoration(
-                border: Border(top: BorderSide(color: rule, width: 1))),
+                border: Border(top: BorderSide(color: rule, width: 1)),
+              ),
         constraints: const BoxConstraints(minHeight: 64),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: ink,
-                    fontFamily: 'Inter')),
+            Text(
+              label,
+              style: TextStyle(fontSize: 15, color: ink, fontFamily: 'Inter'),
+            ),
             const SizedBox(height: 4),
             Text(sub, style: TextStyle(fontSize: 13, color: inkMute)),
           ],

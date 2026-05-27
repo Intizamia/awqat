@@ -4,14 +4,14 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/theme/cohere_colors.dart';
-import 'package:times/core/utils/qibla_bearing.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/qibla/presentation/widgets/qibla_compass_dial.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/theme/cohere_colors.dart';
+import 'package:awqat/core/utils/qibla_bearing.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/qibla/presentation/widgets/qibla_compass_dial.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 const _kaabaLat = 21.4225;
 const _kaabaLon = 39.8262;
@@ -20,7 +20,8 @@ double _distanceKm(double lat1, double lon1, double lat2, double lon2) {
   const r = 6371.0;
   final dLat = (lat2 - lat1) * math.pi / 180;
   final dLon = (lon2 - lon1) * math.pi / 180;
-  final a = math.pow(math.sin(dLat / 2), 2) +
+  final a =
+      math.pow(math.sin(dLat / 2), 2) +
       math.cos(lat1 * math.pi / 180) *
           math.cos(lat2 * math.pi / 180) *
           math.pow(math.sin(dLon / 2), 2);
@@ -78,9 +79,10 @@ class _QiblaScreenState extends State<QiblaScreen> {
                   child: Text(
                     l10n.qiblaLocationRequired,
                     style: TextStyle(
-                        fontSize: 14,
-                        color: CohereColors.inkDim(brightness),
-                        height: 1.5),
+                      fontSize: 14,
+                      color: CohereColors.inkDim(brightness),
+                      height: 1.5,
+                    ),
                   ),
                 ),
               ],
@@ -92,7 +94,11 @@ class _QiblaScreenState extends State<QiblaScreen> {
             longitude: location.longitude,
           );
           final distKm = _distanceKm(
-              location.latitude, location.longitude, _kaabaLat, _kaabaLon);
+            location.latitude,
+            location.longitude,
+            _kaabaLat,
+            _kaabaLon,
+          );
           final distMi = distKm * 0.621371;
 
           return CohereDetailScaffold(
@@ -128,9 +134,10 @@ class _QiblaScreenState extends State<QiblaScreen> {
                       child: Text(
                         l10n.qiblaCalibratedHint,
                         style: TextStyle(
-                            fontSize: 13,
-                            color: CohereColors.inkDim(brightness),
-                            height: 1.5),
+                          fontSize: 13,
+                          color: CohereColors.inkDim(brightness),
+                          height: 1.5,
+                        ),
                       ),
                     ),
                   ],
@@ -145,10 +152,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
 }
 
 class _QiblaMeta extends StatelessWidget {
-  const _QiblaMeta({
-    required this.locationLabel,
-    required this.bearing,
-  });
+  const _QiblaMeta({required this.locationLabel, required this.bearing});
 
   final String locationLabel;
   final double bearing;
@@ -171,19 +175,23 @@ class _QiblaMeta extends StatelessWidget {
               children: [
                 Text(
                   'BEARING FROM',
-                  style: cohereMonoLabel(context,
-                      fontSize: 10, letterSpacing: 0.14, color: inkMute),
+                  style: cohereMonoLabel(
+                    context,
+                    fontSize: 10,
+                    letterSpacing: 0.14,
+                    color: inkMute,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   locationLabel,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontSize: 22,
-                        letterSpacing: -0.2,
-                        fontWeight: FontWeight.w400,
-                        height: 1.1,
-                        color: ink,
-                      ),
+                    fontSize: 22,
+                    letterSpacing: -0.2,
+                    fontWeight: FontWeight.w400,
+                    height: 1.1,
+                    color: ink,
+                  ),
                 ),
               ],
             ),
@@ -194,17 +202,21 @@ class _QiblaMeta extends StatelessWidget {
               Text(
                 '${bearing.toStringAsFixed(1)}°',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontSize: 28,
-                      letterSpacing: -0.6,
-                      fontWeight: FontWeight.w400,
-                      color: ink,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                  fontSize: 28,
+                  letterSpacing: -0.6,
+                  fontWeight: FontWeight.w400,
+                  color: ink,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
               Text(
                 'QIBLA · TRUE N',
-                style: cohereMonoLabel(context,
-                    fontSize: 10, letterSpacing: 0.16, color: inkMute),
+                style: cohereMonoLabel(
+                  context,
+                  fontSize: 10,
+                  letterSpacing: 0.16,
+                  color: inkMute,
+                ),
               ),
             ],
           ),
@@ -231,15 +243,17 @@ class _QiblaInfoRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _InfoCell(
-              value: distKm.round().toString(),
-              label: 'KM TO MAKKAH',
-              ink: ink,
-              inkMute: inkMute),
+            value: distKm.round().toString(),
+            label: 'KM TO MAKKAH',
+            ink: ink,
+            inkMute: inkMute,
+          ),
           _InfoCell(
-              value: distMi.round().toString(),
-              label: 'MILES',
-              ink: ink,
-              inkMute: inkMute),
+            value: distMi.round().toString(),
+            label: 'MILES',
+            ink: ink,
+            inkMute: inkMute,
+          ),
         ],
       ),
     );
@@ -277,8 +291,12 @@ class _InfoCell extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: cohereMonoLabel(context,
-              fontSize: 9, letterSpacing: 0.1, color: inkMute),
+          style: cohereMonoLabel(
+            context,
+            fontSize: 9,
+            letterSpacing: 0.1,
+            color: inkMute,
+          ),
         ),
       ],
     );

@@ -1,10 +1,10 @@
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:times/features/settings/domain/madhab_id.dart';
-import 'package:times/features/settings/domain/theme_mode_id.dart';
-import 'package:times/features/settings/domain/time_format_id.dart';
-import 'package:times/features/settings/domain/user_location.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
+import 'package:awqat/features/settings/domain/madhab_id.dart';
+import 'package:awqat/features/settings/domain/theme_mode_id.dart';
+import 'package:awqat/features/settings/domain/time_format_id.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 String madhabLabel(AppLocalizations l10n, MadhabId madhab) {
   return switch (madhab) {
@@ -62,9 +62,7 @@ String displaySummary(AppLocalizations l10n, AppSettings settings) {
   final hijri = settings.hijriAdjustmentDays;
   final hijriPart = hijri == 0
       ? l10n.hijriAdjustmentNeutral
-      : l10n.hijriAdjustmentDaysShort(
-          hijri > 0 ? '+$hijri' : '$hijri',
-        );
+      : l10n.hijriAdjustmentDaysShort(hijri > 0 ? '+$hijri' : '$hijri');
   return '$format · $hijriPart';
 }
 

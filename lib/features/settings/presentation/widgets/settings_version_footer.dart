@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class SettingsVersionFooter extends StatelessWidget {
   const SettingsVersionFooter({super.key});
@@ -24,8 +24,8 @@ class SettingsVersionFooter extends StatelessWidget {
             child: Text(
               label,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.65),
-                  ),
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.65),
+              ),
             ),
           ),
         );

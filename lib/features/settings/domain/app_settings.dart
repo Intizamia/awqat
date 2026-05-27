@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/notification_settings.dart';
-import 'package:times/features/settings/domain/setup_completion_status.dart';
-import 'package:times/features/settings/domain/theme_mode_id.dart';
-import 'package:times/features/settings/domain/time_format_id.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/notification_settings.dart';
+import 'package:awqat/features/settings/domain/setup_completion_status.dart';
+import 'package:awqat/features/settings/domain/theme_mode_id.dart';
+import 'package:awqat/features/settings/domain/time_format_id.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 class AppSettings extends Equatable {
   const AppSettings({
@@ -30,9 +30,9 @@ class AppSettings extends Equatable {
   bool get isLocationConfigured => location != null;
 
   SetupCompletionStatus get setup => SetupCompletionStatus(
-        isCalculationConfigured: calculation.isConfigured,
-        isLocationConfigured: isLocationConfigured,
-      );
+    isCalculationConfigured: calculation.isConfigured,
+    isLocationConfigured: isLocationConfigured,
+  );
 
   AppSettings copyWith({
     CalculationSettings? calculation,
@@ -58,16 +58,16 @@ class AppSettings extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        'calculation': calculation.toJson(),
-        'localeCode': localeCode,
-        'themeMode': themeMode.name,
-        'timeFormat': timeFormat.name,
-        'hijriAdjustmentDays': hijriAdjustmentDays,
-        'showSunrise': showSunrise,
-        'location': location?.toJson(),
-        'isLocationConfigured': isLocationConfigured,
-        'notifications': notifications.toJson(),
-      };
+    'calculation': calculation.toJson(),
+    'localeCode': localeCode,
+    'themeMode': themeMode.name,
+    'timeFormat': timeFormat.name,
+    'hijriAdjustmentDays': hijriAdjustmentDays,
+    'showSunrise': showSunrise,
+    'location': location?.toJson(),
+    'isLocationConfigured': isLocationConfigured,
+    'notifications': notifications.toJson(),
+  };
 
   factory AppSettings.fromJson(Map<String, dynamic> json) {
     UserLocation? location;
@@ -101,13 +101,13 @@ class AppSettings extends Equatable {
 
   @override
   List<Object?> get props => [
-        calculation,
-        localeCode,
-        themeMode,
-        timeFormat,
-        hijriAdjustmentDays,
-        showSunrise,
-        location,
-        notifications,
-      ];
+    calculation,
+    localeCode,
+    themeMode,
+    timeFormat,
+    hijriAdjustmentDays,
+    showSunrise,
+    location,
+    notifications,
+  ];
 }

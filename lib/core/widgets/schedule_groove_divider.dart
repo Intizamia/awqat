@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:times/core/theme/app_surface_tokens.dart';
+import 'package:awqat/core/theme/app_surface_tokens.dart';
 
 /// Full-width divider between rows on grouped settings cards.
 class ScheduleGrooveDivider extends StatelessWidget {

@@ -1,11 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:times/features/location/domain/city_search_result.dart';
-import 'package:times/features/location/presentation/location_cubit.dart';
-import 'package:times/features/location/presentation/location_state.dart';
-import 'package:times/features/settings/data/settings_repository.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/location/domain/city_search_result.dart';
+import 'package:awqat/features/location/presentation/location_cubit.dart';
+import 'package:awqat/features/location/presentation/location_state.dart';
+import 'package:awqat/features/settings/data/settings_repository.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
 
 import 'fake_location_service.dart';
 

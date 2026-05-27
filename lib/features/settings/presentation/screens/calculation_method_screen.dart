@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/cohere_settings_widgets.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/features/settings/presentation/utils/calculation_method_labels.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/widgets/cohere_settings_widgets.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/features/settings/presentation/utils/calculation_method_labels.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 const _kMethodDescriptions = <CalculationMethodId, String>{
   CalculationMethodId.muslimWorldLeague:
       'Standard for general use, Europe and Far East.',
-  CalculationMethodId.karachi:
-      'Pakistan, Bangladesh, India, Afghanistan.',
+  CalculationMethodId.karachi: 'Pakistan, Bangladesh, India, Afghanistan.',
   CalculationMethodId.northAmerica: 'Islamic Society of North America.',
-  CalculationMethodId.ummAlQura:
-      'Saudi Arabia. 90 min Isha after Maghrib.',
-  CalculationMethodId.egyptian:
-      'Used in Africa, Syria, Lebanon, Malaysia.',
+  CalculationMethodId.ummAlQura: 'Saudi Arabia. 90 min Isha after Maghrib.',
+  CalculationMethodId.egyptian: 'Used in Africa, Syria, Lebanon, Malaysia.',
   CalculationMethodId.dubai: 'UAE — Dubai.',
   CalculationMethodId.qatar: 'Qatar.',
   CalculationMethodId.kuwait: 'Kuwait.',

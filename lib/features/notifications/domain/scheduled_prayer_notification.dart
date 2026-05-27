@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
 
 class ScheduledPrayerNotification extends Equatable {
   const ScheduledPrayerNotification({

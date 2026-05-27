@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:times/core/utils/hijri_date_format.dart';
+import 'package:awqat/core/utils/hijri_date_format.dart';
 
 void main() {
   setUpAll(() async {

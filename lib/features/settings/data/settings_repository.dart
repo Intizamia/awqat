@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/theme_mode_id.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/theme_mode_id.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 const _kSettingsKey = 'app_settings_v1';
 
@@ -24,9 +24,7 @@ class SettingsRepository {
       return const AppSettings();
     }
     try {
-      return AppSettings.fromJson(
-        jsonDecode(raw) as Map<String, dynamic>,
-      );
+      return AppSettings.fromJson(jsonDecode(raw) as Map<String, dynamic>);
     } catch (_) {
       return const AppSettings();
     }
@@ -48,10 +46,7 @@ class SettingsRepository {
   Future<void> setLocation(UserLocation? location) async {
     final current = load();
     await save(
-      current.copyWith(
-        location: location,
-        clearLocation: location == null,
-      ),
+      current.copyWith(location: location, clearLocation: location == null),
     );
   }
 

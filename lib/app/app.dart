@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:times/app/router.dart';
-import 'package:times/features/notifications/data/prayer_notification_service.dart';
-import 'package:times/features/notifications/presentation/notification_reschedule_listener.dart';
-import 'package:times/app/theme.dart';
-import 'package:times/core/l10n/locale_config.dart';
-import 'package:times/features/location/data/geolocator_location_service.dart';
-import 'package:times/features/location/presentation/location_cubit.dart';
-import 'package:times/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:times/features/prayer/presentation/prayer_times_cubit.dart';
-import 'package:times/features/settings/data/settings_repository.dart';
-import 'package:times/features/settings/domain/theme_mode_id.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/router.dart';
+import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
+import 'package:awqat/features/notifications/presentation/notification_reschedule_listener.dart';
+import 'package:awqat/app/theme.dart';
+import 'package:awqat/core/l10n/locale_config.dart';
+import 'package:awqat/features/location/data/geolocator_location_service.dart';
+import 'package:awqat/features/location/presentation/location_cubit.dart';
+import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
+import 'package:awqat/features/prayer/presentation/prayer_times_cubit.dart';
+import 'package:awqat/features/settings/data/settings_repository.dart';
+import 'package:awqat/features/settings/domain/theme_mode_id.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
-class TimesApp extends StatelessWidget {
-  TimesApp({
+class AwqatApp extends StatelessWidget {
+  AwqatApp({
     required this.settingsRepository,
     required this.notificationService,
     super.key,
@@ -25,9 +25,7 @@ class TimesApp extends StatelessWidget {
 
   final SettingsRepository settingsRepository;
   final PrayerNotificationService notificationService;
-  late final _router = createRouter(
-    notificationService: notificationService,
-  );
+  late final _router = createRouter(notificationService: notificationService);
 
   static Locale localeFromCode(String code) {
     return switch (code) {
@@ -49,18 +47,14 @@ class TimesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => SettingsCubit(settingsRepository)..load(),
-        ),
+        BlocProvider(create: (_) => SettingsCubit(settingsRepository)..load()),
         BlocProvider(
           create: (context) => LocationCubit(
             locationService: GeolocatorLocationService(),
             settingsCubit: context.read<SettingsCubit>(),
           ),
         ),
-        BlocProvider(
-          create: (_) => PrayerTimesCubit(AdhanCalculationEngine()),
-        ),
+        BlocProvider(create: (_) => PrayerTimesCubit(AdhanCalculationEngine())),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
         buildWhen: (prev, curr) =>

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class ComingSoonScreen extends StatelessWidget {
   const ComingSoonScreen({super.key});
@@ -32,8 +32,8 @@ class ComingSoonScreen extends StatelessWidget {
               Text(
                 l10n.comingSoonMessage,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],

@@ -1,6 +1,6 @@
-import 'package:times/features/location/data/location_service.dart';
-import 'package:times/features/location/domain/city_search_result.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/features/location/data/location_service.dart';
+import 'package:awqat/features/location/domain/city_search_result.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 class FakeLocationService implements LocationService {
   FakeLocationService({

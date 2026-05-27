@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:times/core/utils/timezone_resolver.dart';
+import 'package:awqat/core/utils/timezone_resolver.dart';
 
 void main() {
   test('resolves Karachi timezone', () {

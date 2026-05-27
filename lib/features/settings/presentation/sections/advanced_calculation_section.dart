@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/schedule_groove_divider.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/widgets/settings_section_header.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/widgets/schedule_groove_divider.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/widgets/settings_section_header.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class AdvancedCalculationSection extends StatelessWidget {
   const AdvancedCalculationSection({
@@ -39,10 +39,7 @@ class AdvancedCalculationSection extends StatelessWidget {
 
 /// Sliders and toggles outside the per-prayer grouped card.
 class AdvancedCalculationGeneralBody extends StatelessWidget {
-  const AdvancedCalculationGeneralBody({
-    required this.calculation,
-    super.key,
-  });
+  const AdvancedCalculationGeneralBody({required this.calculation, super.key});
 
   final CalculationSettings calculation;
 
@@ -58,17 +55,15 @@ class AdvancedCalculationGeneralBody extends StatelessWidget {
         _AngleField(
           label: l10n.fajrAngle,
           value: calculation.fajrAngle ?? 18,
-          onChanged: (v) => cubit.updateCalculation(
-            calculation.copyWith(fajrAngle: v),
-          ),
+          onChanged: (v) =>
+              cubit.updateCalculation(calculation.copyWith(fajrAngle: v)),
         ),
         const SizedBox(height: 12),
         _AngleField(
           label: l10n.ishaAngle,
           value: calculation.ishaAngle ?? 17,
-          onChanged: (v) => cubit.updateCalculation(
-            calculation.copyWith(ishaAngle: v),
-          ),
+          onChanged: (v) =>
+              cubit.updateCalculation(calculation.copyWith(ishaAngle: v)),
         ),
         const SizedBox(height: 12),
         _IntervalField(
@@ -199,10 +194,7 @@ class AdvancedCalculationPrayerOffsetsBody extends StatelessWidget {
 }
 
 class AdvancedCalculationBody extends StatelessWidget {
-  const AdvancedCalculationBody({
-    required this.calculation,
-    super.key,
-  });
+  const AdvancedCalculationBody({required this.calculation, super.key});
 
   final CalculationSettings calculation;
 

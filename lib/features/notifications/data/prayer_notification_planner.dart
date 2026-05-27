@@ -1,10 +1,10 @@
-import 'package:times/features/notifications/data/prayer_notification_ids.dart';
-import 'package:times/features/notifications/domain/scheduled_prayer_notification.dart';
-import 'package:times/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:times/features/prayer/domain/prayer_schedule.dart';
-import 'package:times/features/prayer/presentation/prayer_name_l10n.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/features/notifications/data/prayer_notification_ids.dart';
+import 'package:awqat/features/notifications/domain/scheduled_prayer_notification.dart';
+import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
+import 'package:awqat/features/prayer/domain/prayer_schedule.dart';
+import 'package:awqat/features/prayer/presentation/prayer_name_l10n.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 /// Builds upcoming prayer notifications for the next few days.
 List<ScheduledPrayerNotification> planPrayerNotifications({
@@ -24,7 +24,11 @@ List<ScheduledPrayerNotification> planPrayerNotifications({
   final today = DateTime(clock.year, clock.month, clock.day);
   final planned = <ScheduledPrayerNotification>[];
 
-  for (var dayOffset = 0; dayOffset < kPrayerNotificationDayHorizon; dayOffset++) {
+  for (
+    var dayOffset = 0;
+    dayOffset < kPrayerNotificationDayHorizon;
+    dayOffset++
+  ) {
     final date = today.add(Duration(days: dayOffset));
     final schedule = engine.compute(
       date: date,

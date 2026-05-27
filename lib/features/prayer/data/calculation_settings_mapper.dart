@@ -1,9 +1,9 @@
 import 'package:adhan_dart/adhan_dart.dart' as adhan;
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:times/features/settings/domain/madhab_id.dart';
-import 'package:times/features/settings/domain/prayer_offsets.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
+import 'package:awqat/features/settings/domain/madhab_id.dart';
+import 'package:awqat/features/settings/domain/prayer_offsets.dart';
 
 class CalculationSettingsMapper {
   const CalculationSettingsMapper();
@@ -25,8 +25,7 @@ class CalculationSettingsMapper {
         adhan.HighLatitudeRule.middleOfTheNight,
       HighLatitudeRuleId.seventhOfTheNight =>
         adhan.HighLatitudeRule.seventhOfTheNight,
-      HighLatitudeRuleId.twilightAngle =>
-        adhan.HighLatitudeRule.twilightAngle,
+      HighLatitudeRuleId.twilightAngle => adhan.HighLatitudeRule.twilightAngle,
     };
 
     if (method == CalculationMethodId.other) {
@@ -57,8 +56,8 @@ class CalculationSettingsMapper {
       methodAdjustments: params.methodAdjustments,
       offsets: settings.prayerOffsets,
       globalOffset: settings.globalOffsetMinutes,
-      ramadanIshaBoost: settings.ramadanIshaBoost &&
-          method == CalculationMethodId.ummAlQura,
+      ramadanIshaBoost:
+          settings.ramadanIshaBoost && method == CalculationMethodId.ummAlQura,
     );
 
     return params;
@@ -103,7 +102,8 @@ class CalculationSettingsMapper {
         adhan.CalculationMethodParameters.muslimWorldLeague(),
       CalculationMethodId.egyptian =>
         adhan.CalculationMethodParameters.egyptian(),
-      CalculationMethodId.karachi => adhan.CalculationMethodParameters.karachi(),
+      CalculationMethodId.karachi =>
+        adhan.CalculationMethodParameters.karachi(),
       CalculationMethodId.ummAlQura =>
         adhan.CalculationMethodParameters.ummAlQura(),
       CalculationMethodId.dubai => adhan.CalculationMethodParameters.dubai(),

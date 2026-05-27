@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:times/core/widgets/settings_grouped_card.dart';
-import 'package:times/features/settings/presentation/sections/display_settings_section.dart';
-import 'package:times/features/settings/presentation/settings_cubit.dart';
-import 'package:times/features/settings/presentation/settings_state.dart';
-import 'package:times/features/settings/presentation/widgets/settings_detail_scaffold.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/core/widgets/settings_grouped_card.dart';
+import 'package:awqat/features/settings/presentation/sections/display_settings_section.dart';
+import 'package:awqat/features/settings/presentation/settings_cubit.dart';
+import 'package:awqat/features/settings/presentation/settings_state.dart';
+import 'package:awqat/features/settings/presentation/widgets/settings_detail_scaffold.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 class DisplaySettingsScreen extends StatelessWidget {
   const DisplaySettingsScreen({super.key});
@@ -23,9 +23,7 @@ class DisplaySettingsScreen extends StatelessWidget {
           slivers: [
             SettingsGroupedCardSliver(
               child: SettingsGroupedCard(
-                children: [
-                  DisplaySettingsBody(settings: state.settings),
-                ],
+                children: [DisplaySettingsBody(settings: state.settings)],
               ),
             ),
           ],

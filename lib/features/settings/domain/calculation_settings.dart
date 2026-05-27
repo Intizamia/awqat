@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/high_latitude_rule_id.dart';
-import 'package:times/features/settings/domain/madhab_id.dart';
-import 'package:times/features/settings/domain/prayer_offsets.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/high_latitude_rule_id.dart';
+import 'package:awqat/features/settings/domain/madhab_id.dart';
+import 'package:awqat/features/settings/domain/prayer_offsets.dart';
 
 class CalculationSettings extends Equatable {
   const CalculationSettings({
@@ -65,16 +65,16 @@ class CalculationSettings extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        'method': method?.name,
-        'madhab': madhab.name,
-        'highLatitudeRule': highLatitudeRule.name,
-        'fajrAngle': fajrAngle,
-        'ishaAngle': ishaAngle,
-        'ishaIntervalMinutes': ishaIntervalMinutes,
-        'globalOffsetMinutes': globalOffsetMinutes,
-        'prayerOffsets': prayerOffsets.toJson(),
-        'ramadanIshaBoost': ramadanIshaBoost,
-      };
+    'method': method?.name,
+    'madhab': madhab.name,
+    'highLatitudeRule': highLatitudeRule.name,
+    'fajrAngle': fajrAngle,
+    'ishaAngle': ishaAngle,
+    'ishaIntervalMinutes': ishaIntervalMinutes,
+    'globalOffsetMinutes': globalOffsetMinutes,
+    'prayerOffsets': prayerOffsets.toJson(),
+    'ramadanIshaBoost': ramadanIshaBoost,
+  };
 
   factory CalculationSettings.fromJson(Map<String, dynamic> json) {
     return CalculationSettings(
@@ -98,14 +98,14 @@ class CalculationSettings extends Equatable {
 
   @override
   List<Object?> get props => [
-        method,
-        madhab,
-        highLatitudeRule,
-        fajrAngle,
-        ishaAngle,
-        ishaIntervalMinutes,
-        globalOffsetMinutes,
-        prayerOffsets,
-        ramadanIshaBoost,
-      ];
+    method,
+    madhab,
+    highLatitudeRule,
+    fajrAngle,
+    ishaAngle,
+    ishaIntervalMinutes,
+    globalOffsetMinutes,
+    prayerOffsets,
+    ramadanIshaBoost,
+  ];
 }

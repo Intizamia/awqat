@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:times/app/app.dart';
-import 'package:times/features/notifications/data/prayer_notification_service.dart';
-import 'package:times/features/settings/data/settings_repository.dart';
-import 'package:times/features/settings/domain/calculation_method_id.dart';
-import 'package:times/features/settings/domain/calculation_settings.dart';
-import 'package:times/features/settings/domain/user_location.dart';
+import 'package:awqat/app/app.dart';
+import 'package:awqat/features/notifications/data/prayer_notification_service.dart';
+import 'package:awqat/features/settings/data/settings_repository.dart';
+import 'package:awqat/features/settings/domain/calculation_method_id.dart';
+import 'package:awqat/features/settings/domain/calculation_settings.dart';
+import 'package:awqat/features/settings/domain/user_location.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -25,10 +25,12 @@ void main() {
     });
 
     final repo = await SettingsRepository.create();
-    final notificationService = PrayerNotificationService(skipPlatformCalls: true);
+    final notificationService = PrayerNotificationService(
+      skipPlatformCalls: true,
+    );
 
     await tester.pumpWidget(
-      TimesApp(
+      AwqatApp(
         settingsRepository: repo,
         notificationService: notificationService,
       ),

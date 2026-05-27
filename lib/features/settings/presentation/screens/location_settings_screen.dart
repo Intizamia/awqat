@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:times/features/location/presentation/location_screen.dart';
+import 'package:awqat/features/location/presentation/location_screen.dart';
 
 /// Settings route wrapper for [LocationScreen].
 class LocationSettingsScreen extends StatelessWidget {

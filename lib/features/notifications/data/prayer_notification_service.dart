@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:times/app/app.dart';
-import 'package:times/features/notifications/data/prayer_notification_planner.dart';
-import 'package:times/features/notifications/domain/scheduled_prayer_notification.dart';
-import 'package:times/features/prayer/data/adhan_calculation_engine.dart';
-import 'package:times/features/settings/domain/app_settings.dart';
-import 'package:times/l10n/app_localizations.dart';
+import 'package:awqat/app/app.dart';
+import 'package:awqat/features/notifications/data/prayer_notification_planner.dart';
+import 'package:awqat/features/notifications/domain/scheduled_prayer_notification.dart';
+import 'package:awqat/features/prayer/data/adhan_calculation_engine.dart';
+import 'package:awqat/features/settings/domain/app_settings.dart';
+import 'package:awqat/l10n/app_localizations.dart';
 
 const _channelId = 'prayer_times';
 const _channelName = 'Prayer times';
@@ -17,8 +17,8 @@ class PrayerNotificationService {
     FlutterLocalNotificationsPlugin? plugin,
     AdhanCalculationEngine? engine,
     this.skipPlatformCalls = false,
-  })  : _plugin = plugin ?? FlutterLocalNotificationsPlugin(),
-        _engine = engine ?? AdhanCalculationEngine();
+  }) : _plugin = plugin ?? FlutterLocalNotificationsPlugin(),
+       _engine = engine ?? AdhanCalculationEngine();
 
   /// Skips plugin calls (widget tests).
   final bool skipPlatformCalls;
@@ -50,8 +50,10 @@ class PrayerNotificationService {
   }
 
   Future<void> _ensureAndroidChannel() async {
-    final android = _plugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     if (android == null) return;
 
     await android.createNotificationChannel(
@@ -68,8 +70,10 @@ class PrayerNotificationService {
     if (skipPlatformCalls) return true;
     var granted = true;
 
-    final android = _plugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     if (android != null) {
       final notificationGranted =
           await android.requestNotificationsPermission() ?? false;
@@ -77,13 +81,12 @@ class PrayerNotificationService {
       granted = notificationGranted;
     }
 
-    final ios = _plugin.resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>();
+    final ios = _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
     if (ios != null) {
-      final iosGranted = await ios.requestPermissions(
-        alert: true,
-        sound: true,
-      );
+      final iosGranted = await ios.requestPermissions(alert: true, sound: true);
       granted = iosGranted ?? granted;
     }
 
@@ -102,8 +105,9 @@ class PrayerNotificationService {
     final location = settings.location;
     if (location == null) return;
 
-    final l10n = await AppLocalizations.delegate
-        .load(TimesApp.localeFromCode(settings.localeCode));
+    final l10n = await AppLocalizations.delegate.load(
+      AwqatApp.localeFromCode(settings.localeCode),
+    );
     final planned = planPrayerNotifications(
       settings: settings,
       engine: _engine,

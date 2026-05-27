@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:times/features/settings/presentation/widgets/settings_row_metrics.dart';
+import 'package:awqat/features/settings/presentation/widgets/settings_row_metrics.dart';
 
 /// Selectable row with trailing check for single-choice lists.
 class SettingsCheckRow extends StatelessWidget {

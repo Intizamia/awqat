@@ -1,5 +1,5 @@
-name: times
-description: "Islamic prayer times app — offline-first, Material 3."
+name: awqat
+description: "Islamic prayer times app."
 publish_to: 'none'
 version: 0.1.0+1
 

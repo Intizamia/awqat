@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:times/features/prayer/domain/prayer_name.dart';
+import 'package:awqat/features/prayer/domain/prayer_name.dart';
 
 /// Per-prayer notification toggles and master enable flag.
 class NotificationSettings extends Equatable {
@@ -31,18 +31,15 @@ class NotificationSettings extends Equatable {
   }
 
   NotificationSettings copyWithPrayer(PrayerName name, bool value) {
-    return copyWith(
-      prayerEnabled: {...prayerEnabled, name: value},
-    );
+    return copyWith(prayerEnabled: {...prayerEnabled, name: value});
   }
 
   Map<String, dynamic> toJson() => {
-        'enabled': enabled,
-        'prayerEnabled': {
-          for (final entry in prayerEnabled.entries)
-            entry.key.name: entry.value,
-        },
-      };
+    'enabled': enabled,
+    'prayerEnabled': {
+      for (final entry in prayerEnabled.entries) entry.key.name: entry.value,
+    },
+  };
 
   factory NotificationSettings.fromJson(Map<String, dynamic>? json) {
     if (json == null) return const NotificationSettings();

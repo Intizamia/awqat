@@ -1,4 +1,4 @@
-# Times
+# Awqat
 
 Offline-first Islamic prayer times app for Android and iOS. Built with Flutter, Material 3, and `flutter_bloc`.
 
