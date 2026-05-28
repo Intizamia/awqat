@@ -11,6 +11,7 @@ class PrayerDateHeader extends StatelessWidget {
     required this.hijriAdjustmentDays,
     this.locationLabel,
     this.hijriAdjustmentShort,
+    this.isToday = true,
     super.key,
   });
 
@@ -19,6 +20,7 @@ class PrayerDateHeader extends StatelessWidget {
   final int hijriAdjustmentDays;
   final String? locationLabel;
   final String? hijriAdjustmentShort;
+  final bool isToday;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,9 @@ class PrayerDateHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                locationStr.toUpperCase(),
+                isToday
+                    ? locationStr.toUpperCase()
+                    : 'VIEWING · ${locationStr.toUpperCase()}',
                 style: cohereMonoLabel(
                   context,
                   fontSize: 11,

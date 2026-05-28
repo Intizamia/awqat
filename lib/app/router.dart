@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'main_shell.dart';
 import '../features/discover/presentation/discover_screen.dart';
 import '../features/prayer/presentation/prayer_times_screen.dart';
+import '../features/prayer/presentation/month_screen.dart';
 import '../features/qibla/presentation/qibla_screen.dart';
 import '../features/notifications/data/prayer_notification_service.dart';
 import '../features/settings/presentation/screens/advanced_calculation_screen.dart';
@@ -30,6 +31,13 @@ GoRouter createRouter({
         path: '/qibla',
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => const QiblaScreen(),
+      ),
+      GoRoute(
+        path: '/prayer/month',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => MonthScreen(
+          initialDate: state.extra as DateTime?,
+        ),
       ),
       GoRoute(
         path: '/setup/calculation-method',
