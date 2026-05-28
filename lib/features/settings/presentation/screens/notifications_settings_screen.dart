@@ -53,45 +53,53 @@ class NotificationsSettingsScreen extends StatelessWidget {
                 await cubit.setNotificationsEnabled(value);
               },
             ),
-            CohereSectionLabel(label: 'Default sound'),
-            CohereMethodRow(
-              title: 'Silent',
-              sub: 'No audible alert',
-              isSelected: false,
-              isFirst: true,
-              onTap: null,
-            ),
-            CohereMethodRow(
-              title: 'Reminder',
-              sub: 'Standard notification tone',
-              isSelected: notifs.enabled,
-              onTap: null,
-            ),
-            CohereMethodRow(
-              title: 'First sentence',
-              sub: 'Plays "Allāhu akbar"',
-              isSelected: false,
-              onTap: null,
-            ),
-            CohereMethodRow(
-              title: 'Full Adhan',
-              sub: 'Plays complete adhan (~2 min)',
-              isSelected: false,
-              onTap: null,
-            ),
-            if (notifs.enabled) ...[
-              CohereSectionLabel(label: 'Per prayer'),
-              for (var i = 0; i < PrayerName.values.length; i++)
-                CohereToggleRow(
-                  label: PrayerName.values[i].label(l10n),
-                  isFirst: i == 0,
-                  value: notifs.isPrayerEnabled(PrayerName.values[i]),
-                  onChanged: (v) => cubit.setPrayerNotificationEnabled(
-                    PrayerName.values[i],
-                    v,
-                  ),
+            Opacity(
+              opacity: notifs.enabled ? 1.0 : 0.4,
+              child: IgnorePointer(
+                ignoring: !notifs.enabled,
+                child: Column(
+                  children: [
+                    CohereSectionLabel(label: 'Default sound'),
+                    CohereMethodRow(
+                      title: 'Silent',
+                      sub: 'No audible alert',
+                      isSelected: false,
+                      isFirst: true,
+                      onTap: null,
+                    ),
+                    CohereMethodRow(
+                      title: 'Reminder',
+                      sub: 'Standard notification tone',
+                      isSelected: true,
+                      onTap: null,
+                    ),
+                    CohereMethodRow(
+                      title: 'First sentence',
+                      sub: 'Plays "Allāhu akbar"',
+                      isSelected: false,
+                      onTap: null,
+                    ),
+                    CohereMethodRow(
+                      title: 'Full Adhan',
+                      sub: 'Plays complete adhan (~2 min)',
+                      isSelected: false,
+                      onTap: null,
+                    ),
+                    CohereSectionLabel(label: 'Per prayer'),
+                    for (var i = 0; i < PrayerName.values.length; i++)
+                      CohereToggleRow(
+                        label: PrayerName.values[i].label(l10n),
+                        isFirst: i == 0,
+                        value: notifs.isPrayerEnabled(PrayerName.values[i]),
+                        onChanged: (v) => cubit.setPrayerNotificationEnabled(
+                          PrayerName.values[i],
+                          v,
+                        ),
+                      ),
+                  ],
                 ),
-            ],
+              ),
+            ),
           ],
         );
       },

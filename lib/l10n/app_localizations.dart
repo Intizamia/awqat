@@ -802,6 +802,12 @@ abstract class AppLocalizations {
   /// **'Time for {prayer}'**
   String notificationPrayerBody(String prayer);
 
+  /// No description provided for @notificationPreReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{prayer} in {minutes} minutes'**
+  String notificationPreReminderBody(String prayer, int minutes);
+
   /// No description provided for @semanticsNextPrayer.
   ///
   /// In en, this message translates to:

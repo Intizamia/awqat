@@ -13,6 +13,7 @@ import '../features/location/presentation/location_screen.dart';
 import '../features/settings/presentation/screens/location_settings_screen.dart';
 import '../features/settings/presentation/screens/madhab_screen.dart';
 import '../features/settings/presentation/screens/notifications_settings_screen.dart';
+import '../features/settings/presentation/screens/pre_reminder_screen.dart';
 import '../features/settings/presentation/screens/reset_settings_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 
@@ -95,6 +96,10 @@ GoRouter createRouter({
                     builder: (context, state) => NotificationsSettingsScreen(
                       notificationService: notificationService,
                     ),
+                  ),
+                  GoRoute(
+                    path: 'pre-reminder',
+                    builder: (context, state) => const PreReminderScreen(),
                   ),
                   GoRoute(
                     path: 'language',

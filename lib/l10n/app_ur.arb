@@ -131,6 +131,7 @@
   "notificationsMasterSubtitle": "سسٹم کی اطلاع کی آواز استعمال ہوگی",
   "notificationsPermissionDenied": "اطلاع کی اجازت نہیں ملی۔ سسٹم ترتیبات سے اطلاعات چالو کریں۔",
   "notificationPrayerBody": "{prayer} کا وقت ہو گیا",
+  "notificationPreReminderBody": "{prayer} میں {minutes} منٹ باقی ہیں",
   "semanticsNextPrayer": "اگلی نماز: {prayer}، {time}",
   "semanticsPrayerTime": "{prayer}، {time}",
   "semanticsSetupStep": "{title}، {value}"

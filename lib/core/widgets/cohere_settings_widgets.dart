@@ -133,31 +133,34 @@ class CohereToggleRow extends StatelessWidget {
     final ink = CohereColors.inkColor(brightness);
     final inkMute = CohereColors.inkMute(brightness);
 
-    return Container(
-      decoration: isFirst
-          ? null
-          : BoxDecoration(
-              border: Border(top: BorderSide(color: rule, width: 1)),
-            ),
-      constraints: const BoxConstraints(minHeight: 56),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(label, style: TextStyle(fontSize: 15, color: ink)),
-                if (sub != null) ...[
-                  const SizedBox(height: 2),
-                  Text(sub!, style: TextStyle(fontSize: 12, color: inkMute)),
+    return InkWell(
+      onTap: () => onChanged(!value),
+      child: Container(
+        decoration: isFirst
+            ? null
+            : BoxDecoration(
+                border: Border(top: BorderSide(color: rule, width: 1)),
+              ),
+        constraints: const BoxConstraints(minHeight: 56),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(label, style: TextStyle(fontSize: 15, color: ink)),
+                  if (sub != null) ...[
+                    const SizedBox(height: 2),
+                    Text(sub!, style: TextStyle(fontSize: 12, color: inkMute)),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-          _CohereToggle(value: value, onChanged: onChanged),
-        ],
+            _CohereToggle(value: value, onChanged: onChanged),
+          ],
+        ),
       ),
     );
   }

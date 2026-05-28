@@ -131,6 +131,7 @@
   "notificationsMasterSubtitle": "يستخدم صوت إشعارات النظام",
   "notificationsPermissionDenied": "لم يُمنح إذن الإشعارات. فعّل الإشعارات من إعدادات النظام.",
   "notificationPrayerBody": "حان وقت {prayer}",
+  "notificationPreReminderBody": "{prayer} بعد {minutes} دقائق",
   "semanticsNextPrayer": "الصلاة القادمة: {prayer} الساعة {time}",
   "semanticsPrayerTime": "{prayer} الساعة {time}",
   "semanticsSetupStep": "{title}، {value}"

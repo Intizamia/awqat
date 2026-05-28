@@ -164,6 +164,13 @@
       }
     }
   },
+  "notificationPreReminderBody": "{prayer} in {minutes} minutes",
+  "@notificationPreReminderBody": {
+    "placeholders": {
+      "prayer": { "type": "String" },
+      "minutes": { "type": "int" }
+    }
+  },
   "semanticsNextPrayer": "Next prayer: {prayer} at {time}",
   "@semanticsNextPrayer": {
     "placeholders": {

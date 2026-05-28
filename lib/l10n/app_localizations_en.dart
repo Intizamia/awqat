@@ -406,6 +406,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String notificationPreReminderBody(String prayer, int minutes) {
+    return '$prayer in $minutes minutes';
+  }
+
+  @override
   String semanticsNextPrayer(String prayer, String time) {
     return 'Next prayer: $prayer at $time';
   }

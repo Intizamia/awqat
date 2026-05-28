@@ -88,7 +88,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat('EEEE · d MMMM yyyy').format(DateTime.now()).toUpperCase(),
+                        DateFormat(
+                          'EEEE · d MMMM yyyy',
+                        ).format(DateTime.now()).toUpperCase(),
                         style: cohereMonoLabel(
                           context,
                           fontSize: 11,
@@ -221,16 +223,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       value: notificationsSummary(l10n, settings),
                       onTap: () => context.push('/settings/notifications'),
                     ),
-                    CohereToggleRow(
+                    CohereNavRow(
                       label: 'Pre-prayer reminder',
-                      sub: 'Notify 10 minutes before each prayer',
-                      value: false,
-                      onChanged: (_) {},
-                    ),
-                    CohereToggleRow(
-                      label: 'Silent during Friday Khutbah',
-                      value: false,
-                      onChanged: (_) {},
+                      value: settings.notifications.preReminderEnabled
+                          ? '${settings.notifications.preReminderMinutes} min before'
+                          : 'Off',
+                      onTap: () => context.push('/settings/pre-reminder'),
                     ),
                     Container(height: 1, color: rule),
 

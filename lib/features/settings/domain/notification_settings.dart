@@ -13,20 +13,28 @@ class NotificationSettings extends Equatable {
       PrayerName.maghrib: true,
       PrayerName.isha: true,
     },
+    this.preReminderEnabled = false,
+    this.preReminderMinutes = 10,
   });
 
   final bool enabled;
   final Map<PrayerName, bool> prayerEnabled;
+  final bool preReminderEnabled;
+  final int preReminderMinutes;
 
   bool isPrayerEnabled(PrayerName name) => prayerEnabled[name] ?? false;
 
   NotificationSettings copyWith({
     bool? enabled,
     Map<PrayerName, bool>? prayerEnabled,
+    bool? preReminderEnabled,
+    int? preReminderMinutes,
   }) {
     return NotificationSettings(
       enabled: enabled ?? this.enabled,
       prayerEnabled: prayerEnabled ?? this.prayerEnabled,
+      preReminderEnabled: preReminderEnabled ?? this.preReminderEnabled,
+      preReminderMinutes: preReminderMinutes ?? this.preReminderMinutes,
     );
   }
 
@@ -39,6 +47,8 @@ class NotificationSettings extends Equatable {
     'prayerEnabled': {
       for (final entry in prayerEnabled.entries) entry.key.name: entry.value,
     },
+    'preReminderEnabled': preReminderEnabled,
+    'preReminderMinutes': preReminderMinutes,
   };
 
   factory NotificationSettings.fromJson(Map<String, dynamic>? json) {
@@ -59,9 +69,11 @@ class NotificationSettings extends Equatable {
       prayerEnabled: prayers.isEmpty
           ? const NotificationSettings().prayerEnabled
           : {...const NotificationSettings().prayerEnabled, ...prayers},
+      preReminderEnabled: json['preReminderEnabled'] as bool? ?? false,
+      preReminderMinutes: json['preReminderMinutes'] as int? ?? 10,
     );
   }
 
   @override
-  List<Object?> get props => [enabled, prayerEnabled];
+  List<Object?> get props => [enabled, prayerEnabled, preReminderEnabled, preReminderMinutes];
 }

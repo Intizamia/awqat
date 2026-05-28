@@ -7,14 +7,22 @@ import '../core/navigation/primary_scroll_registry.dart';
 import '../core/theme/cohere_colors.dart';
 import '../l10n/app_localizations.dart';
 
+const _branchRoots = ['/prayer', '/discover', '/settings'];
+
 class MainShell extends StatelessWidget {
   const MainShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
-  void _onTap(int index) {
+  void _onTap(BuildContext context, int index) {
     if (index == navigationShell.currentIndex) {
-      PrimaryScrollRegistry.instance.scrollToTop(index);
+      final currentPath = GoRouter.of(
+        context,
+      ).routerDelegate.currentConfiguration.uri.path;
+      final isAtRoot = currentPath == _branchRoots[index];
+      if (isAtRoot) {
+        PrimaryScrollRegistry.instance.scrollToTop(index);
+      }
       navigationShell.goBranch(index, initialLocation: true);
       return;
     }
@@ -26,14 +34,14 @@ class MainShell extends StatelessWidget {
     return PopScope(
       canPop: navigationShell.currentIndex == 0,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) _onTap(0);
+        if (!didPop) _onTap(context, 0);
       },
       child: Scaffold(
         extendBody: true,
         body: navigationShell,
         bottomNavigationBar: _CohereTabBar(
           currentIndex: navigationShell.currentIndex,
-          onTap: _onTap,
+          onTap: (i) => _onTap(context, i),
         ),
       ),
     );

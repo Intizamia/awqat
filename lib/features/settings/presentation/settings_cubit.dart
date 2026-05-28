@@ -55,6 +55,26 @@ class SettingsCubit extends Cubit<SettingsState> {
     );
   }
 
+  Future<void> setPreReminderEnabled(bool value) async {
+    await _save(
+      state.settings.copyWith(
+        notifications: state.settings.notifications.copyWith(
+          preReminderEnabled: value,
+        ),
+      ),
+    );
+  }
+
+  Future<void> setPreReminderMinutes(int minutes) async {
+    await _save(
+      state.settings.copyWith(
+        notifications: state.settings.notifications.copyWith(
+          preReminderMinutes: minutes,
+        ),
+      ),
+    );
+  }
+
   Future<void> setPrayerNotificationEnabled(
     PrayerName prayer,
     bool value,

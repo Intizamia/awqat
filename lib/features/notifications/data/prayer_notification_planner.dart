@@ -58,9 +58,10 @@ List<ScheduledPrayerNotification> _planDay({
   required DateTime now,
 }) {
   final items = <ScheduledPrayerNotification>[];
+  final notifs = settings.notifications;
 
   for (final entry in schedule.entries) {
-    if (!settings.notifications.isPrayerEnabled(entry.name)) continue;
+    if (!notifs.isPrayerEnabled(entry.name)) continue;
     if (!entry.time.isAfter(now)) continue;
 
     items.add(
@@ -72,6 +73,29 @@ List<ScheduledPrayerNotification> _planDay({
         body: l10n.notificationPrayerBody(entry.name.label(l10n)),
       ),
     );
+
+    if (notifs.preReminderEnabled) {
+      final reminderTime = entry.time.subtract(
+        Duration(minutes: notifs.preReminderMinutes),
+      );
+      if (reminderTime.isAfter(now)) {
+        items.add(
+          ScheduledPrayerNotification(
+            id: preReminderNotificationId(
+              prayer: entry.name,
+              dayOffset: dayOffset,
+            ),
+            prayer: entry.name,
+            scheduledAt: reminderTime,
+            title: entry.name.label(l10n),
+            body: l10n.notificationPreReminderBody(
+              entry.name.label(l10n),
+              notifs.preReminderMinutes,
+            ),
+          ),
+        );
+      }
+    }
   }
 
   return items;
