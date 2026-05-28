@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -86,8 +88,10 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
   }
 
   Future<void> _openMonth() async {
-    final result = await context.push<DateTime?>('/prayer/month',
-        extra: _selectedDate);
+    final result = await context.push<DateTime?>(
+      '/prayer/month',
+      extra: _selectedDate,
+    );
     if (result != null && mounted) {
       setState(() => _selectedDate = result);
     }
@@ -114,7 +118,6 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
           return _PrayerList(
             scrollController: _scrollController,
             settings: settingsState.settings,
-            onRefresh: _refresh,
             selectedDate: _selectedDate,
             today: _today,
             onDateSelected: (d) => setState(() => _selectedDate = d),
@@ -147,7 +150,6 @@ class _PrayerList extends StatelessWidget {
   const _PrayerList({
     required this.scrollController,
     required this.settings,
-    required this.onRefresh,
     required this.selectedDate,
     required this.today,
     required this.onDateSelected,
@@ -156,7 +158,6 @@ class _PrayerList extends StatelessWidget {
 
   final ScrollController scrollController;
   final AppSettings settings;
-  final VoidCallback onRefresh;
   final DateTime selectedDate;
   final DateTime today;
   final ValueChanged<DateTime> onDateSelected;
@@ -208,21 +209,19 @@ class _PrayerList extends StatelessWidget {
 
         final fmt = settings.timeFormat;
         final visibleEntries = displaySchedule.entries
-            .where(
-                (e) => settings.showSunrise || e.name != PrayerName.sunrise)
+            .where((e) => settings.showSunrise || e.name != PrayerName.sunrise)
             .toList();
 
         final locationLabel = settings.location?.label ?? '';
         final hijriShort = settings.hijriAdjustmentDays != 0
             ? (settings.hijriAdjustmentDays > 0
-                ? 'Q+${settings.hijriAdjustmentDays}'
-                : 'Q${settings.hijriAdjustmentDays}')
+                  ? 'Q+${settings.hijriAdjustmentDays}'
+                  : 'Q${settings.hijriAdjustmentDays}')
             : null;
         final statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-        // Today's next prayer + countdown (only meaningful when viewing today)
+        // Today's next prayer (only meaningful when viewing today)
         final next = todaySchedule.nextPrayer!;
-        final remaining = next.time.difference(DateTime.now());
 
         return Scaffold(
           backgroundColor: surfPage,
@@ -252,37 +251,27 @@ class _PrayerList extends StatelessWidget {
                     ),
                     // Hidden when not viewing today: clock block disappears,
                     // making this divider overlap the prayer list's top border.
-                    if (_isViewingToday)
-                      Container(
-                        height: 1,
-                        color: rule,
-                      ),
+                    if (_isViewingToday) Container(height: 1, color: rule),
                   ],
                 ),
               ),
               // Scrollable content
               Expanded(
-                child: RefreshIndicator(
-                  onRefresh: _isViewingToday ? () async => onRefresh() : () async {},
-                  child: ListView(
-                    controller: scrollController,
-                    padding: EdgeInsets.zero,
-                    children: [
-                      if (_isViewingToday)
-                        _ClockBlock(
-                          next: next,
-                          remaining: remaining,
-                          fmt: fmt,
-                        ),
+                child: ListView(
+                  controller: scrollController,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    if (_isViewingToday)
+                      _ClockBlock(next: next, fmt: fmt),
                       ...visibleEntries.map((entry) {
                         final isNext =
                             _isViewingToday && entry.name == next.name;
                         final isPassed = _isViewingToday
                             ? entry.time.isBefore(DateTime.now()) && !isNext
                             : false;
-                        final notifOn = settings.notifications.enabled &&
-                            settings.notifications
-                                .isPrayerEnabled(entry.name);
+                        final notifOn =
+                            settings.notifications.enabled &&
+                            settings.notifications.isPrayerEnabled(entry.name);
                         return _PrayerRow(
                           name: entry.name,
                           time: entry.time,
@@ -296,7 +285,6 @@ class _PrayerList extends StatelessWidget {
                       const SizedBox(height: 100),
                     ],
                   ),
-                ),
               ),
             ],
           ),
@@ -322,9 +310,9 @@ class _WeekStrip extends StatelessWidget {
   final VoidCallback onMonthTap;
 
   List<DateTime> get _stripDays => List.generate(7, (i) {
-        final d = today.add(Duration(days: i - 3));
-        return DateTime(d.year, d.month, d.day);
-      });
+    final d = today.add(Duration(days: i - 3));
+    return DateTime(d.year, d.month, d.day);
+  });
 
   static const _wdLetters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
@@ -347,10 +335,12 @@ class _WeekStrip extends StatelessWidget {
         child: Row(
           children: [
             ...days.map((d) {
-              final isSel = d.year == selectedDate.year &&
+              final isSel =
+                  d.year == selectedDate.year &&
                   d.month == selectedDate.month &&
                   d.day == selectedDate.day;
-              final isToday = d.year == today.year &&
+              final isToday =
+                  d.year == today.year &&
                   d.month == today.month &&
                   d.day == today.day;
               final wdLetter = _wdLetters[d.weekday % 7];
@@ -358,8 +348,7 @@ class _WeekStrip extends StatelessWidget {
               final chipBg = isSel ? ink : Colors.transparent;
               final chipBorder = isSel ? ink : (isToday ? accent : rule);
               final numColor = isSel ? surfPage : ink;
-              final wdColor =
-                  isSel ? surfPage.withValues(alpha: 0.7) : inkMute;
+              final wdColor = isSel ? surfPage.withValues(alpha: 0.7) : inkMute;
               return Padding(
                 padding: const EdgeInsets.only(right: 6),
                 child: GestureDetector(
@@ -378,8 +367,12 @@ class _WeekStrip extends StatelessWidget {
                       children: [
                         Text(
                           wdLetter,
-                          style: cohereMonoLabel(context,
-                              fontSize: 9, letterSpacing: 0.14, color: wdColor),
+                          style: cohereMonoLabel(
+                            context,
+                            fontSize: 9,
+                            letterSpacing: 0.14,
+                            color: wdColor,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -406,8 +399,10 @@ class _WeekStrip extends StatelessWidget {
               onTap: onMonthTap,
               child: Container(
                 width: 72,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 10,
+                ),
                 decoration: BoxDecoration(
                   color: surfStone,
                   border: Border.all(color: rule),
@@ -418,8 +413,12 @@ class _WeekStrip extends StatelessWidget {
                   children: [
                     Text(
                       'MONTH',
-                      style: cohereMonoLabel(context,
-                          fontSize: 9, letterSpacing: 0.14, color: inkMute),
+                      style: cohereMonoLabel(
+                        context,
+                        fontSize: 9,
+                        letterSpacing: 0.14,
+                        color: inkMute,
+                      ),
                     ),
                     const SizedBox(height: 5),
                     Icon(Icons.calendar_month_outlined, size: 16, color: ink),
@@ -436,16 +435,30 @@ class _WeekStrip extends StatelessWidget {
 
 // ─── Clock block ──────────────────────────────────────────────────────────────
 
-class _ClockBlock extends StatelessWidget {
-  const _ClockBlock({
-    required this.next,
-    required this.remaining,
-    required this.fmt,
-  });
+class _ClockBlock extends StatefulWidget {
+  const _ClockBlock({required this.next, required this.fmt});
 
   final PrayerTimeEntry next;
-  final Duration remaining;
   final TimeFormatId fmt;
+
+  @override
+  State<_ClockBlock> createState() => _ClockBlockState();
+}
+
+class _ClockBlockState extends State<_ClockBlock> {
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -456,11 +469,11 @@ class _ClockBlock extends StatelessWidget {
     final accent = CohereColors.accentColor(brightness);
 
     final now = DateTime.now();
-    final use12 = fmt == TimeFormatId.hour12;
-    final hour =
-        use12 ? (now.hour % 12 == 0 ? 12 : now.hour % 12) : now.hour;
+    final use12 = widget.fmt == TimeFormatId.hour12;
+    final hour = use12 ? (now.hour % 12 == 0 ? 12 : now.hour % 12) : now.hour;
     final minute = now.minute.toString().padLeft(2, '0');
     final ampm = now.hour < 12 ? 'AM' : 'PM';
+    final remaining = widget.next.time.difference(now);
     final cd = remaining.isNegative ? Duration.zero : remaining;
 
     return Padding(
@@ -475,20 +488,24 @@ class _ClockBlock extends StatelessWidget {
               Text(
                 '$hour:$minute',
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontSize: 64,
-                      letterSpacing: -2.4,
-                      fontWeight: FontWeight.w400,
-                      height: 0.95,
-                      color: ink,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
+                  fontSize: 64,
+                  letterSpacing: -2.4,
+                  fontWeight: FontWeight.w400,
+                  height: 0.95,
+                  color: ink,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
               ),
               if (use12) ...[
                 const SizedBox(width: 14),
                 Text(
                   ampm,
-                  style: cohereMonoLabel(context,
-                      fontSize: 14, letterSpacing: 0.16, color: inkDim),
+                  style: cohereMonoLabel(
+                    context,
+                    fontSize: 14,
+                    letterSpacing: 0.16,
+                    color: inkDim,
+                  ),
                 ),
               ],
             ],
@@ -500,9 +517,8 @@ class _ClockBlock extends StatelessWidget {
               children: [
                 const TextSpan(text: 'Next: '),
                 TextSpan(
-                  text: next.name.label(l10n),
-                  style:
-                      TextStyle(fontWeight: FontWeight.w500, color: accent),
+                  text: widget.next.name.label(l10n),
+                  style: TextStyle(fontWeight: FontWeight.w500, color: accent),
                 ),
                 TextSpan(text: ' in ${formatCountdown(cd)}'),
               ],
@@ -572,11 +588,11 @@ class _PrayerRow extends StatelessWidget {
                 Text(
                   name.label(l10n),
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontSize: 22,
-                        letterSpacing: -0.2,
-                        fontWeight: FontWeight.w400,
-                        color: nameColor,
-                      ),
+                    fontSize: 22,
+                    letterSpacing: -0.2,
+                    fontWeight: FontWeight.w400,
+                    color: nameColor,
+                  ),
                 ),
                 if (arabic.isNotEmpty)
                   Text(

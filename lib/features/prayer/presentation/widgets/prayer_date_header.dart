@@ -43,7 +43,7 @@ class PrayerDateHeader extends StatelessWidget {
         : l10n.locationNotSet;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 18, 24, 18),
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,9 +51,7 @@ class PrayerDateHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                isToday
-                    ? locationStr.toUpperCase()
-                    : 'VIEWING · ${locationStr.toUpperCase()}',
+                locationStr.toUpperCase(),
                 style: cohereMonoLabel(
                   context,
                   fontSize: 11,
@@ -84,8 +82,8 @@ class PrayerDateHeader extends StatelessWidget {
               color: ink,
             ),
           ),
-          const SizedBox(height: 14),
-          Text(hijri, style: TextStyle(fontSize: 15, color: inkDim)),
+          const SizedBox(height: 10),
+          Text(hijri, style: TextStyle(fontSize: 16, color: inkDim)),
         ],
       ),
     );

@@ -1,11 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
+import '../../../core/navigation/primary_scroll_registry.dart';
 import '../../../core/theme/cohere_colors.dart';
 import '../../../l10n/app_localizations.dart';
 
-class DiscoverScreen extends StatelessWidget {
+const _kDiscoverBranchIndex = 1;
+
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
+
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    PrimaryScrollRegistry.instance.register(
+      _kDiscoverBranchIndex,
+      _scrollController,
+    );
+  }
+
+  @override
+  void dispose() {
+    PrimaryScrollRegistry.instance.unregister(
+      _kDiscoverBranchIndex,
+      _scrollController,
+    );
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,137 +51,149 @@ class DiscoverScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: surfPage,
-      body: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: statusBarHeight),
-          // Header
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 18, 24, 22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          // Sticky header
+          ColoredBox(
+            color: surfPage,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(24, statusBarHeight * 2 + 8, 24, 22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.navDiscover.toUpperCase(),
+                    style: cohereMonoLabel(
+                      context,
+                      fontSize: 11,
+                      letterSpacing: 0.12,
+                      color: inkDim,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'More for your day',
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      fontSize: 40,
+                      letterSpacing: -0.8,
+                      height: 1,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    'Tools to support your worship beyond prayer times.',
+                    style: TextStyle(fontSize: 14, color: inkDim, height: 1.5),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Scrollable content
+          Expanded(
+            child: ListView(
+              controller: _scrollController,
+              padding: EdgeInsets.zero,
               children: [
-                Text(
-                  l10n.navDiscover.toUpperCase(),
-                  style: cohereMonoLabel(
-                    context,
-                    fontSize: 11,
-                    letterSpacing: 0.12,
-                    color: inkDim,
+                // Available section
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+                  child: Text(
+                    'AVAILABLE',
+                    style: cohereMonoLabel(
+                      context,
+                      fontSize: 11,
+                      letterSpacing: 0.14,
+                      color: inkMute,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  'More for your day',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    fontSize: 40,
-                    letterSpacing: -0.8,
-                    height: 1,
+                _FeatureRow(
+                  glyph: _QiblaGlyph(accent: accent),
+                  glyphBg: accent,
+                  title: 'Qibla Direction',
+                  description:
+                      'Find the direction of the Kaaba from your location.',
+                  tag: 'OPEN',
+                  tagColor: accent,
+                  isLive: true,
+                  rule: rule,
+                  ink: ink,
+                  inkDim: inkDim,
+                  inkMute: inkMute,
+                  onTap: () => context.push('/qibla'),
+                ),
+                Container(
+                  height: 1,
+                  color: rule,
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                ),
+
+                const SizedBox(height: 28),
+
+                // Coming soon section
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+                  child: Text(
+                    'COMING SOON',
+                    style: cohereMonoLabel(
+                      context,
+                      fontSize: 11,
+                      letterSpacing: 0.14,
+                      color: inkMute,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 14),
-                Text(
-                  'Tools to support your worship beyond prayer times.',
-                  style: TextStyle(fontSize: 14, color: inkDim, height: 1.5),
+                _FeatureRow(
+                  glyph: const _DashedCircleGlyph(),
+                  glyphBg: surfStone,
+                  title: 'Quran Reader',
+                  description: 'Read with translations, bookmarks, and tafsir.',
+                  tag: 'SOON',
+                  tagColor: inkMute,
+                  isLive: false,
+                  rule: rule,
+                  ink: ink,
+                  inkDim: inkDim,
+                  inkMute: inkMute,
                 ),
+                _FeatureRow(
+                  glyph: const _DashedCircleGlyph(),
+                  glyphBg: surfStone,
+                  title: 'Digital Tasbih',
+                  description: 'Counter for dhikr and remembrance.',
+                  tag: 'SOON',
+                  tagColor: inkMute,
+                  isLive: false,
+                  rule: rule,
+                  ink: ink,
+                  inkDim: inkDim,
+                  inkMute: inkMute,
+                ),
+                _FeatureRow(
+                  glyph: const _DashedCircleGlyph(),
+                  glyphBg: surfStone,
+                  title: 'Mosques Nearby',
+                  description: 'Find prayer spaces around you.',
+                  tag: 'SOON',
+                  tagColor: inkMute,
+                  isLive: false,
+                  rule: rule,
+                  ink: ink,
+                  inkDim: inkDim,
+                  inkMute: inkMute,
+                  isLast: true,
+                ),
+                Container(
+                  height: 1,
+                  color: rule,
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                ),
+
+                const SizedBox(height: 10),
               ],
             ),
           ),
-
-          // Available section
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-            child: Text(
-              'AVAILABLE',
-              style: cohereMonoLabel(
-                context,
-                fontSize: 11,
-                letterSpacing: 0.14,
-                color: inkMute,
-              ),
-            ),
-          ),
-          _FeatureRow(
-            glyph: _QiblaGlyph(accent: accent),
-            glyphBg: accent,
-            title: 'Qibla Direction',
-            description: 'Find the direction of the Kaaba from your location.',
-            tag: 'OPEN',
-            tagColor: accent,
-            isLive: true,
-            rule: rule,
-            ink: ink,
-            inkDim: inkDim,
-            inkMute: inkMute,
-            onTap: () => context.push('/qibla'),
-          ),
-          Container(
-            height: 1,
-            color: rule,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-          ),
-
-          const SizedBox(height: 28),
-
-          // Coming soon section
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-            child: Text(
-              'COMING SOON',
-              style: cohereMonoLabel(
-                context,
-                fontSize: 11,
-                letterSpacing: 0.14,
-                color: inkMute,
-              ),
-            ),
-          ),
-          _FeatureRow(
-            glyph: const _DashedCircleGlyph(),
-            glyphBg: surfStone,
-            title: 'Quran Reader',
-            description: 'Read with translations, bookmarks, and tafsir.',
-            tag: 'SOON',
-            tagColor: inkMute,
-            isLive: false,
-            rule: rule,
-            ink: ink,
-            inkDim: inkDim,
-            inkMute: inkMute,
-          ),
-          _FeatureRow(
-            glyph: const _DashedCircleGlyph(),
-            glyphBg: surfStone,
-            title: 'Digital Tasbih',
-            description: 'Counter for dhikr and remembrance.',
-            tag: 'SOON',
-            tagColor: inkMute,
-            isLive: false,
-            rule: rule,
-            ink: ink,
-            inkDim: inkDim,
-            inkMute: inkMute,
-          ),
-          _FeatureRow(
-            glyph: const _DashedCircleGlyph(),
-            glyphBg: surfStone,
-            title: 'Mosques Nearby',
-            description: 'Find prayer spaces around you.',
-            tag: 'SOON',
-            tagColor: inkMute,
-            isLive: false,
-            rule: rule,
-            ink: ink,
-            inkDim: inkDim,
-            inkMute: inkMute,
-            isLast: true,
-          ),
-          Container(
-            height: 1,
-            color: rule,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-          ),
-
-          const SizedBox(height: 10),
         ],
       ),
     );

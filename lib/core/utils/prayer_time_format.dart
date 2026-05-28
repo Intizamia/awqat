@@ -14,8 +14,12 @@ String formatPrayerTime(
 String formatCountdown(Duration remaining) {
   final hours = remaining.inHours;
   final minutes = remaining.inMinutes.remainder(60);
+  final seconds = remaining.inSeconds.remainder(60);
   if (hours > 0) {
-    return '${hours}h ${minutes}m';
+    return '${hours}h ${minutes}m ${seconds}s';
   }
-  return '${minutes}m';
+  if (minutes > 0) {
+    return '${minutes}m ${seconds}s';
+  }
+  return '${seconds}s';
 }

@@ -80,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
                     24,
-                    statusBarHeight * 2 + 18,
+                    statusBarHeight * 2 + 8,
                     24,
                     22,
                   ),
