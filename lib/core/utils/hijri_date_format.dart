@@ -21,5 +21,5 @@ String formatHijriDate(
 
 /// Gregorian date line for the prayer screen header.
 String formatGregorianDate(DateTime date, String appLocaleCode) {
-  return DateFormat.yMMMEd(appLocaleCode).format(date);
+  return DateFormat.yMMMMEEEEd(appLocaleCode).format(date);
 }

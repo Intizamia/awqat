@@ -58,7 +58,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ColoredBox(
             color: surfPage,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(24, statusBarHeight * 2 + 8, 24, 22),
+              padding: EdgeInsets.fromLTRB(24, statusBarHeight * 2, 24, 22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

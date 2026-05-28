@@ -33,7 +33,7 @@ class SetupChecklistBody extends StatelessWidget {
         children: [
           SizedBox(height: statusBarHeight),
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 16, 24, 22),
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

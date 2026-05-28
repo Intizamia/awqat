@@ -13,9 +13,7 @@ import '../../settings/domain/app_settings.dart';
 import '../../settings/domain/time_format_id.dart';
 import '../../settings/presentation/settings_cubit.dart';
 import '../../settings/presentation/settings_state.dart';
-import '../data/adhan_calculation_engine.dart';
 import '../domain/prayer_name.dart';
-import '../domain/prayer_schedule.dart';
 import '../domain/prayer_time_entry.dart';
 import 'prayer_name_l10n.dart';
 import 'prayer_times_cubit.dart';
@@ -43,15 +41,10 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
     with WidgetsBindingObserver {
   static const _branchIndex = 0;
   final _scrollController = ScrollController();
-  late DateTime _today;
-  late DateTime _selectedDate;
 
   @override
   void initState() {
     super.initState();
-    final now = DateTime.now();
-    _today = DateTime(now.year, now.month, now.day);
-    _selectedDate = _today;
     WidgetsBinding.instance.addObserver(this);
     PrimaryScrollRegistry.instance.register(_branchIndex, _scrollController);
     WidgetsBinding.instance.addPostFrameCallback((_) => _refresh());
@@ -67,17 +60,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      final now = DateTime.now();
-      final newToday = DateTime(now.year, now.month, now.day);
-      if (newToday != _today) {
-        setState(() {
-          _today = newToday;
-          if (_selectedDate == _today) _selectedDate = newToday;
-        });
-      }
-      _refresh();
-    }
+    if (state == AppLifecycleState.resumed) _refresh();
   }
 
   void _refresh() {
@@ -87,14 +70,8 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
     }
   }
 
-  Future<void> _openMonth() async {
-    final result = await context.push<DateTime?>(
-      '/prayer/month',
-      extra: _selectedDate,
-    );
-    if (result != null && mounted) {
-      setState(() => _selectedDate = result);
-    }
+  void _openMonth() {
+    context.push('/prayer/month');
   }
 
   @override
@@ -118,9 +95,6 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
           return _PrayerList(
             scrollController: _scrollController,
             settings: settingsState.settings,
-            selectedDate: _selectedDate,
-            today: _today,
-            onDateSelected: (d) => setState(() => _selectedDate = d),
             onMonthTap: _openMonth,
           );
         },
@@ -150,23 +124,12 @@ class _PrayerList extends StatelessWidget {
   const _PrayerList({
     required this.scrollController,
     required this.settings,
-    required this.selectedDate,
-    required this.today,
-    required this.onDateSelected,
     required this.onMonthTap,
   });
 
   final ScrollController scrollController;
   final AppSettings settings;
-  final DateTime selectedDate;
-  final DateTime today;
-  final ValueChanged<DateTime> onDateSelected;
   final VoidCallback onMonthTap;
-
-  bool get _isViewingToday =>
-      selectedDate.year == today.year &&
-      selectedDate.month == today.month &&
-      selectedDate.day == today.day;
 
   @override
   Widget build(BuildContext context) {
@@ -195,20 +158,8 @@ class _PrayerList extends StatelessWidget {
           return Scaffold(backgroundColor: surfPage, body: const SizedBox());
         }
 
-        // For non-today, compute inline (synchronous + fast for a single day)
-        final PrayerSchedule displaySchedule;
-        if (_isViewingToday) {
-          displaySchedule = todaySchedule;
-        } else {
-          displaySchedule = AdhanCalculationEngine().compute(
-            date: selectedDate,
-            location: settings.location!,
-            calculation: settings.calculation,
-          );
-        }
-
         final fmt = settings.timeFormat;
-        final visibleEntries = displaySchedule.entries
+        final visibleEntries = todaySchedule.entries
             .where((e) => settings.showSunrise || e.name != PrayerName.sunrise)
             .toList();
 
@@ -219,8 +170,6 @@ class _PrayerList extends StatelessWidget {
                   : 'Q${settings.hijriAdjustmentDays}')
             : null;
         final statusBarHeight = MediaQuery.of(context).viewPadding.top;
-
-        // Today's next prayer (only meaningful when viewing today)
         final next = todaySchedule.nextPrayer!;
 
         return Scaffold(
@@ -228,7 +177,7 @@ class _PrayerList extends StatelessWidget {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Sticky header
+              // Sticky header — tapping opens month view
               ColoredBox(
                 color: surfPage,
                 child: Column(
@@ -236,22 +185,14 @@ class _PrayerList extends StatelessWidget {
                   children: [
                     SizedBox(height: statusBarHeight * 2),
                     PrayerDateHeader(
-                      date: selectedDate,
+                      date: todaySchedule.date,
                       localeCode: settings.localeCode,
                       hijriAdjustmentDays: settings.hijriAdjustmentDays,
                       locationLabel: locationLabel,
                       hijriAdjustmentShort: hijriShort,
-                      isToday: _isViewingToday,
+                      onTap: onMonthTap,
                     ),
-                    _WeekStrip(
-                      selectedDate: selectedDate,
-                      today: today,
-                      onDaySelected: onDateSelected,
-                      onMonthTap: onMonthTap,
-                    ),
-                    // Hidden when not viewing today: clock block disappears,
-                    // making this divider overlap the prayer list's top border.
-                    if (_isViewingToday) Container(height: 1, color: rule),
+                    Container(height: 1, color: rule),
                   ],
                 ),
               ),
@@ -261,14 +202,11 @@ class _PrayerList extends StatelessWidget {
                   controller: scrollController,
                   padding: EdgeInsets.zero,
                   children: [
-                    if (_isViewingToday)
-                      _ClockBlock(next: next, fmt: fmt),
-                      ...visibleEntries.map((entry) {
-                        final isNext =
-                            _isViewingToday && entry.name == next.name;
-                        final isPassed = _isViewingToday
-                            ? entry.time.isBefore(DateTime.now()) && !isNext
-                            : false;
+                    _ClockBlock(next: next, fmt: fmt),
+                    ...visibleEntries.map((entry) {
+                        final isNext = entry.name == next.name;
+                        final isPassed =
+                            entry.time.isBefore(DateTime.now()) && !isNext;
                         final notifOn =
                             settings.notifications.enabled &&
                             settings.notifications.isPrayerEnabled(entry.name);
@@ -290,145 +228,6 @@ class _PrayerList extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-// ─── Week strip ───────────────────────────────────────────────────────────────
-
-class _WeekStrip extends StatelessWidget {
-  const _WeekStrip({
-    required this.selectedDate,
-    required this.today,
-    required this.onDaySelected,
-    required this.onMonthTap,
-  });
-
-  final DateTime selectedDate;
-  final DateTime today;
-  final ValueChanged<DateTime> onDaySelected;
-  final VoidCallback onMonthTap;
-
-  List<DateTime> get _stripDays => List.generate(7, (i) {
-    final d = today.add(Duration(days: i - 3));
-    return DateTime(d.year, d.month, d.day);
-  });
-
-  static const _wdLetters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-  @override
-  Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    final ink = CohereColors.inkColor(brightness);
-    final inkMute = CohereColors.inkMute(brightness);
-    final accent = CohereColors.accentColor(brightness);
-    final surfPage = CohereColors.surfPage(brightness);
-    final surfStone = CohereColors.surfStone(brightness);
-    final rule = CohereColors.surfRule(brightness);
-    final days = _stripDays;
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 14, bottom: 8),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Row(
-          children: [
-            ...days.map((d) {
-              final isSel =
-                  d.year == selectedDate.year &&
-                  d.month == selectedDate.month &&
-                  d.day == selectedDate.day;
-              final isToday =
-                  d.year == today.year &&
-                  d.month == today.month &&
-                  d.day == today.day;
-              final wdLetter = _wdLetters[d.weekday % 7];
-
-              final chipBg = isSel ? ink : Colors.transparent;
-              final chipBorder = isSel ? ink : (isToday ? accent : rule);
-              final numColor = isSel ? surfPage : ink;
-              final wdColor = isSel ? surfPage.withValues(alpha: 0.7) : inkMute;
-              return Padding(
-                padding: const EdgeInsets.only(right: 6),
-                child: GestureDetector(
-                  onTap: () => onDaySelected(d),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
-                    width: 42,
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                    decoration: BoxDecoration(
-                      color: chipBg,
-                      border: Border.all(color: chipBorder),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          wdLetter,
-                          style: cohereMonoLabel(
-                            context,
-                            fontSize: 9,
-                            letterSpacing: 0.14,
-                            color: wdColor,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          d.day.toString(),
-                          style: TextStyle(
-                            fontFamily: 'SpaceGrotesk',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: -0.3,
-                            color: numColor,
-                            height: 1.0,
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }),
-            const SizedBox(width: 2),
-            // Month CTA
-            GestureDetector(
-              onTap: onMonthTap,
-              child: Container(
-                width: 72,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: surfStone,
-                  border: Border.all(color: rule),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'MONTH',
-                      style: cohereMonoLabel(
-                        context,
-                        fontSize: 9,
-                        letterSpacing: 0.14,
-                        color: inkMute,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Icon(Icons.calendar_month_outlined, size: 16, color: ink),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
