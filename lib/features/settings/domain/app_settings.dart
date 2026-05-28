@@ -11,7 +11,7 @@ class AppSettings extends Equatable {
     this.calculation = const CalculationSettings(),
     this.localeCode = 'en',
     this.themeMode = ThemeModeId.light,
-    this.timeFormat = TimeFormatId.hour24,
+    this.timeFormat = TimeFormatId.hour12,
     this.hijriAdjustmentDays = 0,
     this.showSunrise = false,
     this.location,
@@ -88,7 +88,7 @@ class AppSettings extends Equatable {
         json['themeMode'] as String? ?? 'light',
       ),
       timeFormat: TimeFormatId.values.byName(
-        json['timeFormat'] as String? ?? 'hour24',
+        json['timeFormat'] as String? ?? 'hour12',
       ),
       hijriAdjustmentDays: json['hijriAdjustmentDays'] as int? ?? 0,
       showSunrise: json['showSunrise'] as bool? ?? false,
