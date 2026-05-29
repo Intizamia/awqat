@@ -7,8 +7,6 @@ import '../core/navigation/primary_scroll_registry.dart';
 import '../core/theme/cohere_colors.dart';
 import '../l10n/app_localizations.dart';
 
-const _branchRoots = ['/prayer', '/discover', '/settings'];
-
 class MainShell extends StatelessWidget {
   const MainShell({required this.navigationShell, super.key});
 
@@ -16,14 +14,12 @@ class MainShell extends StatelessWidget {
 
   void _onTap(BuildContext context, int index) {
     if (index == navigationShell.currentIndex) {
-      final currentPath = GoRouter.of(
-        context,
-      ).routerDelegate.currentConfiguration.uri.path;
-      final isAtRoot = currentPath == _branchRoots[index];
-      if (isAtRoot) {
+      final router = GoRouter.of(context);
+      if (router.canPop()) {
+        router.pop();
+      } else {
         PrimaryScrollRegistry.instance.scrollToTop(index);
       }
-      navigationShell.goBranch(index, initialLocation: true);
       return;
     }
     navigationShell.goBranch(index);

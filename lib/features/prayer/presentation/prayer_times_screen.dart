@@ -21,15 +21,6 @@ import 'prayer_times_state.dart';
 import 'widgets/prayer_date_header.dart';
 import 'widgets/setup_checklist_body.dart';
 
-const _kArabicNames = {
-  PrayerName.fajr: 'الفجر',
-  PrayerName.sunrise: 'الشروق',
-  PrayerName.dhuhr: 'الظهر',
-  PrayerName.asr: 'العصر',
-  PrayerName.maghrib: 'المغرب',
-  PrayerName.isha: 'العشاء',
-};
-
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({super.key});
 

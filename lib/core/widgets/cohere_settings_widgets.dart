@@ -18,9 +18,9 @@ class CohereSectionLabel extends StatelessWidget {
         label.toUpperCase(),
         style: cohereMonoLabel(
           context,
-          fontSize: 11,
-          letterSpacing: 0.14,
-          color: CohereColors.inkMute(brightness),
+          fontSize: 12,
+          letterSpacing: 0.24,
+          color: CohereColors.inkDim(brightness),
         ),
       ),
     );
@@ -36,11 +36,13 @@ class CohereNavRow extends StatelessWidget {
     super.key,
     this.sub,
     this.value,
+    this.icon,
   });
 
   final String label;
   final String? sub;
   final String? value;
+  final Widget? icon;
   final VoidCallback onTap;
 
   @override
@@ -61,6 +63,7 @@ class CohereNavRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         child: Row(
           children: [
+            if (icon != null) ...[icon!, const SizedBox(width: 14)],
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,6 +121,7 @@ class CohereToggleRow extends StatelessWidget {
     super.key,
     this.sub,
     this.isFirst = false,
+    this.icon,
   });
 
   final String label;
@@ -125,6 +129,7 @@ class CohereToggleRow extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
   final bool isFirst;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +150,7 @@ class CohereToggleRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         child: Row(
           children: [
+            if (icon != null) ...[icon!, const SizedBox(width: 14)],
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,6 +319,7 @@ class CohereStepperRow extends StatelessWidget {
     this.max = 30,
     this.unit = 'min',
     this.isFirst = false,
+    this.icon,
   });
 
   final String label;
@@ -323,6 +330,7 @@ class CohereStepperRow extends StatelessWidget {
   final int max;
   final String unit;
   final bool isFirst;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -343,6 +351,7 @@ class CohereStepperRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       child: Row(
         children: [
+          if (icon != null) ...[icon!, const SizedBox(width: 14)],
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
