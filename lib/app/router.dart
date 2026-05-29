@@ -5,6 +5,7 @@ import '../features/discover/presentation/discover_screen.dart';
 import '../features/prayer/presentation/prayer_times_screen.dart';
 import '../features/prayer/presentation/month_screen.dart';
 import '../features/qada/presentation/qada_counter_screen.dart';
+import '../features/adhkar/presentation/adhkar_screen.dart';
 import '../features/qibla/presentation/qibla_screen.dart';
 import '../features/notifications/data/prayer_notification_service.dart';
 import '../features/settings/presentation/screens/advanced_calculation_screen.dart';
@@ -37,6 +38,11 @@ GoRouter createRouter({
         path: '/qada',
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => const QadaCounterScreen(),
+      ),
+      GoRoute(
+        path: '/adhkar',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const AdhkarScreen(),
       ),
       GoRoute(
         path: '/prayer/month',

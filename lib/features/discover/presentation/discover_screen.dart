@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
@@ -46,7 +48,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     final inkMute = CohereColors.inkMute(brightness);
     final rule = CohereColors.surfRule(brightness);
     final accent = CohereColors.accentColor(brightness);
-    final surfStone = CohereColors.surfStone(brightness);
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return Scaffold(
@@ -121,18 +122,17 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   onTap: () => context.push('/qada'),
                 ),
                 _FeatureRow(
-                  glyph: const _DashedCircleGlyph(),
-                  glyphBg: surfStone,
+                  glyph: const _AdhkarGlyph(),
+                  glyphBg: accent,
                   title: 'Adhkar',
-                  description: 'Morning, evening, and after-prayer remembrances.',
-                  tag: 'SOON',
-                  tagColor: inkMute,
-                  isLive: false,
+                  description: 'Six supplications recited after each obligatory prayer.',
+                  isLive: true,
                   rule: rule,
                   ink: ink,
                   inkDim: inkDim,
                   inkMute: inkMute,
                   isLast: true,
+                  onTap: () => context.push('/adhkar'),
                 ),
                 Container(
                   height: 1,
@@ -161,8 +161,6 @@ class _FeatureRow extends StatelessWidget {
     required this.ink,
     required this.inkDim,
     required this.inkMute,
-    this.tag,
-    this.tagColor,
     this.onTap,
     this.isLast = false,
   });
@@ -171,8 +169,6 @@ class _FeatureRow extends StatelessWidget {
   final Color glyphBg;
   final String title;
   final String description;
-  final String? tag;
-  final Color? tagColor;
   final bool isLive;
   final Color rule;
   final Color ink;
@@ -221,25 +217,6 @@ class _FeatureRow extends StatelessWidget {
                 ],
               ),
             ),
-            if (tag != null && tagColor != null) ...[
-              const SizedBox(width: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  border: Border.all(color: tagColor!, width: 1),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Text(
-                  tag!,
-                  style: TextStyle(
-                    fontFamily: 'JetBrainsMono',
-                    fontSize: 10,
-                    letterSpacing: 0.14,
-                    color: tagColor,
-                  ),
-                ),
-              ),
-            ],
           ],
         ),
       ),
@@ -308,46 +285,38 @@ class _QiblaGlyphPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-class _DashedCircleGlyph extends StatelessWidget {
-  const _DashedCircleGlyph();
+class _AdhkarGlyph extends StatelessWidget {
+  const _AdhkarGlyph();
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
     return CustomPaint(
       size: const Size(22, 22),
-      painter: _DashedCirclePainter(color: CohereColors.inkMute(brightness)),
+      painter: _TasbihPainter(),
     );
   }
 }
 
-class _DashedCirclePainter extends CustomPainter {
-  const _DashedCirclePainter({required this.color});
-  final Color color;
+class _TasbihPainter extends CustomPainter {
+  const _TasbihPainter();
 
   @override
   void paint(Canvas canvas, Size size) {
     final cx = size.width / 2;
     final cy = size.height / 2;
-    final r = cx - 1;
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
+    const ringR = 7.5;
+    const beadCount = 9;
 
-    const dashCount = 12;
-    const dashAngle = 2 * 3.14159265 / dashCount;
-    const gapFraction = 0.45;
-    for (var i = 0; i < dashCount; i++) {
-      final startAngle = i * dashAngle;
-      final sweepAngle = dashAngle * (1 - gapFraction);
-      canvas.drawArc(
-        Rect.fromCircle(center: Offset(cx, cy), radius: r),
-        startAngle,
-        sweepAngle,
-        false,
-        paint,
-      );
+    final fillPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    for (var i = 0; i < beadCount; i++) {
+      final angle = -math.pi / 2 + (2 * math.pi * i / beadCount);
+      final bx = cx + ringR * math.cos(angle);
+      final by = cy + ringR * math.sin(angle);
+      // top bead (i==0) slightly larger — marker bead
+      canvas.drawCircle(Offset(bx, by), i == 0 ? 2.2 : 1.5, fillPaint);
     }
   }
 
