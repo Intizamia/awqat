@@ -63,11 +63,13 @@ class _MonthScreenState extends State<MonthScreen> {
     final schedules = <PrayerSchedule>[];
     for (int d = 1; d <= days; d++) {
       final date = DateTime(_firstOfMonth.year, _firstOfMonth.month, d);
-      schedules.add(engine.compute(
-        date: date,
-        location: settings.location!,
-        calculation: settings.calculation,
-      ));
+      schedules.add(
+        engine.compute(
+          date: date,
+          location: settings.location!,
+          calculation: settings.calculation,
+        ),
+      );
     }
     setState(() {
       _schedules = schedules;
@@ -86,15 +88,20 @@ class _MonthScreenState extends State<MonthScreen> {
     }
     if (target == null) return;
     const rowHeight = 58.0;
-    final offset = ((target.day - 1) * rowHeight - 200.0)
-        .clamp(0.0, _scrollController.position.maxScrollExtent);
+    final offset = ((target.day - 1) * rowHeight - 200.0).clamp(
+      0.0,
+      _scrollController.position.maxScrollExtent,
+    );
     _scrollController.jumpTo(offset);
   }
 
   void _changeMonth(int delta) {
     setState(() {
-      _firstOfMonth =
-          DateTime(_firstOfMonth.year, _firstOfMonth.month + delta, 1);
+      _firstOfMonth = DateTime(
+        _firstOfMonth.year,
+        _firstOfMonth.month + delta,
+        1,
+      );
       _schedules = [];
       _computing = true;
     });
@@ -125,10 +132,15 @@ class _MonthScreenState extends State<MonthScreen> {
 
     HijriCalendar.setLocal(hijriPackageLocale(settings.localeCode));
     final h1 = HijriCalendar.fromDate(
-        _firstOfMonth.add(Duration(days: hijriAdjDays)));
+      _firstOfMonth.add(Duration(days: hijriAdjDays)),
+    );
     final h2 = HijriCalendar.fromDate(
-        DateTime(_firstOfMonth.year, _firstOfMonth.month, _daysInMonth)
-            .add(Duration(days: hijriAdjDays)));
+      DateTime(
+        _firstOfMonth.year,
+        _firstOfMonth.month,
+        _daysInMonth,
+      ).add(Duration(days: hijriAdjDays)),
+    );
     final hijriHeader = h1.hMonth == h2.hMonth
         ? '${h1.longMonthName} ${h1.hYear} AH'
         : '${h1.longMonthName} – ${h2.longMonthName} ${h2.hYear} AH';
@@ -154,25 +166,30 @@ class _MonthScreenState extends State<MonthScreen> {
                         style: TextButton.styleFrom(
                           foregroundColor: accent,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        icon: const Icon(
-                          Icons.chevron_left,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.chevron_left, size: 18),
                         label: const Text(
                           'Times',
                           style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                       const Spacer(),
                       Text(
                         'MONTHLY',
-                        style: cohereMonoLabel(context,
-                            fontSize: 11, letterSpacing: 0.14, color: inkMute),
+                        style: cohereMonoLabel(
+                          context,
+                          fontSize: 11,
+                          letterSpacing: 0.14,
+                          color: inkMute,
+                        ),
                       ),
                     ],
                   ),
@@ -193,9 +210,7 @@ class _MonthScreenState extends State<MonthScreen> {
                           children: [
                             Text(
                               DateFormat('MMMM yyyy').format(_firstOfMonth),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall
+                              style: Theme.of(context).textTheme.displaySmall
                                   ?.copyWith(
                                     fontSize: 26,
                                     letterSpacing: -0.5,
@@ -231,15 +246,21 @@ class _MonthScreenState extends State<MonthScreen> {
                     ),
                   ),
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 10),
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   child: Row(
                     children: [
                       SizedBox(
                         width: 60,
                         child: Text(
                           'DATE',
-                          style: cohereMonoLabel(context,
-                              fontSize: 9, letterSpacing: 0.14, color: inkMute),
+                          style: cohereMonoLabel(
+                            context,
+                            fontSize: 9,
+                            letterSpacing: 0.14,
+                            color: inkMute,
+                          ),
                         ),
                       ),
                       ...prayers.map(
@@ -250,10 +271,12 @@ class _MonthScreenState extends State<MonthScreen> {
                                 .substring(0, min(4, p.label(l10n).length))
                                 .toUpperCase(),
                             textAlign: TextAlign.center,
-                            style: cohereMonoLabel(context,
-                                fontSize: 9,
-                                letterSpacing: 0.14,
-                                color: inkMute),
+                            style: cohereMonoLabel(
+                              context,
+                              fontSize: 9,
+                              letterSpacing: 0.14,
+                              color: inkMute,
+                            ),
                           ),
                         ),
                       ),
@@ -273,35 +296,42 @@ class _MonthScreenState extends State<MonthScreen> {
                     itemBuilder: (context, index) {
                       if (index == _daysInMonth) {
                         return Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 24, 24, 100),
+                          padding: const EdgeInsets.fromLTRB(24, 24, 24, 50),
                           child: Center(
                             child: Text(
                               'SHOWING $_daysInMonth DAYS  ·  ${DateFormat('MMMM yyyy').format(_firstOfMonth).toUpperCase()}',
-                              style: cohereMonoLabel(context,
-                                  fontSize: 10,
-                                  letterSpacing: 0.14,
-                                  color: inkMute),
+                              style: cohereMonoLabel(
+                                context,
+                                fontSize: 10,
+                                letterSpacing: 0.14,
+                                color: inkMute,
+                              ),
                             ),
                           ),
                         );
                       }
                       final day = index + 1;
                       final date = DateTime(
-                          _firstOfMonth.year, _firstOfMonth.month, day);
-                      final isToday = date.year == _today.year &&
+                        _firstOfMonth.year,
+                        _firstOfMonth.month,
+                        day,
+                      );
+                      final isToday =
+                          date.year == _today.year &&
                           date.month == _today.month &&
                           date.day == _today.day;
                       final isFriday = date.weekday == DateTime.friday;
 
-                      final adjusted =
-                          date.add(Duration(days: hijriAdjDays));
+                      final adjusted = date.add(Duration(days: hijriAdjDays));
                       final hijri = HijriCalendar.fromDate(adjusted);
                       final schedule = index < _schedules.length
                           ? _schedules[index]
                           : null;
 
                       Color? rowBg;
-                      if (isToday) { rowBg = accentSoft; }
+                      if (isToday) {
+                        rowBg = accentSoft;
+                      }
 
                       return _DayRow(
                         date: date,
@@ -438,115 +468,115 @@ class _DayRow extends StatelessWidget {
     final wdLetter = _weekdayLetters[date.weekday % 7];
 
     return Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: rowBg,
-              border: Border(top: BorderSide(color: ruleSoft, width: 1)),
-            ),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 60,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          Text(
-                            day.toString().padLeft(2, '0'),
-                            style: TextStyle(
-                              fontFamily: 'SpaceGrotesk',
-                              fontSize: 18,
-                              letterSpacing: -0.3,
-                              fontWeight: FontWeight.w400,
-                              color: _dayNumColor,
-                              fontFeatures: const [
-                                FontFeature.tabularFigures()
-                              ],
-                            ),
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: rowBg,
+            border: Border(top: BorderSide(color: ruleSoft, width: 1)),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(
+                          day.toString().padLeft(2, '0'),
+                          style: TextStyle(
+                            fontFamily: 'SpaceGrotesk',
+                            fontSize: 18,
+                            letterSpacing: -0.3,
+                            fontWeight: FontWeight.w400,
+                            color: _dayNumColor,
+                            fontFeatures: const [FontFeature.tabularFigures()],
                           ),
-                          const SizedBox(width: 4),
-                          Text(
-                            wdLetter,
-                            style: cohereMonoLabel(context,
-                                fontSize: 9,
-                                letterSpacing: 0.14,
-                                color: _metaColor),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '$hijriDay $hijriMonthAbbr',
-                        style: cohereMonoLabel(context,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          wdLetter,
+                          style: cohereMonoLabel(
+                            context,
                             fontSize: 9,
-                            letterSpacing: 0.08,
-                            color: _metaColor),
-                      ),
-                    ],
-                  ),
-                ),
-                ...prayers.map((p) {
-                  final entry = schedule?.entries
-                      .where((e) => e.name == p)
-                      .firstOrNull;
-                  final timeStr =
-                      entry != null ? _compactTime(entry.time) : '--:--';
-                  final isSunrise = p == PrayerName.sunrise;
-                  return Expanded(
-                    child: Text(
-                      timeStr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 11,
-                        fontWeight:
-                            isToday ? FontWeight.w600 : FontWeight.w400,
-                        color: isSunrise
-                            ? inkMute
-                            : (isToday &&
-                                    brightness == Brightness.dark
-                                ? ink
-                                : ink),
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                        letterSpacing: -0.1,
+                            letterSpacing: 0.14,
+                            color: _metaColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '$hijriDay $hijriMonthAbbr',
+                      style: cohereMonoLabel(
+                        context,
+                        fontSize: 9,
+                        letterSpacing: 0.08,
+                        color: _metaColor,
                       ),
                     ),
-                  );
-                }),
-              ],
-            ),
-          ),
-          // Today: left accent rail
-          if (isToday)
-            Positioned(
-              left: 0,
-              top: 0,
-              bottom: 0,
-              child: Container(width: 3, color: accent),
-            ),
-          // Friday: right subtle rail
-          if (isFriday)
-            Positioned(
-              right: 0,
-              top: 8,
-              bottom: 8,
-              child: Container(
-                width: 2,
-                decoration: BoxDecoration(
-                  color: accent.withValues(alpha: 0.22),
-                  borderRadius: BorderRadius.circular(2),
+                  ],
                 ),
               ),
+              ...prayers.map((p) {
+                final entry = schedule?.entries
+                    .where((e) => e.name == p)
+                    .firstOrNull;
+                final timeStr = entry != null
+                    ? _compactTime(entry.time)
+                    : '--:--';
+                final isSunrise = p == PrayerName.sunrise;
+                return Expanded(
+                  child: Text(
+                    timeStr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 11,
+                      fontWeight: isToday ? FontWeight.w600 : FontWeight.w400,
+                      color: isSunrise
+                          ? inkMute
+                          : (isToday && brightness == Brightness.dark
+                                ? ink
+                                : ink),
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                      letterSpacing: -0.1,
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+        // Today: left accent rail
+        if (isToday)
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            child: Container(width: 3, color: accent),
+          ),
+        // Friday: right subtle rail
+        if (isFriday)
+          Positioned(
+            right: 0,
+            top: 8,
+            bottom: 8,
+            child: Container(
+              width: 2,
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: 0.22),
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
-        ],
+          ),
+      ],
     );
   }
 }

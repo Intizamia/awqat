@@ -204,25 +204,25 @@ class _PrayerList extends StatelessWidget {
                   children: [
                     _ClockBlock(next: next, fmt: fmt),
                     ...visibleEntries.map((entry) {
-                        final isNext = entry.name == next.name;
-                        final isPassed =
-                            entry.time.isBefore(DateTime.now()) && !isNext;
-                        final notifOn =
-                            settings.notifications.enabled &&
-                            settings.notifications.isPrayerEnabled(entry.name);
-                        return _PrayerRow(
-                          name: entry.name,
-                          time: entry.time,
-                          fmt: fmt,
-                          isNext: isNext,
-                          isPassed: isPassed,
-                          notifOn: notifOn,
-                          notifMasterEnabled: settings.notifications.enabled,
-                        );
-                      }),
-                      const SizedBox(height: 100),
-                    ],
-                  ),
+                      final isNext = entry.name == next.name;
+                      final isPassed =
+                          entry.time.isBefore(DateTime.now()) && !isNext;
+                      final notifOn =
+                          settings.notifications.enabled &&
+                          settings.notifications.isPrayerEnabled(entry.name);
+                      return _PrayerRow(
+                        name: entry.name,
+                        time: entry.time,
+                        fmt: fmt,
+                        isNext: isNext,
+                        isPassed: isPassed,
+                        notifOn: notifOn,
+                        notifMasterEnabled: settings.notifications.enabled,
+                      );
+                    }),
+                    const SizedBox(height: 100),
+                  ],
+                ),
               ),
             ],
           ),
@@ -276,7 +276,7 @@ class _ClockBlockState extends State<_ClockBlock> {
     final cd = remaining.isNegative ? Duration.zero : remaining;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+      padding: const EdgeInsets.fromLTRB(24, 20, 24, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -287,7 +287,7 @@ class _ClockBlockState extends State<_ClockBlock> {
               Text(
                 '$hour:$minute',
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  fontSize: 64,
+                  fontSize: 48,
                   letterSpacing: -2.4,
                   fontWeight: FontWeight.w400,
                   height: 0.95,
@@ -361,7 +361,6 @@ class _PrayerRow extends StatelessWidget {
 
     final nameColor = isPassed ? inkMute : ink;
     final timeColor = isNext ? accent : (isPassed ? inkMute : ink);
-    final arabic = _kArabicNames[name] ?? '';
 
     return Container(
       decoration: BoxDecoration(
@@ -393,16 +392,6 @@ class _PrayerRow extends StatelessWidget {
                     color: nameColor,
                   ),
                 ),
-                if (arabic.isNotEmpty)
-                  Text(
-                    arabic,
-                    style: TextStyle(
-                      fontSize: 11,
-                      letterSpacing: 0.1,
-                      color: inkMute,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
               ],
             ),
           ),
