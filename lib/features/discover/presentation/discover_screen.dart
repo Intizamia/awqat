@@ -95,27 +95,12 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               controller: _scrollController,
               padding: EdgeInsets.zero,
               children: [
-                // Available section
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-                  child: Text(
-                    'AVAILABLE',
-                    style: cohereMonoLabel(
-                      context,
-                      fontSize: 11,
-                      letterSpacing: 0.14,
-                      color: inkMute,
-                    ),
-                  ),
-                ),
                 _FeatureRow(
                   glyph: _QiblaGlyph(accent: accent),
                   glyphBg: accent,
                   title: 'Qibla Direction',
                   description:
                       'Find the direction of the Kaaba from your location.',
-                  tag: 'OPEN',
-                  tagColor: accent,
                   isLive: true,
                   rule: rule,
                   ink: ink,
@@ -123,39 +108,17 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   inkMute: inkMute,
                   onTap: () => context.push('/qibla'),
                 ),
-                Container(
-                  height: 1,
-                  color: rule,
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                ),
-
-                const SizedBox(height: 28),
-
-                // Coming soon section
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-                  child: Text(
-                    'COMING SOON',
-                    style: cohereMonoLabel(
-                      context,
-                      fontSize: 11,
-                      letterSpacing: 0.14,
-                      color: inkMute,
-                    ),
-                  ),
-                ),
                 _FeatureRow(
-                  glyph: const _DashedCircleGlyph(),
-                  glyphBg: surfStone,
+                  glyph: _QadaGlyph(ink: ink),
+                  glyphBg: accent,
                   title: 'Qada Counter',
                   description: 'Track and make up missed prayers.',
-                  tag: 'SOON',
-                  tagColor: inkMute,
-                  isLive: false,
+                  isLive: true,
                   rule: rule,
                   ink: ink,
                   inkDim: inkDim,
                   inkMute: inkMute,
+                  onTap: () => context.push('/qada'),
                 ),
                 _FeatureRow(
                   glyph: const _DashedCircleGlyph(),
@@ -193,13 +156,13 @@ class _FeatureRow extends StatelessWidget {
     required this.glyphBg,
     required this.title,
     required this.description,
-    required this.tag,
-    required this.tagColor,
     required this.isLive,
     required this.rule,
     required this.ink,
     required this.inkDim,
     required this.inkMute,
+    this.tag,
+    this.tagColor,
     this.onTap,
     this.isLast = false,
   });
@@ -208,8 +171,8 @@ class _FeatureRow extends StatelessWidget {
   final Color glyphBg;
   final String title;
   final String description;
-  final String tag;
-  final Color tagColor;
+  final String? tag;
+  final Color? tagColor;
   final bool isLive;
   final Color rule;
   final Color ink;
@@ -258,23 +221,25 @@ class _FeatureRow extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 12),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                border: Border.all(color: tagColor, width: 1),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Text(
-                tag,
-                style: TextStyle(
-                  fontFamily: 'JetBrainsMono',
-                  fontSize: 10,
-                  letterSpacing: 0.14,
-                  color: tagColor,
+            if (tag != null && tagColor != null) ...[
+              const SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  border: Border.all(color: tagColor!, width: 1),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Text(
+                  tag!,
+                  style: TextStyle(
+                    fontFamily: 'JetBrainsMono',
+                    fontSize: 10,
+                    letterSpacing: 0.14,
+                    color: tagColor,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
@@ -284,6 +249,16 @@ class _FeatureRow extends StatelessWidget {
       return InkWell(onTap: onTap, child: row);
     }
     return row;
+  }
+}
+
+class _QadaGlyph extends StatelessWidget {
+  const _QadaGlyph({required this.ink});
+  final Color ink;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(Icons.check_circle_outline, size: 22, color: Colors.white);
   }
 }
 
