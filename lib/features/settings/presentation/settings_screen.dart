@@ -140,6 +140,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Container(height: 1, color: rule),
 
+                    // Calendar section
+                    CohereSectionLabel(label: 'Calendar'),
+                    CohereStepperRow(
+                      label: l10n.hijriAdjustmentTitle,
+                      value: settings.hijriAdjustmentDays,
+                      min: -2,
+                      max: 2,
+                      unit: 'day',
+                      onChanged: cubit.setHijriAdjustmentDays,
+                    ),
+                    Container(height: 1, color: rule),
+
+                    // Notifications section
+                    CohereSectionLabel(label: l10n.settingsGroupNotifications),
+                    CohereNavRow(
+                      label: 'Default notification',
+                      value: notificationsSummary(l10n, settings),
+                      onTap: () => context.push('/settings/notifications'),
+                    ),
+                    CohereNavRow(
+                      label: 'Pre-prayer reminder',
+                      value: settings.notifications.preReminderEnabled
+                          ? '${settings.notifications.preReminderMinutes} min before'
+                          : 'Off',
+                      onTap: () => context.push('/settings/pre-reminder'),
+                    ),
+                    Container(height: 1, color: rule),
+
                     // Display section
                     CohereSectionLabel(label: l10n.settingsGroupDisplay),
                     _InlineRadioSection(
@@ -190,34 +218,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: 'Show Sunrise time',
                       value: settings.showSunrise,
                       onChanged: cubit.setShowSunrise,
-                    ),
-                    Container(height: 1, color: rule),
-
-                    // Calendar section
-                    CohereSectionLabel(label: 'Calendar'),
-                    CohereStepperRow(
-                      label: l10n.hijriAdjustmentTitle,
-                      value: settings.hijriAdjustmentDays,
-                      min: -2,
-                      max: 2,
-                      unit: 'day',
-                      onChanged: cubit.setHijriAdjustmentDays,
-                    ),
-                    Container(height: 1, color: rule),
-
-                    // Notifications section
-                    CohereSectionLabel(label: l10n.settingsGroupNotifications),
-                    CohereNavRow(
-                      label: 'Default notification',
-                      value: notificationsSummary(l10n, settings),
-                      onTap: () => context.push('/settings/notifications'),
-                    ),
-                    CohereNavRow(
-                      label: 'Pre-prayer reminder',
-                      value: settings.notifications.preReminderEnabled
-                          ? '${settings.notifications.preReminderMinutes} min before'
-                          : 'Off',
-                      onTap: () => context.push('/settings/pre-reminder'),
                     ),
                     Container(height: 1, color: rule),
 

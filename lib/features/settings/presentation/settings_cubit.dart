@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/settings_repository.dart';
 import '../domain/app_settings.dart';
 import '../../prayer/domain/prayer_name.dart';
+import '../../prayer/domain/prayer_notif_type.dart';
 import '../domain/calculation_method_id.dart';
 import '../domain/calculation_settings.dart';
 import '../domain/default_app_settings.dart';
@@ -85,6 +86,14 @@ class SettingsCubit extends Cubit<SettingsState> {
           prayer,
           value,
         ),
+      ),
+    );
+  }
+
+  Future<void> setPrayerNotifType(PrayerName prayer, PrayerNotifType type) async {
+    await _save(
+      state.settings.copyWith(
+        notifications: state.settings.notifications.copyWithNotifType(prayer, type),
       ),
     );
   }
