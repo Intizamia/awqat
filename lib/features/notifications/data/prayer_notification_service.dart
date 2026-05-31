@@ -6,11 +6,17 @@ import '../../../app/app.dart';
 import 'prayer_notification_planner.dart';
 import '../domain/scheduled_prayer_notification.dart';
 import '../../prayer/data/adhan_calculation_engine.dart';
+import '../../prayer/domain/prayer_name.dart';
+import '../../prayer/domain/prayer_notif_type.dart';
 import '../../settings/domain/app_settings.dart';
 import '../../../l10n/app_localizations.dart';
 
-const _channelId = 'prayer_times';
-const _channelName = 'Prayer times';
+// Android channel IDs — each has a fixed sound; never reuse with a different sound.
+const _chSilent = 'prayer_silent';
+const _chReminder = 'prayer_reminder';
+const _chFirst = 'prayer_athan_takbir';
+const _chFull = 'prayer_athan_full';
+const _chFajr = 'prayer_athan_fajr';
 
 class PrayerNotificationService {
   PrayerNotificationService({
@@ -20,7 +26,6 @@ class PrayerNotificationService {
   }) : _plugin = plugin ?? FlutterLocalNotificationsPlugin(),
        _engine = engine ?? AdhanCalculationEngine();
 
-  /// Skips plugin calls (widget tests).
   final bool skipPlatformCalls;
 
   final FlutterLocalNotificationsPlugin _plugin;
@@ -45,11 +50,11 @@ class PrayerNotificationService {
     const settings = InitializationSettings(android: android, iOS: ios);
 
     await _plugin.initialize(settings: settings);
-    await _ensureAndroidChannel();
+    await _ensureAndroidChannels();
     _initialized = true;
   }
 
-  Future<void> _ensureAndroidChannel() async {
+  Future<void> _ensureAndroidChannels() async {
     final android = _plugin
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
@@ -58,10 +63,47 @@ class PrayerNotificationService {
 
     await android.createNotificationChannel(
       const AndroidNotificationChannel(
-        _channelId,
-        _channelName,
-        description: 'Alerts when prayer times begin',
+        _chSilent,
+        'Prayer (silent)',
+        description: 'Prayer time badge — no sound',
+        importance: Importance.defaultImportance,
+        playSound: false,
+        enableVibration: false,
+      ),
+    );
+    await android.createNotificationChannel(
+      const AndroidNotificationChannel(
+        _chReminder,
+        'Prayer (reminder)',
+        description: 'Prayer time with default notification tone',
         importance: Importance.high,
+      ),
+    );
+    await android.createNotificationChannel(
+      AndroidNotificationChannel(
+        _chFirst,
+        'Prayer (takbīr)',
+        description: 'Plays "Allāhu akbar"',
+        importance: Importance.high,
+        sound: const RawResourceAndroidNotificationSound('athan_takbir'),
+      ),
+    );
+    await android.createNotificationChannel(
+      AndroidNotificationChannel(
+        _chFull,
+        'Prayer (full athan)',
+        description: 'Plays complete adhan',
+        importance: Importance.high,
+        sound: const RawResourceAndroidNotificationSound('athan_full'),
+      ),
+    );
+    await android.createNotificationChannel(
+      AndroidNotificationChannel(
+        _chFajr,
+        'Fajr (full athan)',
+        description: 'Plays complete Fajr adhan',
+        importance: Importance.high,
+        sound: const RawResourceAndroidNotificationSound('athan_fajr'),
       ),
     );
   }
@@ -128,18 +170,7 @@ class PrayerNotificationService {
     final scheduled = tz.TZDateTime.from(item.scheduledAt, tzLocation);
     if (!scheduled.isAfter(tz.TZDateTime.now(tzLocation))) return;
 
-    const androidDetails = AndroidNotificationDetails(
-      _channelId,
-      _channelName,
-      channelDescription: 'Alerts when prayer times begin',
-      importance: Importance.high,
-      priority: Priority.high,
-    );
-    const iosDetails = DarwinNotificationDetails();
-    const details = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
+    final details = _buildDetails(item.notifType, item.prayer);
 
     try {
       await _plugin.zonedSchedule(
@@ -152,6 +183,72 @@ class PrayerNotificationService {
       );
     } catch (e, st) {
       debugPrint('PrayerNotificationService: schedule failed: $e\n$st');
+    }
+  }
+
+  NotificationDetails _buildDetails(PrayerNotifType type, PrayerName prayer) {
+    return NotificationDetails(
+      android: _androidDetails(type, prayer),
+      iOS: _iosDetails(type),
+    );
+  }
+
+  AndroidNotificationDetails _androidDetails(
+    PrayerNotifType type,
+    PrayerName prayer,
+  ) {
+    switch (type) {
+      case PrayerNotifType.none:
+        return const AndroidNotificationDetails(
+          _chSilent,
+          'Prayer (silent)',
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
+          playSound: false,
+          enableVibration: false,
+        );
+      case PrayerNotifType.reminder:
+        return const AndroidNotificationDetails(
+          _chReminder,
+          'Prayer (reminder)',
+          importance: Importance.high,
+          priority: Priority.high,
+        );
+      case PrayerNotifType.takbir:
+        return const AndroidNotificationDetails(
+          _chFirst,
+          'Prayer (takbīr)',
+          importance: Importance.high,
+          priority: Priority.high,
+          sound: RawResourceAndroidNotificationSound('athan_takbir'),
+          playSound: true,
+        );
+      case PrayerNotifType.fullAthan:
+        final isFajr = prayer == PrayerName.fajr;
+        return AndroidNotificationDetails(
+          isFajr ? _chFajr : _chFull,
+          isFajr ? 'Fajr (full athan)' : 'Prayer (full athan)',
+          importance: Importance.high,
+          priority: Priority.high,
+          sound: RawResourceAndroidNotificationSound(
+            isFajr ? 'athan_fajr' : 'athan_full',
+          ),
+          playSound: true,
+        );
+    }
+  }
+
+  DarwinNotificationDetails _iosDetails(PrayerNotifType type) {
+    switch (type) {
+      case PrayerNotifType.none:
+        return const DarwinNotificationDetails(presentSound: false);
+      case PrayerNotifType.reminder:
+        return const DarwinNotificationDetails();
+      case PrayerNotifType.takbir:
+      case PrayerNotifType.fullAthan:
+        return const DarwinNotificationDetails(
+          sound: 'athan_takbir.wav',
+        );
     }
   }
 }

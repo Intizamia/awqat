@@ -17,6 +17,24 @@ class PrayerNotifDisc extends StatelessWidget {
   final PrayerName name;
   final PrayerNotifType notifType;
 
+  static List<PrayerNotifType> _availableTypes(
+    PrayerName name,
+    TargetPlatform platform,
+  ) {
+    final isIos = platform == TargetPlatform.iOS;
+    final isSunrise = name == PrayerName.sunrise;
+    if (isIos && isSunrise) {
+      return const [PrayerNotifType.none];
+    }
+    if (isIos) {
+      return const [PrayerNotifType.none, PrayerNotifType.takbir];
+    }
+    if (isSunrise) {
+      return const [PrayerNotifType.none, PrayerNotifType.reminder];
+    }
+    return PrayerNotifType.values;
+  }
+
   void _showMenu(BuildContext ctx) {
     final box = ctx.findRenderObject() as RenderBox;
     final pos = box.localToGlobal(Offset.zero);
@@ -37,6 +55,11 @@ class PrayerNotifDisc extends StatelessWidget {
     );
 
     final cubit = ctx.read<SettingsCubit>();
+
+    final availableTypes = _availableTypes(
+      name,
+      Theme.of(ctx).platform,
+    );
 
     showMenu<PrayerNotifType>(
       context: ctx,
@@ -64,7 +87,7 @@ class PrayerNotifDisc extends StatelessWidget {
             ),
           ),
         ),
-        for (final type in PrayerNotifType.values)
+        for (final type in availableTypes)
           PopupMenuItem<PrayerNotifType>(
             value: type,
             height: 44,
@@ -114,8 +137,7 @@ class PrayerNotifDisc extends StatelessWidget {
     final accent = CohereColors.accentColor(brightness);
     final rule = CohereColors.surfRule(brightness);
 
-    final isInactive = notifType == PrayerNotifType.none ||
-        notifType == PrayerNotifType.silent;
+    final isInactive = notifType == PrayerNotifType.none;
 
     return Builder(
       builder: (iconCtx) => GestureDetector(
@@ -223,11 +245,9 @@ class PrayerNotifIconPainter extends CustomPainter {
     switch (type) {
       case PrayerNotifType.none:
         _paintNone(canvas, p, s);
-      case PrayerNotifType.silent:
-        _paintBellOff(canvas, p, s);
       case PrayerNotifType.reminder:
         _paintBell(canvas, p, s);
-      case PrayerNotifType.firstSentence:
+      case PrayerNotifType.takbir:
         _paintMic(canvas, p, s);
       case PrayerNotifType.fullAthan:
         _paintSpeaker(canvas, p, s);
@@ -236,35 +256,6 @@ class PrayerNotifIconPainter extends CustomPainter {
 
   void _paintNone(Canvas canvas, Paint p, double s) {
     canvas.drawLine(Offset(7 * s, 12 * s), Offset(17 * s, 12 * s), p);
-  }
-
-  void _paintBellOff(Canvas canvas, Paint p, double s) {
-    canvas.drawPath(
-      Path()
-        ..moveTo(6 * s, 8 * s)
-        ..arcToPoint(
-          Offset(18 * s, 8 * s),
-          radius: Radius.circular(6 * s),
-          clockwise: true,
-        )
-        ..lineTo(18 * s, 11 * s)
-        ..lineTo(19.5 * s, 14 * s)
-        ..lineTo(4.5 * s, 14 * s)
-        ..lineTo(6 * s, 11 * s)
-        ..close(),
-      p,
-    );
-    canvas.drawLine(Offset(3 * s, 3 * s), Offset(21 * s, 21 * s), p);
-    canvas.drawPath(
-      Path()
-        ..moveTo(10 * s, 19 * s)
-        ..arcToPoint(
-          Offset(14 * s, 19 * s),
-          radius: Radius.circular(2 * s),
-          clockwise: false,
-        ),
-      p,
-    );
   }
 
   void _paintBell(Canvas canvas, Paint p, double s) {

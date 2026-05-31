@@ -90,6 +90,24 @@ class SettingsCubit extends Cubit<SettingsState> {
     );
   }
 
+  Future<void> completeNotificationOnboarding({required bool granted}) async {
+    final types = <PrayerName, PrayerNotifType>{
+      for (final name in PrayerName.values)
+        name: (!granted || name == PrayerName.sunrise)
+            ? PrayerNotifType.none
+            : PrayerNotifType.takbir,
+    };
+    await _save(
+      state.settings.copyWith(
+        notifications: state.settings.notifications.copyWith(
+          enabled: granted,
+          onboardingDone: true,
+          prayerNotifType: types,
+        ),
+      ),
+    );
+  }
+
   Future<void> setPrayerNotifType(PrayerName prayer, PrayerNotifType type) async {
     await _save(
       state.settings.copyWith(

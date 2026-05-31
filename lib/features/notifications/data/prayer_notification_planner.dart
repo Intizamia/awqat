@@ -1,6 +1,7 @@
 import 'prayer_notification_ids.dart';
 import '../domain/scheduled_prayer_notification.dart';
 import '../../prayer/data/adhan_calculation_engine.dart';
+import '../../prayer/domain/prayer_notif_type.dart';
 import '../../prayer/domain/prayer_schedule.dart';
 import '../../prayer/presentation/prayer_name_l10n.dart';
 import '../../settings/domain/app_settings.dart';
@@ -61,7 +62,8 @@ List<ScheduledPrayerNotification> _planDay({
   final notifs = settings.notifications;
 
   for (final entry in schedule.entries) {
-    if (!notifs.isPrayerEnabled(entry.name)) continue;
+    final notifType = notifs.notifTypeFor(entry.name);
+    if (notifType == PrayerNotifType.none) continue;
     if (!entry.time.isAfter(now)) continue;
 
     items.add(
@@ -71,6 +73,7 @@ List<ScheduledPrayerNotification> _planDay({
         scheduledAt: entry.time,
         title: entry.name.label(l10n),
         body: l10n.notificationPrayerBody(entry.name.label(l10n)),
+        notifType: notifType,
       ),
     );
 
@@ -92,6 +95,7 @@ List<ScheduledPrayerNotification> _planDay({
               entry.name.label(l10n),
               notifs.preReminderMinutes,
             ),
+            notifType: PrayerNotifType.reminder,
           ),
         );
       }

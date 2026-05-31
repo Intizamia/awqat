@@ -6,6 +6,7 @@ import '../../prayer/domain/prayer_notif_type.dart';
 class NotificationSettings extends Equatable {
   const NotificationSettings({
     this.enabled = false,
+    this.onboardingDone = false,
     this.prayerEnabled = const {
       PrayerName.fajr: true,
       PrayerName.sunrise: false,
@@ -15,18 +16,19 @@ class NotificationSettings extends Equatable {
       PrayerName.isha: true,
     },
     this.prayerNotifType = const {
-      PrayerName.fajr: PrayerNotifType.silent,
-      PrayerName.sunrise: PrayerNotifType.silent,
-      PrayerName.dhuhr: PrayerNotifType.silent,
-      PrayerName.asr: PrayerNotifType.silent,
-      PrayerName.maghrib: PrayerNotifType.silent,
-      PrayerName.isha: PrayerNotifType.silent,
+      PrayerName.fajr: PrayerNotifType.none,
+      PrayerName.sunrise: PrayerNotifType.none,
+      PrayerName.dhuhr: PrayerNotifType.none,
+      PrayerName.asr: PrayerNotifType.none,
+      PrayerName.maghrib: PrayerNotifType.none,
+      PrayerName.isha: PrayerNotifType.none,
     },
     this.preReminderEnabled = false,
     this.preReminderMinutes = 10,
   });
 
   final bool enabled;
+  final bool onboardingDone;
   final Map<PrayerName, bool> prayerEnabled;
   final Map<PrayerName, PrayerNotifType> prayerNotifType;
   final bool preReminderEnabled;
@@ -35,10 +37,11 @@ class NotificationSettings extends Equatable {
   bool isPrayerEnabled(PrayerName name) => prayerEnabled[name] ?? false;
 
   PrayerNotifType notifTypeFor(PrayerName name) =>
-      prayerNotifType[name] ?? PrayerNotifType.silent;
+      prayerNotifType[name] ?? PrayerNotifType.none;
 
   NotificationSettings copyWith({
     bool? enabled,
+    bool? onboardingDone,
     Map<PrayerName, bool>? prayerEnabled,
     Map<PrayerName, PrayerNotifType>? prayerNotifType,
     bool? preReminderEnabled,
@@ -46,6 +49,7 @@ class NotificationSettings extends Equatable {
   }) {
     return NotificationSettings(
       enabled: enabled ?? this.enabled,
+      onboardingDone: onboardingDone ?? this.onboardingDone,
       prayerEnabled: prayerEnabled ?? this.prayerEnabled,
       prayerNotifType: prayerNotifType ?? this.prayerNotifType,
       preReminderEnabled: preReminderEnabled ?? this.preReminderEnabled,
@@ -63,6 +67,7 @@ class NotificationSettings extends Equatable {
 
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
+    'onboardingDone': onboardingDone,
     'prayerEnabled': {
       for (final entry in prayerEnabled.entries) entry.key.name: entry.value,
     },
@@ -94,7 +99,7 @@ class NotificationSettings extends Equatable {
           final str = rawTypes[name.name] as String?;
           notifTypes[name] = PrayerNotifType.values.firstWhere(
             (t) => t.name == str,
-            orElse: () => PrayerNotifType.silent,
+            orElse: () => PrayerNotifType.none,
           );
         }
       }
@@ -102,6 +107,7 @@ class NotificationSettings extends Equatable {
 
     return NotificationSettings(
       enabled: json['enabled'] as bool? ?? false,
+      onboardingDone: json['onboardingDone'] as bool? ?? false,
       prayerEnabled: prayers.isEmpty
           ? const NotificationSettings().prayerEnabled
           : {...const NotificationSettings().prayerEnabled, ...prayers},
@@ -116,6 +122,7 @@ class NotificationSettings extends Equatable {
   @override
   List<Object?> get props => [
     enabled,
+    onboardingDone,
     prayerEnabled,
     prayerNotifType,
     preReminderEnabled,
