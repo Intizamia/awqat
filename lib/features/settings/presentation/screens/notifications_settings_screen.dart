@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/theme/cohere_colors.dart';
 import '../../../../core/widgets/cohere_settings_widgets.dart';
 import '../../../notifications/data/prayer_notification_service.dart';
 import '../../../prayer/domain/prayer_name.dart';
 import '../../../prayer/presentation/prayer_name_l10n.dart';
+import '../../../prayer/presentation/widgets/prayer_notif_disc.dart';
 import '../settings_cubit.dart';
 import '../settings_state.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -25,6 +27,9 @@ class NotificationsSettingsScreen extends StatelessWidget {
         final settings = state.settings;
         final notifs = settings.notifications;
         final cubit = context.read<SettingsCubit>();
+        final brightness = Theme.of(context).brightness;
+        final ink = CohereColors.inkColor(brightness);
+        final rule = CohereColors.surfRule(brightness);
 
         return CohereDetailScaffold(
           title: l10n.notificationsSectionTitle,
@@ -59,41 +64,30 @@ class NotificationsSettingsScreen extends StatelessWidget {
                 ignoring: !notifs.enabled,
                 child: Column(
                   children: [
-                    CohereSectionLabel(label: 'Default sound'),
-                    CohereMethodRow(
-                      title: 'Silent',
-                      sub: 'No audible alert',
-                      isSelected: false,
-                      isFirst: true,
-                      onTap: null,
-                    ),
-                    CohereMethodRow(
-                      title: 'Reminder',
-                      sub: 'Standard notification tone',
-                      isSelected: true,
-                      onTap: null,
-                    ),
-                    CohereMethodRow(
-                      title: 'First sentence',
-                      sub: 'Plays "Allāhu akbar"',
-                      isSelected: false,
-                      onTap: null,
-                    ),
-                    CohereMethodRow(
-                      title: 'Full Adhan',
-                      sub: 'Plays complete adhan (~2 min)',
-                      isSelected: false,
-                      onTap: null,
-                    ),
                     CohereSectionLabel(label: 'Per prayer'),
                     for (var i = 0; i < PrayerName.values.length; i++)
-                      CohereToggleRow(
-                        label: PrayerName.values[i].label(l10n),
-                        isFirst: i == 0,
-                        value: notifs.isPrayerEnabled(PrayerName.values[i]),
-                        onChanged: (v) => cubit.setPrayerNotificationEnabled(
-                          PrayerName.values[i],
-                          v,
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(color: rule, width: 1),
+                          ),
+                        ),
+                        padding: const EdgeInsets.fromLTRB(24, 14, 20, 14),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                PrayerName.values[i].label(l10n),
+                                style: TextStyle(fontSize: 15, color: ink),
+                              ),
+                            ),
+                            PrayerNotifDisc(
+                              name: PrayerName.values[i],
+                              notifType: notifs.notifTypeFor(
+                                PrayerName.values[i],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                   ],
