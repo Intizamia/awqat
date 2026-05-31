@@ -119,7 +119,6 @@ class PrayerNotificationService {
     if (android != null) {
       final notificationGranted =
           await android.requestNotificationsPermission() ?? false;
-      await android.requestExactAlarmsPermission();
       granted = notificationGranted;
     }
 
