@@ -81,8 +81,14 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
             return const _LoadingScaffold();
           }
 
-          if (!settingsState.settings.setup.isComplete) {
-            return SetupChecklistBody(settings: settingsState.settings);
+          final settings = settingsState.settings;
+          if (!settings.setup.isComplete || !settings.setupDismissed) {
+            return SetupChecklistBody(
+              settings: settings,
+              onContinue: settings.setup.isComplete
+                  ? () => context.read<SettingsCubit>().dismissSetup()
+                  : null,
+            );
           }
 
           return _PrayerList(
@@ -95,6 +101,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
     );
   }
 }
+
 
 // ─── Loading scaffold ─────────────────────────────────────────────────────────
 

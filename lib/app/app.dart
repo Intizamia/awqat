@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'router.dart';
 import '../features/notifications/data/prayer_notification_service.dart';
-import '../features/notifications/presentation/notification_onboarding_listener.dart';
 import '../features/notifications/presentation/notification_reschedule_listener.dart';
 import 'theme.dart';
 import '../core/l10n/locale_config.dart';
@@ -102,14 +101,11 @@ class AwqatApp extends StatelessWidget {
             routerConfig: _router,
             builder: (context, child) {
               final content = child ?? const SizedBox.shrink();
-              return NotificationOnboardingListener(
+              return NotificationRescheduleListener(
                 notificationService: notificationService,
-                child: NotificationRescheduleListener(
-                  notificationService: notificationService,
-                  child: Directionality(
-                    textDirection: textDirectionForLocale(locale),
-                    child: content,
-                  ),
+                child: Directionality(
+                  textDirection: textDirectionForLocale(locale),
+                  child: content,
                 ),
               );
             },

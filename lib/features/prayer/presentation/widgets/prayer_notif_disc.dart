@@ -248,14 +248,39 @@ class PrayerNotifIconPainter extends CustomPainter {
       case PrayerNotifType.reminder:
         _paintBell(canvas, p, s);
       case PrayerNotifType.takbir:
-        _paintMic(canvas, p, s);
+        _paintSpeakerOne(canvas, p, s);
       case PrayerNotifType.fullAthan:
         _paintSpeaker(canvas, p, s);
     }
   }
 
   void _paintNone(Canvas canvas, Paint p, double s) {
-    canvas.drawLine(Offset(7 * s, 12 * s), Offset(17 * s, 12 * s), p);
+    canvas.drawPath(
+      Path()
+        ..moveTo(6 * s, 8 * s)
+        ..arcToPoint(
+          Offset(18 * s, 8 * s),
+          radius: Radius.circular(6 * s),
+          clockwise: true,
+        )
+        ..lineTo(18 * s, 11 * s)
+        ..lineTo(19.5 * s, 14 * s)
+        ..lineTo(4.5 * s, 14 * s)
+        ..lineTo(6 * s, 11 * s)
+        ..close(),
+      p,
+    );
+    canvas.drawLine(Offset(3 * s, 3 * s), Offset(21 * s, 21 * s), p);
+    canvas.drawPath(
+      Path()
+        ..moveTo(10 * s, 19 * s)
+        ..arcToPoint(
+          Offset(14 * s, 19 * s),
+          radius: Radius.circular(2 * s),
+          clockwise: false,
+        ),
+      p,
+    );
   }
 
   void _paintBell(Canvas canvas, Paint p, double s) {
@@ -286,26 +311,28 @@ class PrayerNotifIconPainter extends CustomPainter {
     );
   }
 
-  void _paintMic(Canvas canvas, Paint p, double s) {
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(9 * s, 3 * s, 6 * s, 12 * s),
-        Radius.circular(3 * s),
-      ),
+  void _paintSpeakerOne(Canvas canvas, Paint p, double s) {
+    canvas.drawPath(
+      Path()
+        ..moveTo(4 * s, 9 * s)
+        ..lineTo(4 * s, 15 * s)
+        ..lineTo(8 * s, 15 * s)
+        ..lineTo(13 * s, 19 * s)
+        ..lineTo(13 * s, 5 * s)
+        ..lineTo(8 * s, 9 * s)
+        ..close(),
       p,
     );
     canvas.drawPath(
       Path()
-        ..moveTo(5 * s, 11 * s)
+        ..moveTo(16 * s, 8.5 * s)
         ..arcToPoint(
-          Offset(19 * s, 11 * s),
-          radius: Radius.circular(7 * s),
-          clockwise: false,
+          Offset(16 * s, 15.5 * s),
+          radius: Radius.circular(5 * s),
+          clockwise: true,
         ),
       p,
     );
-    canvas.drawLine(Offset(12 * s, 18 * s), Offset(12 * s, 21 * s), p);
-    canvas.drawLine(Offset(9 * s, 21 * s), Offset(15 * s, 21 * s), p);
   }
 
   void _paintSpeaker(Canvas canvas, Paint p, double s) {

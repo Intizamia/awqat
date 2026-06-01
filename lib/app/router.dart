@@ -59,7 +59,14 @@ GoRouter createRouter({
       GoRoute(
         path: '/setup/location',
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const LocationScreen(popOnSelect: true),
+        builder: (context, state) => const LocationScreen(popOnSelect: false),
+      ),
+      GoRoute(
+        path: '/setup/notifications',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => NotificationsSettingsScreen(
+          notificationService: notificationService,
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

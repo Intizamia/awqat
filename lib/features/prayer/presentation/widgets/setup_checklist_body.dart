@@ -9,9 +9,14 @@ import '../../../settings/presentation/utils/settings_value_labels.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class SetupChecklistBody extends StatelessWidget {
-  const SetupChecklistBody({required this.settings, super.key});
+  const SetupChecklistBody({
+    required this.settings,
+    this.onContinue,
+    super.key,
+  });
 
   final AppSettings settings;
+  final VoidCallback? onContinue;
 
   @override
   Widget build(BuildContext context) {
@@ -26,39 +31,47 @@ class SetupChecklistBody extends StatelessWidget {
     final setup = settings.setup;
     final calc = settings.calculation;
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
+    final canContinue = onContinue != null;
 
     return Scaffold(
       backgroundColor: surfPage,
-      body: ListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: statusBarHeight),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.setup.toUpperCase(),
-                  style: cohereMonoLabel(
-                    context,
-                    fontSize: 11,
-                    letterSpacing: 0.12,
-                    color: inkDim,
+          ColoredBox(
+            color: surfPage,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(24, statusBarHeight * 2, 24, 22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.setup.toUpperCase(),
+                    style: cohereMonoLabel(
+                      context,
+                      fontSize: 11,
+                      letterSpacing: 0.12,
+                      color: inkDim,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  l10n.setupRequiredTitle,
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
-                const SizedBox(height: 14),
-                Text(
-                  l10n.setupRequiredMessage,
-                  style: TextStyle(fontSize: 14, color: inkDim, height: 1.5),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    l10n.setupRequiredTitle,
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    l10n.setupRequiredMessage,
+                    style: TextStyle(fontSize: 14, color: inkDim, height: 1.5),
+                  ),
+                ],
+              ),
             ),
           ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
           CohereSectionLabel(label: l10n.setupChecklistGroupLabel),
           _SetupRow(
             label: l10n.calculationMethodTitle,
@@ -66,6 +79,7 @@ class SetupChecklistBody extends StatelessWidget {
                 ? calculationMethodLabel(calc.method)
                 : l10n.chooseCalculationMethod,
             isDone: setup.isCalculationConfigured,
+            isOptional: false,
             isFirst: true,
             rule: rule,
             ink: ink,
@@ -77,6 +91,7 @@ class SetupChecklistBody extends StatelessWidget {
             label: l10n.locationTitle,
             value: locationSummary(l10n, settings.location),
             isDone: setup.isLocationConfigured,
+            isOptional: false,
             isFirst: false,
             rule: rule,
             ink: ink,
@@ -84,7 +99,48 @@ class SetupChecklistBody extends StatelessWidget {
             accent: accent,
             onTap: () => context.push('/setup/location'),
           ),
+          _SetupRow(
+            label: 'Notifications',
+            value: 'Optional — configure alert types',
+            isDone: false,
+            isOptional: true,
+            isFirst: false,
+            rule: rule,
+            ink: ink,
+            inkMute: inkMute,
+            accent: accent,
+            onTap: () => context.push('/setup/notifications'),
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: GestureDetector(
+              onTap: canContinue ? onContinue : null,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: canContinue ? accent : rule,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Center(
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: canContinue ? Colors.white : inkMute,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: 100),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -96,6 +152,7 @@ class _SetupRow extends StatelessWidget {
     required this.label,
     required this.value,
     required this.isDone,
+    required this.isOptional,
     required this.isFirst,
     required this.rule,
     required this.ink,
@@ -107,6 +164,7 @@ class _SetupRow extends StatelessWidget {
   final String label;
   final String value;
   final bool isDone;
+  final bool isOptional;
   final bool isFirst;
   final Color rule;
   final Color ink;
@@ -133,28 +191,70 @@ class _SetupRow extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isDone ? accent : Colors.transparent,
-                border: Border.all(color: isDone ? accent : rule, width: 1.5),
+                color: isDone
+                    ? accent
+                    : isOptional
+                        ? Colors.transparent
+                        : Colors.transparent,
+                border: Border.all(
+                  color: isDone
+                      ? accent
+                      : isOptional
+                          ? inkMute.withValues(alpha: 0.4)
+                          : rule,
+                  width: 1.5,
+                  strokeAlign: BorderSide.strokeAlignInside,
+                ),
               ),
               child: isDone
                   ? const Icon(Icons.check, size: 16, color: Colors.white)
-                  : null,
+                  : isOptional
+                      ? null
+                      : null,
             ),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: ink,
-                      fontFamily: 'Inter',
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: ink,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                      if (isOptional) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: inkMute.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            'Optional',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: inkMute,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   const SizedBox(height: 2),
-                  Text(value, style: TextStyle(fontSize: 13, color: inkMute)),
+                  Text(
+                    value,
+                    style: TextStyle(fontSize: 13, color: inkMute),
+                  ),
                 ],
               ),
             ),

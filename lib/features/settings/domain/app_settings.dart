@@ -16,6 +16,7 @@ class AppSettings extends Equatable {
     this.showSunrise = true,
     this.location,
     this.notifications = const NotificationSettings(),
+    this.setupDismissed = false,
   });
 
   final CalculationSettings calculation;
@@ -26,6 +27,7 @@ class AppSettings extends Equatable {
   final bool showSunrise;
   final UserLocation? location;
   final NotificationSettings notifications;
+  final bool setupDismissed;
 
   bool get isLocationConfigured => location != null;
 
@@ -44,6 +46,7 @@ class AppSettings extends Equatable {
     UserLocation? location,
     bool clearLocation = false,
     NotificationSettings? notifications,
+    bool? setupDismissed,
   }) {
     return AppSettings(
       calculation: calculation ?? this.calculation,
@@ -54,6 +57,7 @@ class AppSettings extends Equatable {
       showSunrise: showSunrise ?? this.showSunrise,
       location: clearLocation ? null : (location ?? this.location),
       notifications: notifications ?? this.notifications,
+      setupDismissed: setupDismissed ?? this.setupDismissed,
     );
   }
 
@@ -67,6 +71,7 @@ class AppSettings extends Equatable {
     'location': location?.toJson(),
     'isLocationConfigured': isLocationConfigured,
     'notifications': notifications.toJson(),
+    'setupDismissed': setupDismissed,
   };
 
   factory AppSettings.fromJson(Map<String, dynamic> json) {
@@ -96,6 +101,7 @@ class AppSettings extends Equatable {
       notifications: NotificationSettings.fromJson(
         json['notifications'] as Map<String, dynamic>?,
       ),
+      setupDismissed: json['setupDismissed'] as bool? ?? false,
     );
   }
 
@@ -109,5 +115,6 @@ class AppSettings extends Equatable {
     showSunrise,
     location,
     notifications,
+    setupDismissed,
   ];
 }

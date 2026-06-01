@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../app/theme.dart';
 import '../../../../core/theme/cohere_colors.dart';
 import '../../../../core/widgets/cohere_settings_widgets.dart';
 import '../../../notifications/data/prayer_notification_service.dart';
 import '../../../prayer/domain/prayer_name.dart';
+import '../../../prayer/domain/prayer_notif_type.dart';
 import '../../../prayer/presentation/prayer_name_l10n.dart';
 import '../../../prayer/presentation/widgets/prayer_notif_disc.dart';
 import '../settings_cubit.dart';
@@ -58,11 +60,13 @@ class NotificationsSettingsScreen extends StatelessWidget {
                 await cubit.setNotificationsEnabled(value);
               },
             ),
+            _NotifTypesInfograhic(),
             Opacity(
               opacity: notifs.enabled ? 1.0 : 0.4,
               child: IgnorePointer(
                 ignoring: !notifs.enabled,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CohereSectionLabel(label: 'Per prayer'),
                     for (var i = 0; i < PrayerName.values.length; i++)
@@ -97,6 +101,127 @@ class NotificationsSettingsScreen extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _NotifTypesInfograhic extends StatelessWidget {
+  const _NotifTypesInfograhic();
+
+  static const _types = [
+    (type: PrayerNotifType.none, desc: 'No alert'),
+    (type: PrayerNotifType.reminder, desc: 'System tone'),
+    (type: PrayerNotifType.takbir, desc: 'First takbīr'),
+    (type: PrayerNotifType.fullAthan, desc: 'Full adhan'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final inkMute = CohereColors.inkMute(brightness);
+    final inkDim = CohereColors.inkDim(brightness);
+    final accent = CohereColors.accentColor(brightness);
+    final rule = CohereColors.surfRule(brightness);
+    final surfElev = CohereColors.surfElevColor(brightness);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'ALERT TYPES',
+            style: cohereMonoLabel(
+              context,
+              fontSize: 10,
+              letterSpacing: 0.16,
+              color: inkMute,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+            decoration: BoxDecoration(
+              color: surfElev,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: rule, width: 1),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _types.map((entry) {
+                final isNone = entry.type == PrayerNotifType.none;
+                return Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 36,
+                        height: 36,
+                        child: isNone
+                            ? CustomPaint(
+                                painter: PrayerDashedCirclePainter(color: rule),
+                                child: Center(
+                                  child: SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CustomPaint(
+                                      painter: PrayerNotifIconPainter(
+                                        type: entry.type,
+                                        color: inkMute,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : DecoratedBox(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: accent,
+                                ),
+                                child: Center(
+                                  child: SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CustomPaint(
+                                      painter: PrayerNotifIconPainter(
+                                        type: entry.type,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        entry.type.label,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: inkDim,
+                          fontFamily: 'Inter',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        entry.desc,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: inkMute,
+                          fontFamily: 'Inter',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
     );
   }
 }

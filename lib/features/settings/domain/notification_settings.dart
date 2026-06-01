@@ -6,7 +6,6 @@ import '../../prayer/domain/prayer_notif_type.dart';
 class NotificationSettings extends Equatable {
   const NotificationSettings({
     this.enabled = false,
-    this.onboardingDone = false,
     this.prayerEnabled = const {
       PrayerName.fajr: true,
       PrayerName.sunrise: false,
@@ -28,7 +27,6 @@ class NotificationSettings extends Equatable {
   });
 
   final bool enabled;
-  final bool onboardingDone;
   final Map<PrayerName, bool> prayerEnabled;
   final Map<PrayerName, PrayerNotifType> prayerNotifType;
   final bool preReminderEnabled;
@@ -41,7 +39,6 @@ class NotificationSettings extends Equatable {
 
   NotificationSettings copyWith({
     bool? enabled,
-    bool? onboardingDone,
     Map<PrayerName, bool>? prayerEnabled,
     Map<PrayerName, PrayerNotifType>? prayerNotifType,
     bool? preReminderEnabled,
@@ -49,7 +46,6 @@ class NotificationSettings extends Equatable {
   }) {
     return NotificationSettings(
       enabled: enabled ?? this.enabled,
-      onboardingDone: onboardingDone ?? this.onboardingDone,
       prayerEnabled: prayerEnabled ?? this.prayerEnabled,
       prayerNotifType: prayerNotifType ?? this.prayerNotifType,
       preReminderEnabled: preReminderEnabled ?? this.preReminderEnabled,
@@ -67,7 +63,6 @@ class NotificationSettings extends Equatable {
 
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
-    'onboardingDone': onboardingDone,
     'prayerEnabled': {
       for (final entry in prayerEnabled.entries) entry.key.name: entry.value,
     },
@@ -107,7 +102,6 @@ class NotificationSettings extends Equatable {
 
     return NotificationSettings(
       enabled: json['enabled'] as bool? ?? false,
-      onboardingDone: json['onboardingDone'] as bool? ?? false,
       prayerEnabled: prayers.isEmpty
           ? const NotificationSettings().prayerEnabled
           : {...const NotificationSettings().prayerEnabled, ...prayers},
@@ -122,7 +116,6 @@ class NotificationSettings extends Equatable {
   @override
   List<Object?> get props => [
     enabled,
-    onboardingDone,
     prayerEnabled,
     prayerNotifType,
     preReminderEnabled,
