@@ -9,6 +9,7 @@ import '../../../core/navigation/primary_scroll_registry.dart';
 import '../../../core/theme/cohere_colors.dart';
 import '../../../core/utils/prayer_time_format.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../notifications/data/prayer_notification_service.dart';
 import '../../settings/domain/app_settings.dart';
 import '../../settings/domain/time_format_id.dart';
 import '../../settings/presentation/settings_cubit.dart';
@@ -24,7 +25,9 @@ import 'widgets/prayer_notif_disc.dart';
 import 'widgets/setup_checklist_body.dart';
 
 class PrayerTimesScreen extends StatefulWidget {
-  const PrayerTimesScreen({super.key});
+  const PrayerTimesScreen({required this.notificationService, super.key});
+
+  final PrayerNotificationService notificationService;
 
   @override
   State<PrayerTimesScreen> createState() => _PrayerTimesScreenState();
@@ -95,6 +98,7 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen>
             scrollController: _scrollController,
             settings: settingsState.settings,
             onMonthTap: _openMonth,
+            notificationService: widget.notificationService,
           );
         },
       ),
@@ -125,11 +129,13 @@ class _PrayerList extends StatelessWidget {
     required this.scrollController,
     required this.settings,
     required this.onMonthTap,
+    required this.notificationService,
   });
 
   final ScrollController scrollController;
   final AppSettings settings;
   final VoidCallback onMonthTap;
+  final PrayerNotificationService notificationService;
 
   @override
   Widget build(BuildContext context) {
@@ -217,6 +223,7 @@ class _PrayerList extends StatelessWidget {
                         isNext: isNext,
                         isPassed: isPassed,
                         notifType: notifType,
+                        notificationService: notificationService,
                       );
                     }),
                     const SizedBox(height: 100),
@@ -338,6 +345,7 @@ class _PrayerRow extends StatelessWidget {
     required this.isNext,
     required this.isPassed,
     required this.notifType,
+    required this.notificationService,
   });
 
   final PrayerName name;
@@ -346,6 +354,7 @@ class _PrayerRow extends StatelessWidget {
   final bool isNext;
   final bool isPassed;
   final PrayerNotifType notifType;
+  final PrayerNotificationService notificationService;
 
   @override
   Widget build(BuildContext context) {
@@ -403,7 +412,11 @@ class _PrayerRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 14),
-          PrayerNotifDisc(name: name, notifType: notifType),
+          PrayerNotifDisc(
+            name: name,
+            notifType: notifType,
+            notificationService: notificationService,
+          ),
         ],
       ),
     );

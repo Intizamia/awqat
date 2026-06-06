@@ -12,11 +12,12 @@ import '../../settings/domain/app_settings.dart';
 import '../../../l10n/app_localizations.dart';
 
 // Android channel IDs — each has a fixed sound; never reuse with a different sound.
-const _chSilent = 'prayer_silent';
-const _chReminder = 'prayer_reminder';
-const _chFirst = 'prayer_athan_takbir';
-const _chFull = 'prayer_athan_full';
-const _chFajr = 'prayer_athan_fajr';
+// Bump suffix (_v2, _v3 …) whenever sound or importance changes to force channel recreation.
+const _chSilent = 'prayer_silent_v2';
+const _chReminder = 'prayer_reminder_v2';
+const _chFirst = 'prayer_athan_takbir_v2';
+const _chFull = 'prayer_athan_full_v2';
+const _chFajr = 'prayer_athan_fajr_v2';
 
 class PrayerNotificationService {
   PrayerNotificationService({
@@ -108,6 +109,22 @@ class PrayerNotificationService {
     );
   }
 
+  Future<bool> hasPermission() async {
+    if (skipPlatformCalls) return true;
+    await initialize();
+
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    if (android != null) {
+      return await android.areNotificationsEnabled() ?? true;
+    }
+
+    // iOS: no revocation check available without extra plugin; assume granted.
+    return true;
+  }
+
   Future<bool> requestPermissions() async {
     if (skipPlatformCalls) return true;
     var granted = true;
@@ -182,6 +199,24 @@ class PrayerNotificationService {
       );
     } catch (e, st) {
       debugPrint('PrayerNotificationService: schedule failed: $e\n$st');
+    }
+  }
+
+  Future<void> testNotification(PrayerName prayer, PrayerNotifType type) async {
+    if (type == PrayerNotifType.none) return;
+    await initialize();
+    if (skipPlatformCalls) return;
+    try {
+      final details = _buildDetails(type, prayer);
+      await _plugin.show(
+        id: 9999,
+        title: 'Test: ${type.name}',
+        body: prayer.name,
+        notificationDetails: details,
+      );
+    } catch (e, st) {
+      debugPrint('PrayerNotificationService: testNotification failed: $e\n$st');
+      rethrow;
     }
   }
 

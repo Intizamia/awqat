@@ -77,7 +77,9 @@ GoRouter createRouter({
             routes: [
               GoRoute(
                 path: '/prayer',
-                builder: (context, state) => const PrayerTimesScreen(),
+                builder: (context, state) => PrayerTimesScreen(
+                  notificationService: notificationService,
+                ),
               ),
             ],
           ),

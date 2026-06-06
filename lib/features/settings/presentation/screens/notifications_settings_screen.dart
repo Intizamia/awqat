@@ -8,6 +8,7 @@ import '../../../prayer/domain/prayer_name.dart';
 import '../../../prayer/domain/prayer_notif_type.dart';
 import '../../../prayer/presentation/prayer_name_l10n.dart';
 import '../../../prayer/presentation/widgets/prayer_notif_disc.dart';
+import '../../domain/notification_settings.dart';
 import '../settings_cubit.dart';
 import '../settings_state.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -61,6 +62,7 @@ class NotificationsSettingsScreen extends StatelessWidget {
               },
             ),
             _NotifTypesInfograhic(),
+            _TestNotifButton(notificationService: notificationService, notifs: notifs),
             Opacity(
               opacity: notifs.enabled ? 1.0 : 0.4,
               child: IgnorePointer(
@@ -221,6 +223,120 @@ class _NotifTypesInfograhic extends StatelessWidget {
           ),
           const SizedBox(height: 16),
         ],
+      ),
+    );
+  }
+}
+
+class _TestNotifButton extends StatefulWidget {
+  const _TestNotifButton({
+    required this.notificationService,
+    required this.notifs,
+  });
+
+  final PrayerNotificationService notificationService;
+  final NotificationSettings notifs;
+
+  @override
+  State<_TestNotifButton> createState() => _TestNotifButtonState();
+}
+
+class _TestNotifButtonState extends State<_TestNotifButton> {
+  PrayerName _prayer = PrayerName.dhuhr;
+  bool _firing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final ink = CohereColors.inkColor(brightness);
+    final inkMute = CohereColors.inkMute(brightness);
+    final rule = CohereColors.surfRule(brightness);
+    final accent = CohereColors.accentColor(brightness);
+    final notifType = widget.notifs.notifTypeFor(_prayer);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          border: Border.all(color: rule),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'TEST NOTIFICATION',
+              style: cohereMonoLabel(
+                context,
+                fontSize: 10,
+                letterSpacing: 0.16,
+                color: inkMute,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<PrayerName>(
+                      value: _prayer,
+                      style: TextStyle(fontSize: 14, color: ink, fontFamily: 'Inter'),
+                      dropdownColor: CohereColors.surfElevColor(brightness),
+                      borderRadius: BorderRadius.circular(10),
+                      items: PrayerName.values
+                          .map((n) => DropdownMenuItem(
+                                value: n,
+                                child: Text(n.name),
+                              ))
+                          .toList(),
+                      onChanged: (v) {
+                        if (v != null) setState(() => _prayer = v);
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  notifType.label,
+                  style: TextStyle(fontSize: 13, color: inkMute),
+                ),
+                const SizedBox(width: 10),
+                GestureDetector(
+                  onTap: _firing
+                      ? null
+                      : () async {
+                          setState(() => _firing = true);
+                          try {
+                            await widget.notificationService
+                                .testNotification(_prayer, notifType);
+                          } catch (_) {
+                            // error already logged in service
+                          } finally {
+                            if (mounted) setState(() => _firing = false);
+                          }
+                        },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: _firing ? rule : accent,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      _firing ? '…' : 'Fire',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: _firing ? inkMute : Colors.white,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

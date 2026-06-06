@@ -101,8 +101,10 @@ class SetupChecklistBody extends StatelessWidget {
           ),
           _SetupRow(
             label: 'Notifications',
-            value: 'Optional — configure alert types',
-            isDone: false,
+            value: settings.notifications.enabled
+                ? 'Enabled'
+                : 'Optional — configure alert types',
+            isDone: settings.notifications.enabled,
             isOptional: true,
             isFirst: false,
             rule: rule,

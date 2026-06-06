@@ -49,11 +49,10 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> setNotificationsEnabled(bool value) async {
-    await _save(
-      state.settings.copyWith(
-        notifications: state.settings.notifications.copyWith(enabled: value),
-      ),
-    );
+    final notifs = value
+        ? state.settings.notifications.withDefaults()
+        : state.settings.notifications.withAllNone();
+    await _save(state.settings.copyWith(notifications: notifs));
   }
 
   Future<void> setPreReminderEnabled(bool value) async {

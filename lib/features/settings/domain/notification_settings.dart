@@ -61,6 +61,30 @@ class NotificationSettings extends Equatable {
     return copyWith(prayerNotifType: {...prayerNotifType, name: type});
   }
 
+  NotificationSettings withAllNone() => copyWith(
+    enabled: false,
+    prayerNotifType: const {
+      PrayerName.fajr: PrayerNotifType.none,
+      PrayerName.sunrise: PrayerNotifType.none,
+      PrayerName.dhuhr: PrayerNotifType.none,
+      PrayerName.asr: PrayerNotifType.none,
+      PrayerName.maghrib: PrayerNotifType.none,
+      PrayerName.isha: PrayerNotifType.none,
+    },
+  );
+
+  NotificationSettings withDefaults() => copyWith(
+    enabled: true,
+    prayerNotifType: const {
+      PrayerName.fajr: PrayerNotifType.takbir,
+      PrayerName.sunrise: PrayerNotifType.none,
+      PrayerName.dhuhr: PrayerNotifType.reminder,
+      PrayerName.asr: PrayerNotifType.reminder,
+      PrayerName.maghrib: PrayerNotifType.reminder,
+      PrayerName.isha: PrayerNotifType.reminder,
+    },
+  );
+
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
     'prayerEnabled': {

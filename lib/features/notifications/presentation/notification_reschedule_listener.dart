@@ -29,7 +29,10 @@ class _NotificationRescheduleListenerState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _reschedule());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _syncPermission();
+      _reschedule();
+    });
   }
 
   @override
@@ -41,7 +44,18 @@ class _NotificationRescheduleListenerState
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _reschedule();
+      _syncPermission().then((_) => _reschedule());
+    }
+  }
+
+  Future<void> _syncPermission() async {
+    final settingsState = context.read<SettingsCubit>().state;
+    if (settingsState.isLoading) return;
+    if (!settingsState.settings.notifications.enabled) return;
+
+    final granted = await widget.notificationService.hasPermission();
+    if (!granted && mounted) {
+      await context.read<SettingsCubit>().setNotificationsEnabled(false);
     }
   }
 

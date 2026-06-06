@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/theme.dart';
 import '../../../../core/theme/cohere_colors.dart';
+import '../../../notifications/data/prayer_notification_service.dart';
 import '../../../settings/presentation/settings_cubit.dart';
 import '../../domain/prayer_name.dart';
 import '../../domain/prayer_notif_type.dart';
@@ -11,11 +12,13 @@ class PrayerNotifDisc extends StatelessWidget {
   const PrayerNotifDisc({
     required this.name,
     required this.notifType,
+    this.notificationService,
     super.key,
   });
 
   final PrayerName name;
   final PrayerNotifType notifType;
+  final PrayerNotificationService? notificationService;
 
   static List<PrayerNotifType> _availableTypes(
     PrayerName name,
@@ -123,10 +126,20 @@ class PrayerNotifDisc extends StatelessWidget {
             ),
           ),
       ],
-    ).then((selected) {
-      if (selected != null && selected != notifType) {
-        cubit.setPrayerNotifType(name, selected);
+    ).then((selected) async {
+      if (selected == null || selected == notifType) return;
+
+      final svc = notificationService;
+      final notifDisabled = !cubit.state.settings.notifications.enabled;
+
+      if (svc != null && notifDisabled && selected != PrayerNotifType.none) {
+        await svc.initialize();
+        final granted = await svc.requestPermissions();
+        if (!granted) return;
+        await cubit.setNotificationsEnabled(true);
       }
+
+      cubit.setPrayerNotifType(name, selected);
     });
   }
 
