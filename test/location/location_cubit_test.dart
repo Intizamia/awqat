@@ -43,7 +43,7 @@ void main() {
       expect(settingsCubit.state.settings.location, isNotNull);
       expect(
         settingsCubit.state.settings.location!.latitude,
-        fakeLocation.currentLocation.latitude,
+        fakeLocation.gpsCoordinates.latitude,
       );
     },
   );

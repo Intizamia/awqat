@@ -1,36 +1,28 @@
 import 'package:awqat/features/location/data/location_service.dart';
 import 'package:awqat/features/location/domain/city_search_result.dart';
-import 'package:awqat/features/settings/domain/user_location.dart';
 
 class FakeLocationService implements LocationService {
   FakeLocationService({
-    this.currentLocation = kDefaultUserLocation,
+    this.gpsCoordinates = (latitude: 24.8607, longitude: 67.0011),
+    this.reverseLabel,
     this.searchResults = const [],
   });
 
-  UserLocation currentLocation;
+  ({double latitude, double longitude}) gpsCoordinates;
+  String? reverseLabel;
   List<CitySearchResult> searchResults;
 
   @override
-  Future<UserLocation> getCurrentLocation() async => currentLocation;
+  Future<({double latitude, double longitude})> getGpsCoordinates() async =>
+      gpsCoordinates;
+
+  @override
+  Future<String?> reverseGeocodeLabel(double latitude, double longitude) async =>
+      reverseLabel;
 
   @override
   Future<List<CitySearchResult>> searchCities(String query) async {
     if (query.length < 2) return [];
     return searchResults;
-  }
-
-  @override
-  Future<UserLocation> locationFromCoordinates({
-    required double latitude,
-    required double longitude,
-    String? label,
-  }) async {
-    return UserLocation(
-      latitude: latitude,
-      longitude: longitude,
-      timeZoneId: 'Asia/Karachi',
-      label: label,
-    );
   }
 }
