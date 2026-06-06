@@ -1,4 +1,6 @@
-import 'package:geocoding/geocoding.dart';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:geolocator/geolocator.dart';
 import '../../../core/utils/timezone_resolver.dart';
 import 'location_service.dart';
@@ -7,6 +9,8 @@ import '../domain/location_exception.dart';
 import '../../settings/domain/user_location.dart';
 
 class GeolocatorLocationService implements LocationService {
+  static const _userAgent = 'Awqat Prayer Times/1.0';
+
   @override
   Future<UserLocation> getCurrentLocation() async {
     await _ensurePermissionAndService();
@@ -27,34 +31,36 @@ class GeolocatorLocationService implements LocationService {
   @override
   Future<List<CitySearchResult>> searchCities(String query) async {
     final trimmed = query.trim();
-    if (trimmed.length < 2) {
-      return [];
-    }
+    if (trimmed.length < 2) return [];
 
     try {
-      final locations = await locationFromAddress(trimmed);
-      if (locations.isEmpty) {
-        return [];
-      }
+      final uri = Uri.https('nominatim.openstreetmap.org', '/search', {
+        'q': trimmed,
+        'format': 'jsonv2',
+        'limit': '5',
+        'addressdetails': '1',
+      });
+
+      final body = await _get(uri);
+      final list = jsonDecode(body) as List<dynamic>;
 
       final results = <CitySearchResult>[];
       final seen = <String>{};
 
-      for (final loc in locations.take(5)) {
-        final label = await _labelForCoordinates(
-          loc.latitude,
-          loc.longitude,
+      for (final raw in list) {
+        final map = raw as Map<String, dynamic>;
+        final lat = double.tryParse(map['lat'] as String? ?? '');
+        final lon = double.tryParse(map['lon'] as String? ?? '');
+        if (lat == null || lon == null) continue;
+
+        final label = _labelFromAddress(
+          map['address'] as Map<String, dynamic>?,
           fallback: trimmed,
         );
-        final key =
-            '${loc.latitude.toStringAsFixed(3)},${loc.longitude.toStringAsFixed(3)}';
+        final key = '${lat.toStringAsFixed(3)},${lon.toStringAsFixed(3)}';
         if (seen.add(key)) {
           results.add(
-            CitySearchResult(
-              label: label,
-              latitude: loc.latitude,
-              longitude: loc.longitude,
-            ),
+            CitySearchResult(label: label, latitude: lat, longitude: lon),
           );
         }
       }
@@ -73,7 +79,7 @@ class GeolocatorLocationService implements LocationService {
   }) async {
     final timeZoneId = resolveTimeZoneId(latitude, longitude);
     final resolvedLabel =
-        label ?? await _labelForCoordinates(latitude, longitude);
+        label ?? await _reverseGeocode(latitude, longitude);
 
     return UserLocation(
       latitude: latitude,
@@ -85,15 +91,12 @@ class GeolocatorLocationService implements LocationService {
 
   Future<void> _ensurePermissionAndService() async {
     final enabled = await Geolocator.isLocationServiceEnabled();
-    if (!enabled) {
-      throw const LocationServiceDisabled();
-    }
+    if (!enabled) throw const LocationServiceDisabled();
 
     var permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
-
     if (permission == LocationPermission.deniedForever) {
       throw const LocationPermissionDeniedForever();
     }
@@ -102,35 +105,70 @@ class GeolocatorLocationService implements LocationService {
     }
   }
 
-  Future<String> _labelForCoordinates(
+  Future<String> _reverseGeocode(
     double latitude,
     double longitude, {
     String fallback = '',
   }) async {
     try {
-      final placemarks = await placemarkFromCoordinates(latitude, longitude);
-      if (placemarks.isEmpty) {
-        return fallback.isNotEmpty
-            ? fallback
-            : '${latitude.toStringAsFixed(2)}, ${longitude.toStringAsFixed(2)}';
-      }
-      final p = placemarks.first;
-      final parts = <String>[
-        if (p.locality != null && p.locality!.isNotEmpty) p.locality!,
-        if (p.administrativeArea != null && p.administrativeArea!.isNotEmpty)
-          p.administrativeArea!,
-        if (p.country != null && p.country!.isNotEmpty) p.country!,
-      ];
-      if (parts.isEmpty) {
-        return fallback.isNotEmpty
-            ? fallback
-            : '${latitude.toStringAsFixed(2)}, ${longitude.toStringAsFixed(2)}';
-      }
-      return parts.join(', ');
+      final uri = Uri.https('nominatim.openstreetmap.org', '/reverse', {
+        'lat': latitude.toString(),
+        'lon': longitude.toString(),
+        'format': 'jsonv2',
+        'addressdetails': '1',
+      });
+
+      final body = await _get(uri);
+      final json = jsonDecode(body) as Map<String, dynamic>;
+      return _labelFromAddress(
+        json['address'] as Map<String, dynamic>?,
+        fallback: fallback,
+      );
     } catch (_) {
       return fallback.isNotEmpty
           ? fallback
           : '${latitude.toStringAsFixed(2)}, ${longitude.toStringAsFixed(2)}';
+    }
+  }
+
+  String _labelFromAddress(
+    Map<String, dynamic>? address, {
+    String fallback = '',
+  }) {
+    if (address == null) return fallback;
+
+    final city = address['city'] as String? ??
+        address['town'] as String? ??
+        address['village'] as String? ??
+        address['municipality'] as String?;
+    final state = address['state'] as String? ??
+        address['region'] as String?;
+    final country = address['country'] as String?;
+
+    final parts = <String>[
+      if (city != null && city.isNotEmpty) city,
+      if (state != null && state.isNotEmpty) state,
+      if (country != null && country.isNotEmpty) country,
+    ];
+
+    return parts.isEmpty ? fallback : parts.join(', ');
+  }
+
+  Future<String> _get(Uri uri) async {
+    final client = HttpClient()
+      ..connectionTimeout = const Duration(seconds: 10);
+    try {
+      final request = await client.getUrl(uri);
+      request.headers
+        ..set(HttpHeaders.userAgentHeader, _userAgent)
+        ..set(HttpHeaders.acceptHeader, 'application/json');
+      final response = await request.close();
+      if (response.statusCode != 200) {
+        throw Exception('Nominatim HTTP ${response.statusCode}');
+      }
+      return await response.transform(utf8.decoder).join();
+    } finally {
+      client.close();
     }
   }
 }
