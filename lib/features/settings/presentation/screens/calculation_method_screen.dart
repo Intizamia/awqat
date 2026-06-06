@@ -26,7 +26,9 @@ const _kMethodDescriptions = <CalculationMethodId, String>{
 };
 
 class CalculationMethodScreen extends StatelessWidget {
-  const CalculationMethodScreen({super.key});
+  const CalculationMethodScreen({this.backLabel = 'Settings', super.key});
+
+  final String backLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class CalculationMethodScreen extends StatelessWidget {
         return CohereDetailScaffold(
           title: l10n.calculationMethodTitle,
           intro: l10n.calculationMethodSubtitle,
+          backLabel: backLabel,
           children: [
             CohereSectionLabel(label: 'Choose authority'),
             for (final (id, label) in kCalculationMethods)

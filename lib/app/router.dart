@@ -54,18 +54,19 @@ GoRouter createRouter({
       GoRoute(
         path: '/setup/calculation-method',
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const CalculationMethodScreen(),
+        builder: (context, state) => const CalculationMethodScreen(backLabel: 'Setup'),
       ),
       GoRoute(
         path: '/setup/location',
         parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const LocationScreen(popOnSelect: false),
+        builder: (context, state) => const LocationScreen(popOnSelect: false, backLabel: 'Setup'),
       ),
       GoRoute(
         path: '/setup/notifications',
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => NotificationsSettingsScreen(
           notificationService: notificationService,
+          backLabel: 'Setup',
         ),
       ),
       StatefulShellRoute.indexedStack(

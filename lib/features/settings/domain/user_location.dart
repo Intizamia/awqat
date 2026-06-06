@@ -22,6 +22,18 @@ class UserLocation extends Equatable {
         'label': label,
       };
 
+  UserLocation copyWith({
+    double? latitude,
+    double? longitude,
+    String? timeZoneId,
+    String? label,
+  }) => UserLocation(
+    latitude: latitude ?? this.latitude,
+    longitude: longitude ?? this.longitude,
+    timeZoneId: timeZoneId ?? this.timeZoneId,
+    label: label ?? this.label,
+  );
+
   factory UserLocation.fromJson(Map<String, dynamic> json) {
     return UserLocation(
       latitude: (json['latitude'] as num).toDouble(),

@@ -16,10 +16,12 @@ import '../../../../l10n/app_localizations.dart';
 class NotificationsSettingsScreen extends StatelessWidget {
   const NotificationsSettingsScreen({
     required this.notificationService,
+    this.backLabel = 'Settings',
     super.key,
   });
 
   final PrayerNotificationService notificationService;
+  final String backLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class NotificationsSettingsScreen extends StatelessWidget {
 
         return CohereDetailScaffold(
           title: l10n.notificationsSectionTitle,
+          backLabel: backLabel,
           children: [
             CohereSectionLabel(label: 'Master'),
             CohereToggleRow(

@@ -2,17 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:geolocator/geolocator.dart';
-import '../../../core/utils/timezone_resolver.dart';
 import 'location_service.dart';
 import '../domain/city_search_result.dart';
 import '../domain/location_exception.dart';
-import '../../settings/domain/user_location.dart';
 
 class GeolocatorLocationService implements LocationService {
   static const _userAgent = 'Awqat Prayer Times/1.0';
 
   @override
-  Future<UserLocation> getCurrentLocation() async {
+  Future<({double latitude, double longitude})> getGpsCoordinates() async {
     await _ensurePermissionAndService();
 
     final position = await Geolocator.getCurrentPosition(
@@ -22,10 +20,29 @@ class GeolocatorLocationService implements LocationService {
       ),
     );
 
-    return locationFromCoordinates(
-      latitude: position.latitude,
-      longitude: position.longitude,
-    );
+    return (latitude: position.latitude, longitude: position.longitude);
+  }
+
+  @override
+  Future<String?> reverseGeocodeLabel(
+    double latitude,
+    double longitude,
+  ) async {
+    try {
+      final uri = Uri.https('nominatim.openstreetmap.org', '/reverse', {
+        'lat': latitude.toString(),
+        'lon': longitude.toString(),
+        'format': 'jsonv2',
+        'addressdetails': '1',
+      });
+
+      final body = await _get(uri);
+      final json = jsonDecode(body) as Map<String, dynamic>;
+      final label = _labelFromAddress(json['address'] as Map<String, dynamic>?);
+      return label.isEmpty ? null : label;
+    } catch (_) {
+      return null;
+    }
   }
 
   @override
@@ -71,24 +88,6 @@ class GeolocatorLocationService implements LocationService {
     }
   }
 
-  @override
-  Future<UserLocation> locationFromCoordinates({
-    required double latitude,
-    required double longitude,
-    String? label,
-  }) async {
-    final timeZoneId = resolveTimeZoneId(latitude, longitude);
-    final resolvedLabel =
-        label ?? await _reverseGeocode(latitude, longitude);
-
-    return UserLocation(
-      latitude: latitude,
-      longitude: longitude,
-      timeZoneId: timeZoneId,
-      label: resolvedLabel,
-    );
-  }
-
   Future<void> _ensurePermissionAndService() async {
     final enabled = await Geolocator.isLocationServiceEnabled();
     if (!enabled) throw const LocationServiceDisabled();
@@ -105,32 +104,6 @@ class GeolocatorLocationService implements LocationService {
     }
   }
 
-  Future<String> _reverseGeocode(
-    double latitude,
-    double longitude, {
-    String fallback = '',
-  }) async {
-    try {
-      final uri = Uri.https('nominatim.openstreetmap.org', '/reverse', {
-        'lat': latitude.toString(),
-        'lon': longitude.toString(),
-        'format': 'jsonv2',
-        'addressdetails': '1',
-      });
-
-      final body = await _get(uri);
-      final json = jsonDecode(body) as Map<String, dynamic>;
-      return _labelFromAddress(
-        json['address'] as Map<String, dynamic>?,
-        fallback: fallback,
-      );
-    } catch (_) {
-      return fallback.isNotEmpty
-          ? fallback
-          : '${latitude.toStringAsFixed(2)}, ${longitude.toStringAsFixed(2)}';
-    }
-  }
-
   String _labelFromAddress(
     Map<String, dynamic>? address, {
     String fallback = '',
@@ -141,8 +114,8 @@ class GeolocatorLocationService implements LocationService {
         address['town'] as String? ??
         address['village'] as String? ??
         address['municipality'] as String?;
-    final state = address['state'] as String? ??
-        address['region'] as String?;
+    final state =
+        address['state'] as String? ?? address['region'] as String?;
     final country = address['country'] as String?;
 
     final parts = <String>[
