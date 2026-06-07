@@ -18,10 +18,10 @@ void main() {
   });
 
   test('plans upcoming enabled prayers for Karachi', () {
-    const settings = AppSettings(
-      calculation: CalculationSettings(method: CalculationMethodId.karachi),
+    final settings = AppSettings(
+      calculation: const CalculationSettings(method: CalculationMethodId.karachi),
       location: kDefaultUserLocation,
-      notifications: NotificationSettings(enabled: true),
+      notifications: NotificationSettings().withDefaults(),
     );
 
     final planned = planPrayerNotifications(

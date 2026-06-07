@@ -26,7 +26,8 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.text('PRAYERS'), findsOneWidget);
+    expect(find.text('SETTINGS'), findsOneWidget);
     expect(find.text('Complete setup'), findsOneWidget);
     expect(find.text('Calculation method'), findsOneWidget);
     expect(find.text('Location'), findsOneWidget);

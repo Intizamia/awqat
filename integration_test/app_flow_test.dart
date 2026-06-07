@@ -13,16 +13,46 @@ import 'package:awqat/features/settings/domain/user_location.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('configured app shows prayer list', (tester) async {
-    SharedPreferences.setMockInitialValues({
-      'app_settings_v1': jsonEncode({
+  const _settingsKey = 'app_settings_v1';
+
+  tearDown(() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_settingsKey);
+  });
+
+  test('settings load correctly from shared prefs', () async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _settingsKey,
+      jsonEncode({
         'calculation': const CalculationSettings(
           method: CalculationMethodId.karachi,
         ).toJson(),
         'localeCode': 'en',
         'location': kDefaultUserLocation.toJson(),
+        'setupDismissed': true,
       }),
-    });
+    );
+    final repo = await SettingsRepository.create();
+    final settings = repo.load();
+    expect(settings.setup.isComplete, isTrue,
+        reason:
+            'location=${settings.location}, method=${settings.calculation.method}');
+  });
+
+  testWidgets('configured app shows prayer list', (tester) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _settingsKey,
+      jsonEncode({
+        'calculation': const CalculationSettings(
+          method: CalculationMethodId.karachi,
+        ).toJson(),
+        'localeCode': 'en',
+        'location': kDefaultUserLocation.toJson(),
+        'setupDismissed': true,
+      }),
+    );
 
     final repo = await SettingsRepository.create();
     final notificationService = PrayerNotificationService(
@@ -35,10 +65,13 @@ void main() {
         notificationService: notificationService,
       ),
     );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     await tester.pumpAndSettle();
 
-    expect(find.text('Prayer Times'), findsWidgets);
-    expect(find.text('Fajr'), findsOneWidget);
+    expect(find.text('PRAYERS'), findsOneWidget);
     expect(find.text('Complete setup'), findsNothing);
+    expect(find.text('Fajr'), findsOneWidget);
+    expect(find.text('KARACHI'), findsWidgets);
   });
 }
