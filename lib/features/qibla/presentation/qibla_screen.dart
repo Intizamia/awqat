@@ -1,12 +1,11 @@
-import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_qiblah/flutter_qiblah.dart';
 import '../../../app/theme.dart';
 import '../../../core/theme/cohere_colors.dart';
 import '../../../core/utils/qibla_bearing.dart';
+import '../../../core/utils/sensor_check.dart';
 import '../../../core/widgets/cohere_settings_widgets.dart';
 import 'widgets/qibla_compass_dial.dart';
 import '../../settings/presentation/settings_cubit.dart';
@@ -46,10 +45,10 @@ class _QiblaScreenState extends State<QiblaScreen> {
   }
 
   Future<void> _checkSensor() async {
-    final supported = await FlutterQiblah.androidDeviceSensorSupport();
+    final supported = await hasMagnetometer();
     if (!mounted) return;
     setState(() {
-      _sensorSupported = Platform.isIOS ? true : (supported ?? false);
+      _sensorSupported = supported;
       _checkingSensor = false;
     });
   }

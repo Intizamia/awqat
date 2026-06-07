@@ -20,7 +20,6 @@ dependencies:
   geolocator: ^14.0.2
   lat_lng_to_timezone: ^0.2.0
   hijri: ^3.0.1
-  flutter_qiblah: ^3.2.0
   flutter_compass_v2: ^1.0.3
   flutter_local_notifications: ^21.0.0
   timezone: ^0.11.0
