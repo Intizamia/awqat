@@ -12,6 +12,7 @@ class PrayerTimesCubit extends Cubit<PrayerTimesState> {
   void refresh(AppSettings settings) {
     if (!settings.setup.isComplete || settings.location == null) {
       emit(const PrayerTimesState());
+      WidgetDataWriter.clear();
       return;
     }
 

@@ -31,6 +31,8 @@ data class WidgetData(
         return if (h > 0) "${h}h ${m}m" else "${m}m"
     }
 
+    val hasData: Boolean get() = prayers.isNotEmpty()
+
     /** Prayer rows excluding Sunrise. */
     val prayerRowsNoSunrise: List<PrayerRow>
         get() = prayers.filter { it.key != "sunrise" }

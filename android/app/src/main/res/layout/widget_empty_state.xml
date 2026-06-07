@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:background="#FFE7EDE9"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/empty_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complete setup to view prayer times"
+        android:textColor="#FF4E5D57"
+        android:textSize="12sp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/empty_cta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Tap to open"
+        android:textColor="#FF003C33"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+</LinearLayout>

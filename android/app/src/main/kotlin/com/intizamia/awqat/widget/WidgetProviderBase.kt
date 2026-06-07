@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
+import com.intizamia.awqat.R
 
 abstract class WidgetProviderBase : AppWidgetProvider() {
 
@@ -18,15 +19,18 @@ abstract class WidgetProviderBase : AppWidgetProvider() {
     override fun onUpdate(ctx: Context, mgr: AppWidgetManager, ids: IntArray) {
         val data = WidgetData.read(ctx)
         val colors = WidgetColors.resolve(skin, ctx)
+        val launchPi = launchAppPendingIntent(ctx)
         ids.forEach { id ->
-            mgr.updateAppWidget(id, buildRemoteViews(ctx, data, colors))
+            val rv = if (data.hasData) buildRemoteViews(ctx, data, colors)
+                     else buildEmptyStateViews(ctx, colors)
+            rv.setOnClickPendingIntent(R.id.root, launchPi)
+            mgr.updateAppWidget(id, rv)
         }
         scheduleMinuteAlarm(ctx)
     }
 
     override fun onDeleted(ctx: Context, ids: IntArray) {
         super.onDeleted(ctx, ids)
-        // Cancel alarm only if no more instances of ANY widget remain
         val mgr = AppWidgetManager.getInstance(ctx)
         val anyRemaining = AwqatWidgetRefreshReceiver.allProviders.any { cls ->
             mgr.getAppWidgetIds(android.content.ComponentName(ctx, cls)).isNotEmpty()
@@ -37,6 +41,26 @@ abstract class WidgetProviderBase : AppWidgetProvider() {
     companion object {
         private const val ALARM_ACTION = "com.intizamia.awqat.WIDGET_MINUTE_TICK"
         private const val ALARM_REQUEST_CODE = 0xA771
+
+        fun launchAppPendingIntent(ctx: Context): PendingIntent {
+            val intent = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)
+                ?: Intent().apply {
+                    setClassName(ctx.packageName, "${ctx.packageName}.MainActivity")
+                }
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            return PendingIntent.getActivity(
+                ctx, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        }
+
+        fun buildEmptyStateViews(ctx: Context, colors: WidgetColorScheme): RemoteViews {
+            val rv = RemoteViews(ctx.packageName, R.layout.widget_empty_state)
+            rv.setInt(R.id.root, "setBackgroundColor", colors.bg)
+            rv.setTextColor(R.id.empty_label, colors.textMute)
+            rv.setTextColor(R.id.empty_cta, colors.accent)
+            return rv
+        }
 
         fun scheduleMinuteAlarm(ctx: Context) {
             val alarmMgr = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -49,9 +73,6 @@ abstract class WidgetProviderBase : AppWidgetProvider() {
             )
             val nowMs = System.currentTimeMillis()
             val nextMinuteMs = ((nowMs / 60_000) + 1) * 60_000
-            // API 31+ requires SCHEDULE_EXACT_ALARM or USE_EXACT_ALARM for exact alarms.
-            // USE_EXACT_ALARM is only recognized on API 33+, so on API 31-32 we check first
-            // and fall back to a 30s window alarm if exact scheduling isn't available.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmMgr.canScheduleExactAlarms()) {
                 alarmMgr.setWindow(AlarmManager.RTC_WAKEUP, nextMinuteMs, 30_000L, pi)
             } else {

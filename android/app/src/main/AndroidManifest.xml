@@ -69,35 +69,35 @@
 
         <!-- 4×1 Strip -->
         <receiver android:name="com.intizamia.awqat.widget.CohStripProvider" android:exported="true"
-            android:label="Times Strip">
+            android:label="Strip">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_strip" />
         </receiver>
 
         <!-- 2×2 Next Prayer -->
         <receiver android:name="com.intizamia.awqat.widget.CohNextProvider" android:exported="true"
-            android:label="Times Next Prayer">
+            android:label="Next Prayer">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_next" />
         </receiver>
 
         <!-- 2×2 Prayer List -->
         <receiver android:name="com.intizamia.awqat.widget.CohListProvider" android:exported="true"
-            android:label="Times Prayer List">
+            android:label="Prayer List">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_list" />
         </receiver>
 
         <!-- 4×2 Editorial Split -->
         <receiver android:name="com.intizamia.awqat.widget.CohSplitProvider" android:exported="true"
-            android:label="Times Editorial Split">
+            android:label="Editorial Split">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_split" />
         </receiver>
 
         <!-- 4×3 Compact Band -->
         <receiver android:name="com.intizamia.awqat.widget.CohCompactBandProvider" android:exported="true"
-            android:label="Times Compact Band">
+            android:label="Compact Band">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_compact_band" />
         </receiver>

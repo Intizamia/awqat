@@ -80,6 +80,11 @@ class WidgetDataWriter {
     );
   }
 
+  static Future<void> clear() async {
+    await HomeWidget.saveWidgetData<String>('widget_prayers_json', '');
+    await HomeWidget.updateWidget(qualifiedAndroidName: _androidReceiver);
+  }
+
   static String _name(PrayerName n) => switch (n) {
         PrayerName.fajr => 'Fajr',
         PrayerName.sunrise => 'Sunrise',
