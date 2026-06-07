@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:background="#FFE7EDE9"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/lead"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingStart="18dp"
+        android:paddingEnd="12dp">
+
+        <TextView android:textColor="#FF141C18"
+            android:id="@+id/next_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEXT"
+            android:textSize="9sp" />
+
+        <TextView android:textColor="#FF141C18"
+            android:id="@+id/next_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asr"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:maxLines="1" />
+
+        <TextView android:textColor="#FF141C18"
+            android:id="@+id/next_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2h 14m"
+            android:textSize="11sp"
+            android:maxLines="1" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/vline"
+        android:layout_width="1dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/cell0"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell0_abbr" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="FJR" android:textSize="8sp" />
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell0_time" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="5:23" android:textSize="12sp"
+            android:textStyle="bold" android:maxLines="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cell1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell1_abbr" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="DHR" android:textSize="8sp" />
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell1_time" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="12:30" android:textSize="12sp"
+            android:textStyle="bold" android:maxLines="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cell2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell2_abbr" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="ASR" android:textSize="8sp" />
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell2_time" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="15:45" android:textSize="12sp"
+            android:textStyle="bold" android:maxLines="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cell3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell3_abbr" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="MGH" android:textSize="8sp" />
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell3_time" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="18:20" android:textSize="12sp"
+            android:textStyle="bold" android:maxLines="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cell4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell4_abbr" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="ISH" android:textSize="8sp" />
+        <TextView android:textColor="#FF141C18" android:id="@+id/cell4_time" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="20:15" android:textSize="12sp"
+            android:textStyle="bold" android:maxLines="1" />
+    </LinearLayout>
+
+</LinearLayout>

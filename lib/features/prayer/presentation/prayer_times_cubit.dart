@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/adhan_calculation_engine.dart';
 import 'prayer_times_state.dart';
 import '../../settings/domain/app_settings.dart';
+import '../../widgets/widget_data_writer.dart';
 
 class PrayerTimesCubit extends Cubit<PrayerTimesState> {
   PrayerTimesCubit(this._engine) : super(const PrayerTimesState());
@@ -22,6 +23,7 @@ class PrayerTimesCubit extends Cubit<PrayerTimesState> {
         calculation: settings.calculation,
       );
       emit(PrayerTimesState(schedule: schedule, isLoading: false));
+      WidgetDataWriter.update(schedule: schedule, settings: settings);
     } catch (e) {
       emit(PrayerTimesState(isLoading: false, errorMessage: e.toString()));
     }

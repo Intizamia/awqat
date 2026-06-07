@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- Fallback for API 31-32 where USE_EXACT_ALARM is not recognized -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:label="awqat"
@@ -37,6 +40,68 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- home_widget data-update receiver — receives ACTION_APPWIDGET_UPDATE from Flutter -->
+        <receiver
+            android:name="com.intizamia.awqat.widget.AwqatWidgetRefreshReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Per-minute countdown tick -->
+        <receiver
+            android:name="com.intizamia.awqat.widget.WidgetMinuteReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.intizamia.awqat.WIDGET_MINUTE_TICK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Re-render widgets immediately when system night mode changes -->
+        <receiver
+            android:name="com.intizamia.awqat.widget.WidgetNightModeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.app.action.NIGHT_MODE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 4×1 Strip -->
+        <receiver android:name="com.intizamia.awqat.widget.CohStripProvider" android:exported="true"
+            android:label="Times Strip">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_strip" />
+        </receiver>
+
+        <!-- 2×2 Next Prayer -->
+        <receiver android:name="com.intizamia.awqat.widget.CohNextProvider" android:exported="true"
+            android:label="Times Next Prayer">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_next" />
+        </receiver>
+
+        <!-- 2×2 Prayer List -->
+        <receiver android:name="com.intizamia.awqat.widget.CohListProvider" android:exported="true"
+            android:label="Times Prayer List">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_list" />
+        </receiver>
+
+        <!-- 4×2 Editorial Split -->
+        <receiver android:name="com.intizamia.awqat.widget.CohSplitProvider" android:exported="true"
+            android:label="Times Editorial Split">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_split" />
+        </receiver>
+
+        <!-- 4×3 Compact Band -->
+        <receiver android:name="com.intizamia.awqat.widget.CohCompactBandProvider" android:exported="true"
+            android:label="Times Compact Band">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_coh_compact_band" />
+        </receiver>
+
         <receiver
             android:exported="false"
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />

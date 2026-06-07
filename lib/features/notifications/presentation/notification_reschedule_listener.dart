@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_widget/home_widget.dart';
 import '../data/prayer_notification_service.dart';
 import '../../prayer/presentation/prayer_times_cubit.dart';
 import '../../prayer/presentation/prayer_times_state.dart';
@@ -46,6 +47,14 @@ class _NotificationRescheduleListenerState
     if (state == AppLifecycleState.resumed) {
       _syncPermission().then((_) => _reschedule());
     }
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    HomeWidget.updateWidget(
+      qualifiedAndroidName:
+          'com.intizamia.awqat.widget.AwqatWidgetRefreshReceiver',
+    );
   }
 
   Future<void> _syncPermission() async {
