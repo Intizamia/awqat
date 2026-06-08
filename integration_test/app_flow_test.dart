@@ -13,17 +13,17 @@ import 'package:awqat/features/settings/domain/user_location.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  const _settingsKey = 'app_settings_v1';
+  const settingsKey = 'app_settings_v1';
 
   tearDown(() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_settingsKey);
+    await prefs.remove(settingsKey);
   });
 
   test('settings load correctly from shared prefs', () async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      _settingsKey,
+      settingsKey,
       jsonEncode({
         'calculation': const CalculationSettings(
           method: CalculationMethodId.karachi,
@@ -35,15 +35,18 @@ void main() {
     );
     final repo = await SettingsRepository.create();
     final settings = repo.load();
-    expect(settings.setup.isComplete, isTrue,
-        reason:
-            'location=${settings.location}, method=${settings.calculation.method}');
+    expect(
+      settings.setup.isComplete,
+      isTrue,
+      reason:
+          'location=${settings.location}, method=${settings.calculation.method}',
+    );
   });
 
   testWidgets('configured app shows prayer list', (tester) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      _settingsKey,
+      settingsKey,
       jsonEncode({
         'calculation': const CalculationSettings(
           method: CalculationMethodId.karachi,
