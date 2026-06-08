@@ -46,5 +46,5 @@ flutter run
 
 ## Contributing
 
-- Contributions are welcome. For bugs or suggestions, open an [issue](https://github.com/yourusername/awqat/issues).
+- Contributions are welcome. For bugs or suggestions, open an [issue](https://github.com/intizamia/awqat/issues).
 - Translation contributions are especially appreciated.
